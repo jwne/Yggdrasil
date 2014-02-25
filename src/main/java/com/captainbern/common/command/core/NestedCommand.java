@@ -24,7 +24,9 @@ import java.lang.annotation.Target;
 
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.METHOD)
-public @interface CommandAlias {
+public @interface NestedCommand {
 
-    String[] value();
+    Class[] body();
+
+    boolean executeBody() default false;
 }

@@ -17,23 +17,27 @@
 */
 package com.captainbern.common.command;
 
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandSender;
-import org.bukkit.command.PluginIdentifiableCommand;
-import org.bukkit.plugin.Plugin;
+import org.bukkit.command.CommandMap;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 
-public class WrappedPluginCommand extends Command implements PluginIdentifiableCommand {
-    protected WrappedPluginCommand(String name) {
-        super(name);
+public class FallbackCommandRegistrationService implements Listener {
+
+    protected CommandMap fallbackCommandMap;
+
+    public FallbackCommandRegistrationService(CommandMap commandMap) {
+        this.fallbackCommandMap = commandMap;
     }
 
-    @Override
-    public boolean execute(CommandSender commandSender, String s, String[] strings) {
-        return false;
+    public CommandMap getFallbackCommandMap() {
+        return this.fallbackCommandMap;
     }
 
-    @Override
-    public Plugin getPlugin() {
-        return null;
+    @EventHandler(ignoreCancelled = true)
+    public void onCommand(PlayerCommandPreprocessEvent event) {
+        if(fallbackCommandMap.dispatch(event.getPlayer(), event.getMessage())) {
+            event.setCancelled(true);
+        }
     }
 }

@@ -17,10 +17,13 @@ public @interface Command {
 
     String description();
 
+    String flags() default "";
+
     int minArgs() default 0;
 
     int maxArgs() default -1;
 
     String help() default "";
 
+    boolean anyFlags() default false;
 }

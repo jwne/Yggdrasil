@@ -1,5 +1,6 @@
 package com.captainbern.common.internal;
 
+import com.captainbern.common.BukkitPlugin;
 import com.captainbern.common.ModuleLogger;
 import com.captainbern.common.server.CommonServer;
 
@@ -17,8 +18,7 @@ public class CBCommonLib {
         return INSTANCE;
     }
 
-    public CBCommonLib(CommonServer server) {
-
+    public CBCommonLib(CommonServer server, BukkitPlugin plugin) {
     }
 }
 

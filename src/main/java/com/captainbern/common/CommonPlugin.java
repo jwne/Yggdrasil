@@ -1,5 +1,9 @@
 package com.captainbern.common;
 
+import com.captainbern.common.command.CommandManager;
+import com.captainbern.common.command.DefaultCommandExecutor;
+import com.captainbern.common.command.ObjectInstantiator;
+import com.captainbern.common.debug.CommandDebug;
 import com.captainbern.common.internal.CBCommonLib;
 import com.captainbern.common.server.*;
 import org.bukkit.Bukkit;
@@ -41,5 +45,16 @@ public class CommonPlugin extends BukkitPlugin {
                 Bukkit.getPluginManager().disablePlugin(this);
             }
         }
+    }
+
+    @Override
+    public void onEnable() {
+        new CommonPlugin();
+        new CBCommonLib(COMMON_SERVER, this);
+
+        CommandManager commandManager = new CommandManager(this);
+        commandManager.setExecutor(new DefaultCommandExecutor(commandManager));
+        commandManager.register(CommandDebug.class);
+        commandManager.getCommandRegistrationService().setObjectInstantiator(new ObjectInstantiator());
     }
 }

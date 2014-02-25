@@ -1,0 +1,59 @@
+/*
+ * WorldEdit
+ * Copyright (C) 2010 sk89q <http://www.sk89q.com> and contributors
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
+*/
+
+This part of the library contains a slightly modified version of the command framework found in WorldEdit.
+It has been edited to only work with bukkit (and it's unofficial clones, WorldEdit's version
+is made to also serve compatibility with mods/clientside worldedit). Most of the classes found have been rewritten
+but some, like the CommandRegistrationService, are almost a plain copy of classes found in worldedit.
+(eg: CommandRegistrationService has been based/copied of CommandsManager)
+
+Because I rewrote some stuff, the usage is also different.
+
+To create a new CommandManager you have to do:
+
+CommandManager manager = new CommandManager(<plugin instance>); //You can also provide an external command executor.
+
+To register a command class:
+
+manager.register(<myCommandClass.class>);
+
+Then your onCommand method should look like this:
+
+@Override
+public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
+    try {
+        this.manager.execute(cmd.getName(), args, sender, sender);
+    } catch (CommandPermissionsException e) {
+        sender.sendMessage(ChatColor.RED + "You don't have permission.");
+    } catch (MissingNestedCommandException e) {
+        sender.sendMessage(ChatColor.RED + e.getUsage());
+    } catch (CommandUsageException e) {
+        sender.sendMessage(ChatColor.RED + e.getMessage());
+        sender.sendMessage(ChatColor.RED + e.getUsage());
+    } catch (WrappedCommandException e) {
+        if (e.getCause() instanceof NumberFormatException) {
+            sender.sendMessage(ChatColor.RED + "Number expected, string received instead.");
+        } else {
+            sender.sendMessage(ChatColor.RED + "An error has occurred. See console.");
+            e.printStackTrace();
+        }
+    } catch (CommandException e) {
+        sender.sendMessage(ChatColor.RED + e.getMessage());
+    }
+    return true;
+}
