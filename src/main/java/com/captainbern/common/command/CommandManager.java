@@ -79,7 +79,7 @@ public class CommandManager {
 
         for(Command command : commands) {
             List<String> permissions = null;
-            Method cmdMethod = this.commandRegistrationService.getMethods().get(null).get(command.aliases()[0]);
+            Method cmdMethod = this.commandRegistrationService.getMethods().get(null).get(command.name());
             Map<String, Method> childMethods = this.commandRegistrationService.getMethods().get(cmdMethod);
 
             if (cmdMethod != null && cmdMethod.isAnnotationPresent(CommandPermissions.class)) {
@@ -92,8 +92,7 @@ public class CommandManager {
                     }
                 }
             }
-
-            toRegister.add(new CommandInfo(command.usage(), command.description(), command.aliases(), commands, permissions == null ? null : permissions.toArray(new String[permissions.size()])));
+            toRegister.add(new CommandInfo(command.name(), command.usage(), command.description(), command.aliases(), commands, permissions == null ? null : permissions.toArray(new String[permissions.size()])));
         }
 
         register(toRegister);
@@ -119,8 +118,8 @@ public class CommandManager {
             return false;
         }
         for (CommandInfo command : commandList) {
-            DynamicPluginCommand cmd = new DynamicPluginCommand(command.getAliases(),
-                    command.getDesc(), "/" + command.getAliases()[0] + " " + command.getUsage(), executor, command.getRegisteredWith(), plugin);
+            DynamicPluginCommand cmd = new DynamicPluginCommand(command.getName(), command.getAliases(),
+                    command.getDesc(), "/" + command.getName() + " " + command.getUsage(), executor, command.getRegisteredWith(), plugin);
             cmd.setPermissions(command.getPermissions());
             commandMap.register(plugin.getDescription().getName(), cmd);
         }

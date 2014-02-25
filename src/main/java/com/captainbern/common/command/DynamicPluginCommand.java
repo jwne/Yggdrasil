@@ -32,8 +32,8 @@ public class DynamicPluginCommand extends Command implements PluginIdentifiableC
     protected final Plugin owningPlugin;
     protected String[] permissions = new String[0];
 
-    public DynamicPluginCommand(String[] aliases, String desc, String usage, CommandExecutor owner, Object registeredWith, Plugin plugin) {
-        super(aliases[0], desc, usage, Arrays.asList(aliases));
+    public DynamicPluginCommand(String name, String[] aliases, String desc, String usage, CommandExecutor owner, Object registeredWith, Plugin plugin) {
+        super(name, desc, usage, Arrays.asList(aliases));
         this.owner = owner;
         this.owningPlugin = plugin;
         this.registeredWith = registeredWith;

@@ -26,7 +26,7 @@ import java.lang.annotation.Target;
 @Target(ElementType.METHOD)
 public @interface NestedCommand {
 
-    Class[] body();
+    Class[] value();
 
     boolean executeBody() default false;
 }

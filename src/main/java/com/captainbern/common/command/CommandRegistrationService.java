@@ -96,7 +96,7 @@ public class CommandRegistrationService {
             }
 
             if (parent == null) {
-                final String commandName = cmd.aliases()[0];
+                final String commandName = cmd.name();
                 final String desc = cmd.description();
 
                 final String usage = cmd.usage();
@@ -121,7 +121,15 @@ public class CommandRegistrationService {
                         helpMessages.put(key, previous + "\n\n" + helpMessage);
                     }
                 }
+            }
+            registeredCommands.add(cmd);
 
+            if (method.isAnnotationPresent(NestedCommand.class)) {
+                NestedCommand nestedCmd = method.getAnnotation(NestedCommand.class);
+
+                for (Class<?> nestedCls : nestedCmd.value()) {
+                    registerMethods(nestedCls, method);
+                }
             }
         }
 

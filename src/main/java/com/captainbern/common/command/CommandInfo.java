@@ -18,16 +18,18 @@
 package com.captainbern.common.command;
 
 public class CommandInfo {
+    private final String name;
     private final String[] aliases;
     private final Object registeredWith;
     private final String usage, desc;
     private final String[] permissions;
 
-    public CommandInfo(String usage, String desc, String[] aliases, Object registeredWith) {
-        this(usage, desc, aliases, registeredWith, null);
+    public CommandInfo(String name, String usage, String desc, String[] aliases, Object registeredWith) {
+        this(name, usage, desc, aliases, registeredWith, null);
     }
 
-    public CommandInfo(String usage, String desc, String[] aliases, Object registeredWith, String[] permissions) {
+    public CommandInfo(String name, String usage, String desc, String[] aliases, Object registeredWith, String[] permissions) {
+        this.name = name;
         this.usage = usage;
         this.desc = desc;
         this.aliases = aliases;
@@ -40,7 +42,7 @@ public class CommandInfo {
     }
 
     public String getName() {
-        return aliases[0];
+        return name;
     }
 
     public String getUsage() {
