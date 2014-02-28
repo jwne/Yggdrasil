@@ -6,13 +6,15 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
+import java.util.Set;
+
 public abstract class RegionProtectionProvider<T> {
 
     protected Plugin plugin = null;
 
     abstract public String getName();
 
-    abstract public Class<T> getProviderClass();
+    abstract public T getProviderClass();
 
     abstract public boolean isHooked();
 
@@ -22,11 +24,11 @@ public abstract class RegionProtectionProvider<T> {
 
     abstract public boolean isInRegion(Entity entity);
 
-    abstract public Region getRegionOf(Location location);
+    abstract public Set<Region> getRegionOf(Location location);
 
-    abstract public Region getRegionOf(Block block);
+    abstract public Set<Region> getRegionOf(Block block);
 
-    abstract public Region getRegionOf(Entity entity);
+    abstract public Set<Region> getRegionOf(Entity entity);
 
     abstract public boolean hasRegions(Player player);
 
@@ -37,4 +39,8 @@ public abstract class RegionProtectionProvider<T> {
     abstract public boolean hasFlags(Region region, RegionFlag... flags);
 
     abstract public boolean hasFlag(Region region, RegionFlag flag);
+
+    protected abstract boolean canBuild(Player player, Location location);
+
+    protected abstract boolean canBuild(Player player, Block block);
 }

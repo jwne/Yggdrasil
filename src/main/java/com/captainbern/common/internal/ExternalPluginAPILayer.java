@@ -31,7 +31,7 @@ public class ExternalPluginAPILayer {
         /**
          * Register the region protection providers first
          */
-        registerRegionProtection(new RegionProtection_WorldGuard(), ServicePriority.Normal);
+        registerRegionProtection(new RegionProtection_WorldGuard(cbCommonLib), ServicePriority.Normal);
     }
 
     /**

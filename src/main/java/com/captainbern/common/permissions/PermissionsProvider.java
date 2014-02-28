@@ -8,7 +8,7 @@ public abstract class PermissionsProvider<T> {
 
     abstract public String getName();
 
-    abstract public Class<T> getProviderClass();
+    abstract public T getProviderClass();
 
     abstract public boolean isHooked();
 }
