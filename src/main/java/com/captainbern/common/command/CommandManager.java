@@ -22,7 +22,6 @@ import com.captainbern.common.command.core.CommandPermissions;
 import com.captainbern.common.internal.CBCommonLib;
 import com.captainbern.common.reflection.FieldAccessor;
 import com.captainbern.common.reflection.SafeField;
-import com.captainbern.common.utils.CommonUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandMap;
@@ -99,7 +98,7 @@ public class CommandManager {
     }
 
     protected CommandMap getCommandMap() {
-        CommandMap commandMap = CommonUtil.getCommandMap();
+        CommandMap commandMap = CBCommonLib.getCommonServer().getCommandMap();
         if(commandMap == null) {
             if(fallbackCommandmap != null) {
                 commandMap = fallbackCommandmap;

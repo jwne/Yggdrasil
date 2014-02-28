@@ -1,10 +1,15 @@
 package com.captainbern.common.server;
 
-import com.captainbern.common.CommonPlugin;
 import com.captainbern.common.internal.CBCommonLib;
+import com.captainbern.common.reflection.FieldAccessor;
+import com.captainbern.common.reflection.SafeField;
 import org.bukkit.Bukkit;
+import org.bukkit.command.CommandMap;
+import org.bukkit.plugin.SimplePluginManager;
 
 public class CraftBukkitServer implements CommonServer {
+
+    private static final FieldAccessor<CommandMap> COMMAND_MAP_FIELD_ACCESSOR = new SafeField<CommandMap>(SimplePluginManager.class, "commandMap");
 
     public String MC_VERSION;
 
@@ -18,18 +23,18 @@ public class CraftBukkitServer implements CommonServer {
     public boolean init() {
         String serverPath = Bukkit.getServer().getClass().getName();
 
-        if(!serverPath.startsWith(CommonPlugin.CRAFBUKKIT_ROOT)) {
+        if(!serverPath.startsWith(CBCommonLib.getCraftBukkitRoot())) {
             return false;
         }
 
         MC_VERSION = Bukkit.getServer().getClass().getPackage().getName().replace(".", ",").split(",")[3];
 
         if(MC_VERSION.isEmpty()) {
-            CRAFTBUKKIT_VERSIONED = CommonPlugin.CRAFBUKKIT_ROOT;
-            MINECRAFT_VERSIONED = CommonPlugin.MINECRAFT_ROOT;
+            CRAFTBUKKIT_VERSIONED = CBCommonLib.getCraftBukkitRoot();
+            MINECRAFT_VERSIONED = CBCommonLib.getNMSRoot();
         } else {
-            CRAFTBUKKIT_VERSIONED = CommonPlugin.CRAFBUKKIT_ROOT + "." + MC_VERSION;
-            MINECRAFT_VERSIONED = CommonPlugin.MINECRAFT_ROOT + "." + MC_VERSION;
+            CRAFTBUKKIT_VERSIONED = CBCommonLib.getCraftBukkitRoot() + "." + MC_VERSION;
+            MINECRAFT_VERSIONED = CBCommonLib.getNMSRoot() + "." + MC_VERSION;
         }
 
       MC_VERSION_NUMERIC = Integer.valueOf(MC_VERSION.replaceAll("[^0-9]", ""));
@@ -79,6 +84,11 @@ public class CraftBukkitServer implements CommonServer {
 
     @Override
     public boolean isCompatible() {
-        return (CommonPlugin.SUPPORTED_VERSION_NUMERIC == MC_VERSION_NUMERIC) ? true : false;
+        return (CBCommonLib.getSupportedVersionNumeric() == MC_VERSION_NUMERIC) ? true : false;
+    }
+
+    @Override
+    public CommandMap getCommandMap() {
+        return COMMAND_MAP_FIELD_ACCESSOR.get(Bukkit.getPluginManager());
     }
 }

@@ -1,5 +1,7 @@
 package com.captainbern.common.server;
 
+import org.bukkit.command.CommandMap;
+
 public interface CommonServer {
 
     public boolean init();
@@ -20,4 +22,5 @@ public interface CommonServer {
 
     public boolean isCompatible();
 
+    public CommandMap getCommandMap();
 }
