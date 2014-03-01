@@ -3,8 +3,10 @@ package com.captainbern.common.internal;
 import com.captainbern.common.economy.EconomyProvider;
 import com.captainbern.common.permissions.PermissionsProvider;
 import com.captainbern.common.protection.block.BlockProtectionProvider;
+import com.captainbern.common.protection.block.plugins.BlockProtectionProvider_LWC;
 import com.captainbern.common.protection.region.RegionProtectionProvider;
-import com.captainbern.common.protection.region.plugins.RegionProtection_WorldGuard;
+import com.captainbern.common.protection.region.plugins.RegionProtectionProvider_Factions;
+import com.captainbern.common.protection.region.plugins.RegionProtectionProvider_WorldGuard;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.ServicePriority;
 import org.bukkit.plugin.ServicesManager;
@@ -17,6 +19,10 @@ public class ExternalPluginAPILayer {
     public ExternalPluginAPILayer(CBCommonLib cbCommonLib) {
         this.cbCommonLib = cbCommonLib;
         this.servicesManager = Bukkit.getServicesManager();
+
+        loadEconomy();
+        loadPermissions();
+        loadProtection();
     }
 
     public void loadEconomy() {
@@ -31,7 +37,14 @@ public class ExternalPluginAPILayer {
         /**
          * Register the region protection providers first
          */
-        registerRegionProtection(new RegionProtection_WorldGuard(cbCommonLib), ServicePriority.Normal);
+        registerRegionProtection(new RegionProtectionProvider_WorldGuard(cbCommonLib), ServicePriority.Normal);
+
+        registerRegionProtection(new RegionProtectionProvider_Factions(cbCommonLib), ServicePriority.Normal);
+
+        /**
+         * Register the block protection providers
+         */
+        registerBlockProtection(new BlockProtectionProvider_LWC(cbCommonLib), ServicePriority.Normal);
     }
 
     /**

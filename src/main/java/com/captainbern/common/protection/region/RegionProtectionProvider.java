@@ -4,13 +4,10 @@ import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
-import org.bukkit.plugin.Plugin;
 
 import java.util.Set;
 
 public abstract class RegionProtectionProvider<T> {
-
-    protected Plugin plugin = null;
 
     abstract public String getName();
 
@@ -40,7 +37,7 @@ public abstract class RegionProtectionProvider<T> {
 
     abstract public boolean hasFlag(Region region, RegionFlag flag);
 
-    protected abstract boolean canBuild(Player player, Location location);
+    abstract protected boolean canBuild(Player player, Location location);
 
-    protected abstract boolean canBuild(Player player, Block block);
+    abstract protected boolean canBuild(Player player, Block block);
 }

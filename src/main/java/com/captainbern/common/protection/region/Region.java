@@ -30,5 +30,5 @@ public abstract class Region<T> {
 
     abstract public Set<String> getMembers();
 
-    abstract public T getHandlerType();
+    abstract public T getHandler();
 }

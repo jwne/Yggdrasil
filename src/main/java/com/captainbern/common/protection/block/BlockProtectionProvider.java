@@ -2,24 +2,21 @@ package com.captainbern.common.protection.block;
 
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
-import org.bukkit.plugin.Plugin;
 
 public abstract class BlockProtectionProvider<T> {
 
-    protected Plugin plugin = null;
-
     abstract public String getName();
 
-    abstract public Class<T> getProviderClass();
+    abstract public T getProviderClass();
 
-    abstract boolean isHooked();
+    abstract public boolean isHooked();
 
-    abstract boolean isProtected(Block block);
+    abstract public boolean isProtected(Block block);
 
-    abstract String getOwner(Block block);
+    abstract public String getOwner(Block block);
 
-    abstract boolean setOwner(Block block, Player owner);
+    abstract public boolean setOwner(Block block, Player owner);
 
-    abstract boolean removeProtection(Block block);
+    abstract public boolean removeProtection(Block block);
 
 }

@@ -23,21 +23,20 @@ import org.bukkit.event.server.PluginEnableEvent;
 import java.util.HashSet;
 import java.util.Set;
 
-public class RegionProtection_WorldGuard extends RegionProtectionProvider<WorldGuardPlugin> {
+public class RegionProtectionProvider_WorldGuard extends RegionProtectionProvider<WorldGuardPlugin> {
 
     private CBCommonLib cbCommonLib;
     private WorldGuardPlugin worldGuardPlugin;
     protected boolean hooked;
 
-    public RegionProtection_WorldGuard(CBCommonLib cbCommonLib) {
+    public RegionProtectionProvider_WorldGuard(CBCommonLib cbCommonLib) {
         this.cbCommonLib = cbCommonLib;
 
-        if(worldGuardPlugin == null) {
-            worldGuardPlugin = (WorldGuardPlugin) Bukkit.getPluginManager().getPlugin(getName());
+        if(this.worldGuardPlugin == null) {
+            this.worldGuardPlugin = (WorldGuardPlugin) Bukkit.getPluginManager().getPlugin(getName());
 
-            if(worldGuardPlugin != null && worldGuardPlugin.isEnabled()) {
-                // we're hooked yay
-                hooked = true;
+            if(this.worldGuardPlugin != null && this.worldGuardPlugin.isEnabled()) {
+                this.hooked = true;
                 CBCommonLib.LOGGER.info("[" + getName() + "] Successfully hooked");
             }
         }
@@ -49,9 +48,10 @@ public class RegionProtection_WorldGuard extends RegionProtectionProvider<WorldG
                 if((worldGuardPlugin == null) && (event.getPlugin().getName().equalsIgnoreCase(getName()))) {
                     try {
                         worldGuardPlugin = (WorldGuardPlugin) event.getPlugin();
+                        hooked = true;
                         CBCommonLib.LOGGER.info("[" + getName() + "] Successfully hooked");
                     } catch (Exception e) {
-                        throw new PluginHookException(plugin);
+                        throw new PluginHookException(event.getPlugin());
                     }
                 }
             }
@@ -60,6 +60,7 @@ public class RegionProtection_WorldGuard extends RegionProtectionProvider<WorldG
             protected void onDisable(PluginDisableEvent event) {
                 if((worldGuardPlugin != null) && (event.getPlugin().getName().equalsIgnoreCase(getName()))) {
                     worldGuardPlugin = null;
+                    hooked = false;
                     CBCommonLib.LOGGER.info("[" + getName() + "] Successfully unhooked");
                 }
             }
@@ -177,9 +178,15 @@ public class RegionProtection_WorldGuard extends RegionProtectionProvider<WorldG
      */
     private class WorldGuardRegion extends Region<ProtectedRegion> {
 
-        private ProtectedRegion handle;
+        protected final ProtectedRegion handle;
         protected final World world;
 
+        /**
+         * We need to save the world because there's almost no way to get a world back out of
+         * a ProtectedRegion
+         * @param handle
+         * @param world
+         */
         public WorldGuardRegion(ProtectedRegion handle, World world) {
             this.handle = handle;
             this.world = world;
@@ -254,7 +261,7 @@ public class RegionProtection_WorldGuard extends RegionProtectionProvider<WorldG
         }
 
         @Override
-        public ProtectedRegion getHandlerType() {
+        public ProtectedRegion getHandler() {
             return handle;
         }
     }
