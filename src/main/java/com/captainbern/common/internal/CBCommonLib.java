@@ -16,6 +16,10 @@ import java.util.logging.FileHandler;
 
 public class CBCommonLib extends BukkitPlugin {
 
+    public static final String VERSION = "0.0.1";
+
+    public static final String CODENAME = "Megatron";
+
     /**
      * Several loggers
      */
@@ -53,11 +57,6 @@ public class CBCommonLib extends BukkitPlugin {
      * The server brand
      */
     private static CommonServer commonServer;
-
-    /**
-     * The version
-     */
-    private static String version;
 
 
     /**
@@ -117,11 +116,18 @@ public class CBCommonLib extends BukkitPlugin {
         getCommandManager().getCommandRegistrationService().setObjectInstantiator(new ObjectInstantiator());
         registerCommand(CommandDebug.class);
 
+        LOGGER.info("Version: " + getLibVersion());
+        LOGGER.info("Codename: " + getCodename());
 
         long done = System.currentTimeMillis();
         LOGGER.info("Enabled in: " + (done - start) + "ms");
     }
 
+
+    /**
+     * Returns a CommonServer object which contains several operations to define the server brand, version etc...
+     * @return
+     */
     public static CommonServer getCommonServer() {
         if(commonServer != null) {
             return commonServer;
@@ -165,6 +171,14 @@ public class CBCommonLib extends BukkitPlugin {
 
     public static final int getSupportedVersionNumeric() {
         return SUPPORTED_VERSION_NUMERIC;
+    }
+
+    public static final String getLibVersion() {
+        return VERSION;
+    }
+
+    public static final String getCodename() {
+        return CODENAME;
     }
 }
 

@@ -9,15 +9,15 @@ import java.util.logging.LogRecord;
 
 public class CBCommonLibFormatter extends Formatter {
 
+    private final String line = "======================================================================";
+
     private DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss z");
 
     @Override
     public String format(LogRecord record) {
-        StringBuffer buffer = new StringBuffer();
-        buffer.append(getDate(record.getMillis()));
-        buffer.append(" ");
-        buffer.append("[" + record.getLevel() + "] ");
-        buffer.append(formatMessage(record) + "\n");
+        StringBuilder buffer = new StringBuilder();
+        buffer.append(getDate(record.getMillis()))
+                .append(" ").append("[").append(record.getLevel()).append("] ").append(formatMessage(record)).append("\r\n");
         return buffer.toString();
     }
 
@@ -27,11 +27,11 @@ public class CBCommonLibFormatter extends Formatter {
 
     @Override
     public String getHead(Handler handler) {
-        return "Log report from: " + getDate(System.currentTimeMillis()) + "\n";
+        return line + "\r\nLog report from: " + getDate(System.currentTimeMillis()) + "\r\n" + line + "\r\n";
     }
 
     @Override
     public String getTail(Handler handler) {
-        return "\n";
+        return line + "\\n";
     }
 }
