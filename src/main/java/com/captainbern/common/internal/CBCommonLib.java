@@ -4,12 +4,15 @@ import com.captainbern.common.BukkitPlugin;
 import com.captainbern.common.ModuleLogger;
 import com.captainbern.common.command.ObjectInstantiator;
 import com.captainbern.common.debug.CommandDebug;
+import com.captainbern.common.logging.CBCommonLibFormatter;
+import com.captainbern.common.protocol.PacketType;
 import com.captainbern.common.server.*;
-import com.captainbern.common.threading.TPSMonitorTask;
 import org.bukkit.Bukkit;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.FileHandler;
 
 public class CBCommonLib extends BukkitPlugin {
 
@@ -18,6 +21,7 @@ public class CBCommonLib extends BukkitPlugin {
      */
     public static final ModuleLogger LOGGER = new ModuleLogger("CBCommonLib");
     public static final ModuleLogger LOGGER_REFLECTION = LOGGER.getModule("Reflection");
+    public static final ModuleLogger LOGGER_PROTOCOL = LOGGER.getModule("Protocol");
 
     /**
      * The supported minecraft version (packaged)
@@ -71,6 +75,29 @@ public class CBCommonLib extends BukkitPlugin {
     @Override
     public void load() {
         long start = System.currentTimeMillis();
+
+        try {
+
+            File logsFolder = new File(getDataFolder().getAbsolutePath() + File.separator + "logs");
+            if (!logsFolder.exists()) {
+                logsFolder.mkdirs();
+            }
+            File logFile = new File(getDataFolder().getAbsolutePath() + File.separator + "logs" + File.separator + "lib.log");
+            if (logFile.exists()) {
+                if (logFile.length() > 5242880L) {
+                    logFile.delete();
+                }
+            }
+
+            FileHandler fileHandler = new FileHandler(getDataFolder() + File.separator + "logs" + File.separator + "lib.log", true);
+            CBCommonLibFormatter formatter = new CBCommonLibFormatter();
+            fileHandler.setFormatter(formatter);
+
+            LOGGER.addHandler(fileHandler);
+
+        } catch (Exception e) {
+            LOGGER.warning("Failed to initialize the logger correctly! (Logging still works but won't be saved to a file!)");
+        }
 
         instance = this;
         commonServer = getCommonServer();
