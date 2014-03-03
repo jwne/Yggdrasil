@@ -9,7 +9,7 @@ import org.bukkit.event.server.PluginDisableEvent;
 import org.bukkit.event.server.PluginEnableEvent;
 import org.bukkit.plugin.Plugin;
 
-public class PluginDependencyProvider<T extends Plugin> {
+public abstract class PluginDependencyProvider<T extends Plugin> {
 
     private T dependency;
     protected boolean hooked;

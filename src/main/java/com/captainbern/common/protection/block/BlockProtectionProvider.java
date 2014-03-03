@@ -4,7 +4,6 @@ import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 
 public abstract class BlockProtectionProvider<T> {
-
     abstract public String getName();
 
     abstract public T getProviderClass();

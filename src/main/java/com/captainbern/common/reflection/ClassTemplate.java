@@ -6,16 +6,13 @@ import com.captainbern.common.utils.CommonUtil;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Modifier;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 import java.util.logging.Level;
 
 public class ClassTemplate<T> {
 
     private Class<T> type;
-    private List<SafeField<?>> fields;
+    private List<SafeField> fields;
 
     public ClassTemplate(){ }
 
@@ -27,17 +24,17 @@ public class ClassTemplate<T> {
         this.type = clazz;
     }
 
-    public List<SafeField<?>> getFields() {
+    public List<SafeField> getFields() {
         if (type == null) {
             return Collections.emptyList();
         }
         if (fields == null) {
-            fields = populateFieldList(new ArrayList<SafeField<?>>(), type);
+            fields = populateFieldList(new ArrayList<SafeField>(), type);
         }
         return Collections.unmodifiableList(fields);
     }
 
-    private static List<SafeField<?>> populateFieldList(List<SafeField<?>> fields, Class<?> clazz) {
+    private static List<SafeField> populateFieldList(List<SafeField> fields, Class<?> clazz) {
         if (clazz == null) {
             return fields;
         }
