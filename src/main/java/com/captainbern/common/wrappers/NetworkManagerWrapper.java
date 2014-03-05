@@ -2,6 +2,7 @@ package com.captainbern.common.wrappers;
 
 import com.captainbern.common.reflection.NMSClassTemplate;
 import com.captainbern.common.reflection.refs.NetworkManagerRef;
+import com.captainbern.common.reflection.refs.PlayerConnectionRef;
 import net.minecraft.util.io.netty.channel.Channel;
 import org.bukkit.entity.Player;
 
@@ -17,6 +18,8 @@ public class NetworkManagerWrapper extends AbstractWrapper {
 
         this.player = player;
         this.playerConnectionWrapper = playerConnectionWrapper;
+
+        setHandle(PlayerConnectionRef.NETWORK_MANAGER.get(playerConnectionWrapper.getHandle()));
     }
 
     public Player getPlayer() {

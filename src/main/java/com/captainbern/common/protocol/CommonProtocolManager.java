@@ -1,5 +1,6 @@
 package com.captainbern.common.protocol;
 
+import com.captainbern.common.internal.CBCommonLib;
 import com.captainbern.common.protocol.event.PacketAdapter;
 import com.captainbern.common.protocol.event.PacketEvent;
 import com.captainbern.common.protocol.event.PacketListener;
@@ -12,6 +13,10 @@ public class CommonProtocolManager extends ProtocolManager {
 
     private static final PacketListenerMap packetListenerMap = new PacketListenerMap();
 
+    public CommonProtocolManager(final CBCommonLib cbCommonLib) {
+        new PlayerInjector(cbCommonLib);
+    }
+
     @Override
     public void registerPacketListener(PacketListener packetListener, Plugin plugin) {
         packetListenerMap.addListener(packetListener, packetListener.getReceivePackets());
@@ -20,7 +25,7 @@ public class CommonProtocolManager extends ProtocolManager {
 
     @Override
     public void registerPacketAdapter(PacketAdapter adapter, Plugin plugin) {
-
+        registerPacketListener(adapter, plugin);
     }
 
     @Override

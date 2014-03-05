@@ -5,7 +5,9 @@ import com.captainbern.common.ModuleLogger;
 import com.captainbern.common.command.ObjectInstantiator;
 import com.captainbern.common.debug.CommandDebug;
 import com.captainbern.common.logging.CBCommonLibFormatter;
+import com.captainbern.common.protocol.CommonProtocolManager;
 import com.captainbern.common.protocol.PacketType;
+import com.captainbern.common.protocol.ProtocolManager;
 import com.captainbern.common.server.*;
 import org.bukkit.Bukkit;
 
@@ -57,6 +59,11 @@ public class CBCommonLib extends BukkitPlugin {
      * The server brand
      */
     private static CommonServer commonServer;
+
+    /**
+     * The ProtocolManager
+     */
+    private static CommonProtocolManager protocolManager;
 
 
     /**
@@ -116,6 +123,9 @@ public class CBCommonLib extends BukkitPlugin {
         getCommandManager().getCommandRegistrationService().setObjectInstantiator(new ObjectInstantiator());
         registerCommand(CommandDebug.class);
 
+        // protocol manager
+        protocolManager = new CommonProtocolManager(this);
+
         LOGGER.info("Version: " + getLibVersion());
         LOGGER.info("Codename: " + getCodename());
 
@@ -157,28 +167,35 @@ public class CBCommonLib extends BukkitPlugin {
 
     }
 
-    public static final String getCraftBukkitRoot() {
+    public static String getCraftBukkitRoot() {
         return CRAFBUKKIT_ROOT;
     }
 
-    public static final String getNMSRoot() {
+    public static String getNMSRoot() {
         return MINECRAFT_ROOT;
     }
 
-    public static final String getSupportedVersion() {
+    public static String getSupportedVersion() {
         return SUPPORTED_VERSION;
     }
 
-    public static final int getSupportedVersionNumeric() {
+    public static int getSupportedVersionNumeric() {
         return SUPPORTED_VERSION_NUMERIC;
     }
 
-    public static final String getLibVersion() {
+    public static String getLibVersion() {
         return VERSION;
     }
 
-    public static final String getCodename() {
+    public static String getCodename() {
         return CODENAME;
+    }
+
+    public static ProtocolManager getProtocolManager() {
+        if(protocolManager == null) {
+            throw new RuntimeException("ProtocolManager is null!");
+        }
+        return protocolManager;
     }
 }
 
