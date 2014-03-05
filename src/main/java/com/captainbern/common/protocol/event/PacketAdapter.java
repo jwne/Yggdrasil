@@ -20,6 +20,14 @@ public abstract class PacketAdapter implements PacketListener {
         this.types = new HashSet<PacketType>(Arrays.asList(packetTypes));
         this.sendList = new PacketList(packetTypes);
         this.receiveList =  new PacketList(packetTypes);
+
+        for(PacketType type : packetTypes) {
+            if(type.isClient()) {
+                this.receiveList.add(type);
+            } else if(type.isServer()) {
+                this.sendList.add(type);
+            }
+        }
     }
 
     public Set<PacketType> getpacketTypes() {
