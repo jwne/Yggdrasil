@@ -9,18 +9,24 @@ public class PacketList {
     private Set<PacketType> packetTypes;
 
     public PacketList() {
-        this.packetTypes = new HashSet<PacketType>();
+        this(null);
     }
 
     public PacketList(PacketType... types) {
-        this();
+        this.packetTypes = new HashSet<PacketType>();
         this.packetTypes.addAll(Arrays.asList(types));
     }
 
-    public void add(PacketType packetType) {
-         if(!this.packetTypes.contains(packetType)) {
-             this.packetTypes.add(packetType);
-         }
+    public void add(PacketType... packetTypes) {
+        for(PacketType packetType : packetTypes) {
+            if(!this.packetTypes.contains(packetType)) {
+                this.packetTypes.add(packetType);
+            }
+        }
+    }
+
+    public void remove(PacketType... packetType) {
+        this.packetTypes.removeAll(packetTypes);
     }
 
     public void fill() {

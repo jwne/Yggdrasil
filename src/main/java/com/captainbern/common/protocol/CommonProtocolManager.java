@@ -4,6 +4,7 @@ import com.captainbern.common.internal.CBCommonLib;
 import com.captainbern.common.protocol.event.PacketAdapter;
 import com.captainbern.common.protocol.event.PacketEvent;
 import com.captainbern.common.protocol.event.PacketListener;
+import com.google.common.collect.ImmutableList;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
@@ -11,10 +12,12 @@ import java.util.Collection;
 
 public class CommonProtocolManager extends ProtocolManager {
 
+    private static PlayerInjector playerInjector;
+
     private static final PacketListenerMap packetListenerMap = new PacketListenerMap();
 
     public CommonProtocolManager(final CBCommonLib cbCommonLib) {
-        new PlayerInjector(cbCommonLib);
+        playerInjector = new PlayerInjector(cbCommonLib);
     }
 
     @Override
@@ -24,28 +27,13 @@ public class CommonProtocolManager extends ProtocolManager {
     }
 
     @Override
-    public void registerPacketAdapter(PacketAdapter adapter, Plugin plugin) {
-        registerPacketListener(adapter, plugin);
-    }
-
-    @Override
     public void removePacketListener(PacketListener packetListener) {
 
     }
 
     @Override
-    public void removePacketAdapter(PacketAdapter packetAdapter) {
+    public void removePacketListeners(Plugin plugin) {
 
-    }
-
-    @Override
-    public Collection<PacketListener> getPacketListenersFor(Plugin plugin) {
-        return null;
-    }
-
-    @Override
-    public Collection<PacketAdapter> getPacketAdaptersFor(Plugin plugin) {
-        return null;
     }
 
     @Override
@@ -58,5 +46,19 @@ public class CommonProtocolManager extends ProtocolManager {
     @Override
     public void receivePacket(Packet packet, Player player) {
 
+    }
+
+    @Override
+    public ImmutableList<PacketListener> getPacketListeners() {
+        return null;
+    }
+
+    @Override
+    public boolean isClosed() {
+        return !playerInjector.isOpen();
+    }
+
+    public PlayerInjector getPlayerInjector() {
+        return playerInjector;
     }
 }
