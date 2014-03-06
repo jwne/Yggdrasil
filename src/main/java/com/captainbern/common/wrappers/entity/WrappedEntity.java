@@ -2,16 +2,17 @@ package com.captainbern.common.wrappers.entity;
 
 import com.captainbern.common.reflection.refs.entity.EntityRef;
 import com.captainbern.common.reflection.refs.entity.craft.CraftEntityRef;
+import com.captainbern.common.wrappers.WrappedDataWatcher;
 import org.bukkit.entity.Entity;
 
 import java.util.Random;
 
-public class EntityWrapper {
+public class WrappedEntity {
 
     protected final Entity BUKKIT_HANDLE;
     protected final Object NMS_HANDLE;
 
-    public EntityWrapper(Entity entity) {
+    public WrappedEntity(Entity entity) {
         this.BUKKIT_HANDLE = entity;
         this.NMS_HANDLE = CraftEntityRef.getHandle(entity);
     }
@@ -88,7 +89,7 @@ public class EntityWrapper {
         return EntityRef.RANDOM.get(getNMSHandle());
     }
 
-    public Object getDataWatcher() {
-        return EntityRef.DATAWATCHER.get(getNMSHandle());
+    public WrappedDataWatcher getDataWatcher() {
+        return new WrappedDataWatcher(EntityRef.DATAWATCHER.get(getNMSHandle()));
     }
 }

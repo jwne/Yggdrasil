@@ -1,6 +1,6 @@
 package com.captainbern.common.protocol;
 
-import com.captainbern.common.reflection.refs.EnumProtocolRef;
+import com.captainbern.common.reflection.refs.network.EnumProtocolRef;
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
 import com.google.common.collect.Lists;

@@ -1,20 +1,19 @@
 package com.captainbern.common.wrappers;
 
-import com.captainbern.common.reflection.NMSClassTemplate;
-import com.captainbern.common.reflection.refs.NetworkManagerRef;
-import com.captainbern.common.reflection.refs.PlayerConnectionRef;
+import com.captainbern.common.reflection.refs.network.NetworkManagerRef;
+import com.captainbern.common.reflection.refs.network.PlayerConnectionRef;
 import net.minecraft.util.io.netty.channel.Channel;
 import org.bukkit.entity.Player;
 
 import java.net.SocketAddress;
 
-public class NetworkManagerWrapper extends AbstractWrapper {
+public class WrappedNetworkManager extends AbstractWrapper {
 
     private final Player player;
-    private final PlayerConnectionWrapper playerConnectionWrapper;
+    private final WrappedPlayerConnection playerConnectionWrapper;
 
-    public NetworkManagerWrapper(Player player, PlayerConnectionWrapper playerConnectionWrapper) {
-        super(NMSClassTemplate.create("NetworkManager").getType());
+    public WrappedNetworkManager(Player player, WrappedPlayerConnection playerConnectionWrapper) {
+        super(NetworkManagerRef.TEMPLATE.getType());
 
         this.player = player;
         this.playerConnectionWrapper = playerConnectionWrapper;
@@ -26,7 +25,7 @@ public class NetworkManagerWrapper extends AbstractWrapper {
         return this.player;
     }
 
-    public PlayerConnectionWrapper getPlayerConnection() {
+    public WrappedPlayerConnection getPlayerConnection() {
         return this.playerConnectionWrapper;
     }
 

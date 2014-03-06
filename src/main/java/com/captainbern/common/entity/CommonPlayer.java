@@ -3,9 +3,9 @@ package com.captainbern.common.entity;
 import com.captainbern.common.chat.ChatMessage;
 import com.captainbern.common.collection.PlayerHashMap;
 import com.captainbern.common.protocol.Packet;
-import com.captainbern.common.reflection.refs.CraftPlayerRef;
-import com.captainbern.common.wrappers.NetworkManagerWrapper;
-import com.captainbern.common.wrappers.PlayerConnectionWrapper;
+import com.captainbern.common.reflection.refs.entity.craft.CraftEntityRef;
+import com.captainbern.common.wrappers.WrappedNetworkManager;
+import com.captainbern.common.wrappers.WrappedPlayerConnection;
 import net.minecraft.util.io.netty.channel.Channel;
 import org.bukkit.entity.Player;
 
@@ -24,12 +24,12 @@ public class CommonPlayer {
 
     private final Player player;
 
-    private PlayerConnectionWrapper playerConnectionWrapper;
+    private WrappedPlayerConnection playerConnectionWrapper;
 
     private CommonPlayer(Player player) {
         this.player = player;
-        this.playerConnectionWrapper = new PlayerConnectionWrapper(player);
-        this.nms_handle = CraftPlayerRef.GET_HANDLE.invoke(player);
+        this.playerConnectionWrapper = new WrappedPlayerConnection(player);
+        this.nms_handle = CraftEntityRef.GET_HANDLE.invoke(player);
     }
 
     public Player asBukkitPlayer() {
@@ -60,11 +60,11 @@ public class CommonPlayer {
 
     }
 
-    public PlayerConnectionWrapper getPlayerConnection() {
+    public WrappedPlayerConnection getPlayerConnection() {
         return this.playerConnectionWrapper;
     }
 
-    public NetworkManagerWrapper getNetworkManager() {
+    public WrappedNetworkManager getNetworkManager() {
         return getPlayerConnection().getNetworkManagerWrapper();
     }
 

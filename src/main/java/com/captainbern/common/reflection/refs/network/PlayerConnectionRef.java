@@ -1,4 +1,4 @@
-package com.captainbern.common.reflection.refs;
+package com.captainbern.common.reflection.refs.network;
 
 import com.captainbern.common.reflection.ClassTemplate;
 import com.captainbern.common.reflection.FieldAccessor;
