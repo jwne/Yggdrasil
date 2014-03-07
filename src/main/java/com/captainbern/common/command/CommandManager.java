@@ -35,7 +35,6 @@ import java.util.*;
 public class CommandManager {
 
     protected static final FieldAccessor<Map<String, org.bukkit.command.Command>> KNOWN_COMMANDS = new SafeField<Map<String, org.bukkit.command.Command>>(SimpleCommandMap.class, "knownCommands");
-    protected static final FieldAccessor<Set<String>> ALIASES = new SafeField<Set<String>>(SimpleCommandMap.class, "aliases");
 
     static {
         Bukkit.getServer().getHelpMap().registerHelpTopicFactory(DynamicPluginCommand.class, new DynamicPluginCommandHelpTopic.Factory());
@@ -129,8 +128,7 @@ public class CommandManager {
         CommandMap commandMap = getCommandMap();
         List<String> toRemove = new ArrayList<String>();
         Map<String, org.bukkit.command.Command> knownCommands = KNOWN_COMMANDS.get(commandMap);
-        Set<String> aliases = ALIASES.get(commandMap);
-        if (knownCommands == null || aliases == null) {
+        if (knownCommands == null) {
             return false;
         }
         for (Iterator<org.bukkit.command.Command> i = knownCommands.values().iterator(); i.hasNext();) {
@@ -140,7 +138,6 @@ public class CommandManager {
                 for (String alias : cmd.getAliases()) {
                     org.bukkit.command.Command aliasCmd = knownCommands.get(alias);
                     if (cmd.equals(aliasCmd)) {
-                        aliases.remove(alias);
                         toRemove.add(alias);
                     }
                 }
