@@ -64,7 +64,7 @@ public class PlayerInjector {
             @Override
             public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
                 try {
-                    System.out.print("Received packet: " + msg.getClass().getSimpleName());
+                    //System.out.print("Received packet: " + msg.getClass().getSimpleName());
                     //msg = onPacketInAsync(player, msg);
                 } catch (Exception e) {
                     CBCommonLib.LOGGER_PROTOCOL.warning("Error in packet receive async.");
@@ -78,7 +78,7 @@ public class PlayerInjector {
             @Override
             public void write(ChannelHandlerContext ctx, Object msg, ChannelPromise promise) throws Exception {
                 try {
-                    System.out.print("Send packet: " + msg.getClass().getSimpleName());
+                    //System.out.print("Send packet: " + msg.getClass().getSimpleName());
                     // msg = onPacketOutAsync(player, msg);
                 } catch (Exception e) {
                     CBCommonLib.LOGGER_PROTOCOL.warning("Error in packet send async.");

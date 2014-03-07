@@ -6,7 +6,6 @@ import com.captainbern.common.command.ObjectInstantiator;
 import com.captainbern.common.debug.CommandDebug;
 import com.captainbern.common.logging.CBCommonLibFormatter;
 import com.captainbern.common.protocol.CommonProtocolManager;
-import com.captainbern.common.protocol.PacketType;
 import com.captainbern.common.protocol.ProtocolManager;
 import com.captainbern.common.server.*;
 import org.bukkit.Bukkit;
