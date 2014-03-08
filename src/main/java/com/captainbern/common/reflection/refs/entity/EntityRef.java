@@ -14,7 +14,7 @@ public class EntityRef {
     // static fields
     public static final FieldAccessor<Integer> ENTITY_COUNT = TEMPLATE.getField("entityCount");
 
-    // non-static fields
+    // non-static fields                         https://forums.bukkit.org/threads/projectile-nosuchmethoderror.228322/
     public static final FieldAccessor<Integer> ID = TEMPLATE.getField("id");
     public static final FieldAccessor<Double> k_FIELD = TEMPLATE.getField("k");   // Need to find out what this is
     public static final FieldAccessor<Double> l_FIELD = TEMPLATE.getField("l");   // ^ idem
