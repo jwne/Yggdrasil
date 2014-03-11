@@ -8,8 +8,12 @@ public class Packet extends AbstractWrapper {
     protected transient Object packetHandle;
 
     public Packet(PacketType packetType) {
-        super(null);
+        super(packetType.getPacketClass());
         this.packetType = packetType;
+    }
+
+    public Packet(Object packet, PacketType type) {
+        super(packet.getClass());
     }
 
     // TODO: add several utilities

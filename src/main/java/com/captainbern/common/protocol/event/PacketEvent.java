@@ -8,6 +8,7 @@ public class PacketEvent {
 
     private Object packetHandle;
     private PacketType packetType;
+    private boolean cancelled;
 
     private Packet packet;
 
@@ -39,5 +40,13 @@ public class PacketEvent {
 
     public void setPacket(Packet packet) {
         this.packet = packet;
+    }
+
+    public boolean isCancelled() {
+        return this.cancelled;
+    }
+
+    public void setCancelled(boolean bool) {
+        this.cancelled = bool;
     }
 }

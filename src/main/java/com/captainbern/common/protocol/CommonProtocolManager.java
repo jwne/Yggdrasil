@@ -22,8 +22,7 @@ public class CommonProtocolManager extends ProtocolManager {
 
     @Override
     public void registerPacketListener(PacketListener packetListener, Plugin plugin) {
-        packetListenerMap.addListener(packetListener, packetListener.getReceivePackets());
-        packetListenerMap.addListener(packetListener, packetListener.getSendPackets());
+
     }
 
     @Override
