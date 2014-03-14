@@ -1,0 +1,2 @@
+
+InjectionManager manager = new InjectionManager(cbcommonlib);
