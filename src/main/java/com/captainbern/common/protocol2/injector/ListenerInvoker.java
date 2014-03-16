@@ -5,6 +5,7 @@ import com.captainbern.common.protocol2.PacketType;
 import com.captainbern.common.protocol2.event.PacketEvent;
 import com.captainbern.common.protocol2.event.PacketListener;
 import com.captainbern.common.protocol2.event.PacketMonitor;
+import com.captainbern.common.protocol2.event.PacketTypeSet;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
 
@@ -44,9 +45,19 @@ public class ListenerInvoker {
      * @param listener
      */
     public void addListener(PacketListener listener) {
+        if(listener == null)
+            throw new IllegalArgumentException("Listener can't be NULL!");
+
         // Don't want to register a listener twice
         if(!hasListener(listener))
             return;
+
+        PacketTypeSet sending = listener.getSendingWhiteList();
+        PacketTypeSet receiving = listener.getReceivingWhiteList();
+
+        if(sending.size() > 0 || receiving.size() > 0) {
+
+        }
     }
 
     /**
