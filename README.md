@@ -8,7 +8,7 @@ What needs to be done:
 * PermissionsProvider
 * EconomyProvider
 * Block- and RegionProtectionProvider need some more plugins (if any of them fits)
-* Maths and cubois/trigmath utils
+* Maths and cuboid/trigmath utils
 * WorldUtil, which extends ChunkUtil which extends BlockUtil. Will allow different operations on worlds/blocks
 * NBTUtil, set custom nbt tags on entities and items
 * NBTLib needs some converters to vanilla (I will add this later)
