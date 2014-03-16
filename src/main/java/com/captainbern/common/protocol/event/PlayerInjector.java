@@ -1,7 +1,8 @@
-package com.captainbern.common.protocol;
+package com.captainbern.common.protocol.event;
 
 import com.captainbern.common.entity.CommonPlayer;
 import com.captainbern.common.internal.CBCommonLib;
+import com.captainbern.common.protocol.event.PacketEvent;
 import net.minecraft.util.io.netty.channel.ChannelDuplexHandler;
 import net.minecraft.util.io.netty.channel.ChannelHandlerContext;
 import net.minecraft.util.io.netty.channel.ChannelPromise;
@@ -64,8 +65,14 @@ public class PlayerInjector {
             @Override
             public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
                 try {
-                    //System.out.print("Received packet: " + msg.getClass().getSimpleName());
-                    //msg = onPacketInAsync(player, msg);
+
+                    PacketEvent event = CBCommonLib.getProtocolManager().handleReceived(player, msg);
+                    if(event.isCancelled()) {
+                        msg = null;
+                    } else {
+                        msg = event.getPacket().getHandle();
+                    }
+
                 } catch (Exception e) {
                     CBCommonLib.LOGGER_PROTOCOL.warning("Error in packet receive async.");
                 }
@@ -78,10 +85,17 @@ public class PlayerInjector {
             @Override
             public void write(ChannelHandlerContext ctx, Object msg, ChannelPromise promise) throws Exception {
                 try {
-                    //System.out.print("Send packet: " + msg.getClass().getSimpleName());
-                    // msg = onPacketOutAsync(player, msg);
+                    PacketEvent event = CBCommonLib.getProtocolManager().handleSend(player, msg);
+
+                    if(event.isCancelled()) {
+                        msg = null;
+                    } else {
+                        msg = event.getPacket().getHandle();
+                    }
+
                 } catch (Exception e) {
                     CBCommonLib.LOGGER_PROTOCOL.warning("Error in packet send async.");
+                    e.printStackTrace();
                 }
 
                 if (msg != null) {

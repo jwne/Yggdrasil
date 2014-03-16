@@ -1,12 +1,10 @@
 package com.captainbern.common.protocol.event;
 
-import com.captainbern.common.protocol.Packet;
 import com.captainbern.common.protocol.PacketType;
 import org.bukkit.entity.Player;
 
 public class PacketEvent {
 
-    private Object packetHandle;
     private PacketType packetType;
     private boolean cancelled;
 
@@ -14,12 +12,11 @@ public class PacketEvent {
 
     private Player player;
 
-    public PacketEvent(Object packetHandle, Packet packet, Player player) {
-        this.packetHandle = packetHandle;
+    public PacketEvent(Packet packet, Player player) {
         this.packet = packet;
         this.player = player;
 
-        this.packetType = PacketType.getTypeFrom(packetHandle.getClass());
+        this.packetType = PacketType.getTypeFrom(packet.getHandle().getClass());
     }
 
     public Packet getPacket() {
@@ -32,14 +29,6 @@ public class PacketEvent {
 
     public PacketType getPacketType() {
         return this.packetType;
-    }
-
-    public Object getPacketHandle() {
-        return this.packetHandle;
-    }
-
-    public void setPacket(Packet packet) {
-        this.packet = packet;
     }
 
     public boolean isCancelled() {

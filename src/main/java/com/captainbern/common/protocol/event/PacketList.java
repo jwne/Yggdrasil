@@ -1,4 +1,6 @@
-package com.captainbern.common.protocol;
+package com.captainbern.common.protocol.event;
+
+import com.captainbern.common.protocol.PacketType;
 
 import java.util.Arrays;
 import java.util.HashSet;

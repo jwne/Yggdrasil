@@ -1,8 +1,7 @@
-package com.captainbern.common.protocol2.injector.netty;
+package com.captainbern.common.protocol2.injector;
 
 import com.captainbern.common.collection.PlayerHashMap;
 import org.bukkit.entity.Player;
-import org.bukkit.plugin.Plugin;
 
 /**
  * The class that will go about registering our custom ChannelHandler in the channel of the given player.
@@ -13,15 +12,7 @@ public class InjectionManager {
 
     private volatile boolean closed;
 
-    private final Plugin plugin;
-
-    public InjectionManager(Plugin plugin) {
-        this.plugin = plugin;
-    }
-
-    public Plugin getPlugin() {
-        return this.plugin;
-    }
+    public InjectionManager() {}
 
     public boolean isClosed() {
         return this.closed;
@@ -30,23 +21,21 @@ public class InjectionManager {
     /**
      * Registers an injector for the given player
      * @param player
-     * @param listener
+     * @param injector
      * @return
      */
-    public ChannelPipelineInjector registerInjector(Player player, ChannelListener listener) {
+    public ChannelPipelineInjector registerInjector(Player player, ChannelInjector injector) {
         if(closed) {
-            return new NullChannelPipelineInjector(player);
+            return null;
         }
 
         ChannelPipelineInjector pipelineInjector = lookup.get(player);
         if(pipelineInjector == null) {
-            pipelineInjector = new ChannelPipelineInjectorHandler(player, listener, this);
+            pipelineInjector = new ChannelPipelineInjectorHandler(player, this, injector);
         }
 
-        if(pipelineInjector != null) {
-            lookup.remove(player);
-            pipelineInjector.setPlayer(player);
-        }
+        lookup.remove(player);
+        pipelineInjector.setPlayer(player);
 
         return lookup.put(player, pipelineInjector);
     }

@@ -15,13 +15,6 @@ public class SimpleCache<K, V> extends Cache<K, V> {
     }
 
     @Override
-    public Cache<K, V> clone() {
-        SimpleCache<K, V> clone = new SimpleCache<K, V>();
-        clone.cacheAll(this.cache);
-        return clone;
-    }
-
-    @Override
     public boolean containsKey(Object key) {
         return cache.containsKey(key);
     }

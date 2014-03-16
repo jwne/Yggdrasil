@@ -1,6 +1,5 @@
 package com.captainbern.common.protocol.event;
 
-import com.captainbern.common.protocol.PacketList;
 import org.bukkit.plugin.Plugin;
 
 public interface PacketListener {

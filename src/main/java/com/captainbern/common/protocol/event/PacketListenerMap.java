@@ -1,8 +1,6 @@
-package com.captainbern.common.protocol;
+package com.captainbern.common.protocol.event;
 
-import com.captainbern.common.protocol.event.PacketEvent;
-import com.captainbern.common.protocol.event.PacketListener;
-import com.captainbern.common.protocol.event.PacketMonitor;
+import com.captainbern.common.protocol.PacketType;
 import com.google.common.collect.Maps;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
@@ -84,6 +82,36 @@ public class PacketListenerMap {
         }
     }
 
+    public void removePacketListener(PacketListener listener) {
+        if (listener == null) {
+            return;
+        }
+
+        for (Set<PacketListener> listenerList : this.packetTypeToListener.values()) {
+            listenerList.remove(listener);
+        }
+
+        for (Plugin plugin : this.pluginToListener.keySet().toArray(new Plugin[0])) {
+            Set<PacketListener> list = this.pluginToListener.get(plugin);
+            if (list != null && list.remove(listener) && list.isEmpty()) {
+                this.pluginToListener.remove(plugin);
+            }
+        }
+    }
+
+    public void removePacketListeners(Plugin plugin) {
+
+        // Listeners
+        Set<PacketListener> packetListeners = this.pluginToListener.get(plugin);
+        if(packetListeners != null) {
+            for(PacketListener packetListener : packetListeners) {
+                removePacketListener(packetListener);
+            }
+        }
+
+        // Monitors
+    }
+
     public PacketEvent handlePacketSend(Player player, Object packet) {
         if(player == null || packet == null) {
             return null;
@@ -93,7 +121,7 @@ public class PacketListenerMap {
         Set<PacketListener> listeners = this.packetTypeToListener.get(type);
 
         Packet wrappedPacket = new Packet(packet, type);
-        PacketEvent event = new PacketEvent(packet, wrappedPacket, player);
+        PacketEvent event = new PacketEvent(wrappedPacket, player);
 
         if(listeners != null) {
             for(PacketListener listener : listeners) {
@@ -105,7 +133,7 @@ public class PacketListenerMap {
         return event;
     }
 
-    public PacketEvent handlePacketRecieve(Player player, Object packet) {
+    public PacketEvent handlePacketReceived(Player player, Object packet) {
         if(player == null || packet == null) {
             return null;
         }
@@ -114,7 +142,7 @@ public class PacketListenerMap {
         Set<PacketListener> listeners = this.packetTypeToListener.get(type);
 
         Packet wrappedPacket = new Packet(packet, type);
-        PacketEvent event = new PacketEvent(packet, wrappedPacket, player);
+        PacketEvent event = new PacketEvent(wrappedPacket, player);
 
         if(listeners != null) {
             for(PacketListener listener : listeners) {
@@ -134,8 +162,12 @@ public class PacketListenerMap {
         return this.packetTypeToListener.get(packetType);
     }
 
-    public Collection<Set<PacketListener>> values() {
-        return this.packetTypeToListener.values();
+    public Set<PacketListener> values() {
+        Set<PacketListener> packetListeners = new HashSet<PacketListener>();
+        for(Set<PacketListener> listenerSet : this.pluginToListener.values()) {
+            packetListeners.addAll(listenerSet);
+        }
+        return packetListeners;
     }
 
     public Set<PacketType> keySet() {

@@ -16,11 +16,6 @@ public enum OS {
      * Linux
      * (Most of them need some "look at", since I'm not sure about the names)
      */
-    DEBIAN("Debian"),
-    FEDORA("Fedora"),
-    UBUNTU("Ubuntu"),
-    ELEMENTARY_OS("Elementary OS"),
-    LINUX_MINT("Linux mint"),
     LINUX("Linux"),
 
     /**
@@ -41,7 +36,7 @@ public enum OS {
     }
 
     public boolean isLinuxBased() {
-        return ordinal() >= DEBIAN.ordinal() && ordinal() <= LINUX.ordinal();
+        return ordinal() >= LINUX.ordinal() && ordinal() <= LINUX.ordinal();
     }
 
     public boolean isUnixBased() {

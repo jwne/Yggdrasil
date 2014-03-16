@@ -1,25 +1,33 @@
 package com.captainbern.common.protocol2;
 
-import com.captainbern.common.protocol.event.PacketListener;
-import com.captainbern.common.protocol2.injector.netty.ChannelPipelineInjector;
+import com.captainbern.common.protocol2.event.PacketListener;
+import com.captainbern.common.protocol2.event.PacketMonitor;
+import com.captainbern.common.protocol2.injector.InjectionManager;
+import org.bukkit.plugin.Plugin;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.Set;
 
-public class ProtocolManager {
+public interface ProtocolManager {
 
-    private static ProtocolManager INSTANCE;
+    public void registerPacketListener(PacketListener listener);
 
-    private static volatile List<ChannelPipelineInjector> injectorList = new ArrayList<ChannelPipelineInjector>();
+    public void registerPacketMonitor(PacketMonitor monitor);
 
-    private static volatile List<ChannelPipelineInjector> injectors = Collections.synchronizedList(injectorList);
+    public Set<PacketListener> getPacketListenersFor(PacketType type);
 
-    public ProtocolManager() {
-        INSTANCE = this;
-    }
+    public Set<PacketMonitor> getPacketMonitorsFor(PacketType packetType);
 
-    public void registerListener(PacketListener listener) {
+    public Set<PacketListener> getPacketListenersOf(Plugin plugin);
 
-    }
+    public Set<PacketListener> getPacketMonitorsOf(Plugin plugin);
+
+    public boolean removePacketMonitor(PacketMonitor monitor);
+
+    public boolean removePacketListener(PacketListener listener);
+
+    public boolean removePacketListenersOf(Plugin plugin);
+
+    public boolean removePacketMonitorsOf(Plugin plugin);
+
+    public InjectionManager getInjectionManager();
 }

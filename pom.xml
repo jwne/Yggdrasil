@@ -13,6 +13,9 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <minecraft.version>1.7.2</minecraft.version>
+        <cb_package>v1_7_R1</cb_package>
+        <main.class>com.captainbern.common.internal.CBCommonLib</main.class>
     </properties>
 
     <repositories>
@@ -83,7 +86,7 @@
             <artifactId>Factions</artifactId>
             <version>LATEST</version>
             <scope>system</scope>
-            <systemPath>${project.basedir}/lib/Factions.jar</systemPath>
+            <systemPath>${basedir}/lib/Factions.jar</systemPath>
             <optional>true</optional>
         </dependency>
 
@@ -97,7 +100,7 @@
             <artifactId>MCore</artifactId>
             <version>LATEST</version>
             <scope>system</scope>
-            <systemPath>${project.basedir}/lib/mcore.jar</systemPath>
+            <systemPath>${basedir}/lib/mcore.jar</systemPath>
             <optional>true</optional>
         </dependency>
 
@@ -107,20 +110,20 @@
             <artifactId>LWC</artifactId>
             <version>LATEST</version>
             <scope>system</scope>
-            <systemPath>${project.basedir}/lib/LWC.jar</systemPath>
+            <systemPath>${basedir}/lib/LWC.jar</systemPath>
             <optional>true</optional>
         </dependency>
 
     </dependencies>
 
-    <!--build-->
+    <!-- Build -->
 
     <build>
         <defaultGoal>clean install</defaultGoal>
-        <finalName>CBCommonLib ${project.version}</finalName>
+        <finalName>CBCommonLib ${version}</finalName>
         <sourceDirectory>${basedir}/src/main/java</sourceDirectory>
 
-        <!--resources, yey-->
+        <!-- Resources -->
 
         <resources>
             <resource>
@@ -138,7 +141,40 @@
 
         <plugins>
 
+            <!-- Compiler plugin -->
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>2.4</version>
+                <configuration>
+                    <source>1.6</source>
+                    <target>1.6</target>
+                    <showWarnings>true</showWarnings>
+                    <showDeprecation>false</showDeprecation>
+                </configuration>
+            </plugin>
+
+            <!-- Jar plugin -->
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>2.1</version>
+                <configuration>
+                    <archive>
+                        <manifestEntries>
+                            <Main-Class>com.captainbern.common.internal.CBCommonLib</Main-Class>
+                            <Plugin-Version>${project.version}</Plugin-Version>
+                            <Minecraft-Version>${minecraft.version}</Minecraft-Version>
+                            <NMS-Package>${cb_package}</NMS-Package>
+                        </manifestEntries>
+                    </archive>
+                </configuration>
+            </plugin>
+
             <!-- JRebel -->
+
             <plugin>
                 <groupId>org.zeroturnaround</groupId>
                 <artifactId>jrebel-maven-plugin</artifactId>
@@ -153,7 +189,7 @@
                 </executions>
             </plugin>
 
-            <!--clean up-->
+            <!-- Clean up -->
 
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -181,20 +217,6 @@
                         </configuration>
                     </execution>
                 </executions>
-            </plugin>
-
-            <!-- Compiler plugin -->
-
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>2.4</version>
-                <configuration>
-                    <source>1.6</source>
-                    <target>1.6</target>
-                    <showWarnings>true</showWarnings>
-                    <showDeprecation>false</showDeprecation>
-                </configuration>
             </plugin>
         </plugins>
     </build>

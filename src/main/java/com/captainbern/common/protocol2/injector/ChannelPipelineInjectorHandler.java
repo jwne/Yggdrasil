@@ -1,14 +1,19 @@
-package com.captainbern.common.protocol2.injector.netty;
+package com.captainbern.common.protocol2.injector;
 
+import com.captainbern.common.protocol2.Protocol;
+import com.captainbern.common.protocol2.event.PacketEvent;
 import com.captainbern.common.reflection.refs.entity.EntityPlayerRef;
 import com.captainbern.common.reflection.refs.entity.craft.CraftEntityRef;
 import com.captainbern.common.reflection.refs.network.NetworkManagerRef;
 import com.captainbern.common.reflection.refs.network.PlayerConnectionRef;
+
 import com.google.common.base.Preconditions;
+
 import net.minecraft.util.io.netty.channel.Channel;
 import net.minecraft.util.io.netty.channel.ChannelDuplexHandler;
 import net.minecraft.util.io.netty.channel.ChannelHandlerContext;
 import net.minecraft.util.io.netty.channel.ChannelPromise;
+
 import org.bukkit.entity.Player;
 
 public class ChannelPipelineInjectorHandler extends ChannelDuplexHandler implements ChannelPipelineInjector {
@@ -19,13 +24,11 @@ public class ChannelPipelineInjectorHandler extends ChannelDuplexHandler impleme
     // Is the custom handler injected in the pipeline or not?
     private boolean injected;
 
+    // Is this injector open or closed?
     private boolean closed;
 
     // Is this player exempted?
     private boolean exempted;
-
-    // The ChannelListener, handles the PacketListeners
-    private ChannelListener channelListener;
 
     // TODO: make sure to init those in the constructor
     private Object nmsHandle;
@@ -34,19 +37,22 @@ public class ChannelPipelineInjectorHandler extends ChannelDuplexHandler impleme
     private Object networkManager;
     private Channel channel;
 
-    public ChannelPipelineInjectorHandler(Player player, ChannelListener listener, InjectionManager manager) {
+    private ListenerInvoker invoker;
+
+    private ChannelInjector listener;
+
+    public ChannelPipelineInjectorHandler(Player player, InjectionManager manager, ChannelInjector listener) {
         Preconditions.checkNotNull(player, "Player can't be NULL!");
-        Preconditions.checkNotNull(listener, "ChannelListener can't be NULL!");
         Preconditions.checkNotNull(manager, "InjectionManager can't be NULL!");
+        Preconditions.checkNotNull(listener, "The ChannelInjector can't be NULL!");
 
         this.player = player;
+        this.listener = listener;
 
         /**
          * Channel/network stuff
          */
-        this.channel = getChannel();  // Hehe
-
-        this.channelListener = listener;
+        this.channel = getChannel();
     }
 
     @Override
@@ -144,26 +150,72 @@ public class ChannelPipelineInjectorHandler extends ChannelDuplexHandler impleme
         this.exempted = bool;
     }
 
+    @Override
+    public Protocol getProtocolPhase() {
+        return Protocol.fromVanilla(NetworkManagerRef.PROTOCOL_PHASE.get(getNetworkManager()));
+    }
+
     private String getHandlerName() {
-        return "PipelineInjector@CBCommonLib";
+        return toString();
     }
 
     // Override the channel read/write methods so we can capture packets
     @Override
     public void write(ChannelHandlerContext ctx, Object msg, ChannelPromise promise) throws Exception {
-        if(this.isExempted())
+        if(this.isExempted())  // Plugins can "exempt" a player. This means that this player won't be effected by any protocol changes.
             super.write(ctx, msg, promise);
+
+        PacketEvent event = handleSend(this, msg);
+
+        // Houston we have failed...
+        if(event == null)
+            super.write(ctx, msg, promise);
+
+        // Some listener cancelled the event
+        if(event.isCancelled())
+            return;
+
+        // Nope the event isn't cancelled but we need to update the packetObject
+        msg = event.getPacket().getHandle();
+
+        // Yay, everything went well, let's write the packet to the client
+        super.write(ctx, msg, promise);
     }
 
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
         if(this.isExempted())
             super.channelRead(ctx, msg);
+
+        PacketEvent event = handleReceive(this, msg);
+
+        // Houston, we have a problem... Again
+        if(event == null)
+            super.channelRead(ctx, msg);
+
+        // Did anyone request a cancel?
+        if(event.isCancelled())
+            return;
+
+        // Seems like everything went well
+        msg = event.getPacket().getHandle();
+
+        // Everything went well
+        super.channelRead(ctx, msg);
     }
 
-    private ChannelListener getChannelListener() {
-        if(channelListener == null)
-            throw new IllegalStateException("ChannelListener is NULL! Well, this is embarrassing...");
-        return this.channelListener;
+    //@Override
+    public PacketEvent handleReceive(ChannelPipelineInjector injector, Object packet) {
+        return this.listener.onPacketReceive(injector, packet);
+    }
+
+    //@Override
+    public PacketEvent handleSend(ChannelPipelineInjector injector, Object packet) {
+        return this.listener.onPacketSend(injector, packet);
+    }
+
+    @Override
+    public String toString() {
+        return "PacketHandler{player=" + this.player.getName() + "}";
     }
 }

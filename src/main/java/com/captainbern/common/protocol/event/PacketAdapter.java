@@ -1,6 +1,5 @@
 package com.captainbern.common.protocol.event;
 
-import com.captainbern.common.protocol.PacketList;
 import com.captainbern.common.protocol.PacketType;
 import org.bukkit.plugin.Plugin;
 
@@ -20,15 +19,13 @@ public abstract class PacketAdapter implements PacketListener {
         this.types = new HashSet<PacketType>(Arrays.asList(packetTypes));
         this.sendList = new PacketList(packetTypes);
         this.receiveList =  new PacketList(packetTypes);
-
-        for(PacketType type : packetTypes) {
-            if(type.isClient()) {
-                this.receiveList.add(type);
-            } else if(type.isServer()) {
-                this.sendList.add(type);
-            }
-        }
     }
+
+    @Override
+    public void onPacketSending(PacketEvent event) {}
+
+    @Override
+    public void onPacketReceiving(PacketEvent event) {}
 
     public Set<PacketType> getpacketTypes() {
         return this.types;

@@ -2,7 +2,7 @@ package com.captainbern.common.entity;
 
 import com.captainbern.common.chat.ChatMessage;
 import com.captainbern.common.collection.PlayerHashMap;
-import com.captainbern.common.protocol.Packet;
+import com.captainbern.common.protocol.event.Packet;
 import com.captainbern.common.reflection.refs.entity.craft.CraftEntityRef;
 import com.captainbern.common.wrappers.WrappedNetworkManager;
 import com.captainbern.common.wrappers.WrappedPlayerConnection;

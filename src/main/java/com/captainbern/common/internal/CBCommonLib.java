@@ -5,9 +5,13 @@ import com.captainbern.common.ModuleLogger;
 import com.captainbern.common.command.ObjectInstantiator;
 import com.captainbern.common.debug.CommandDebug;
 import com.captainbern.common.logging.CBCommonLibFormatter;
-import com.captainbern.common.protocol.CommonProtocolManager;
-import com.captainbern.common.protocol.ProtocolManager;
+import com.captainbern.common.protocol.event.CommonProtocolManager;
+import com.captainbern.common.protocol.PacketType;
+import com.captainbern.common.protocol.event.ProtocolManager;
+import com.captainbern.common.protocol.event.PacketAdapter;
+import com.captainbern.common.protocol.event.PacketEvent;
 import com.captainbern.common.server.*;
+import com.captainbern.common.threading.ThreadManager;
 import org.bukkit.Bukkit;
 
 import java.io.File;
@@ -63,6 +67,11 @@ public class CBCommonLib extends BukkitPlugin {
      * The ProtocolManager
      */
     private static CommonProtocolManager protocolManager;
+
+    /**
+     * The ThreadManager
+     */
+    private static ThreadManager threadManager;
 
 
     /**
@@ -121,6 +130,10 @@ public class CBCommonLib extends BukkitPlugin {
         // register commands
         getCommandManager().getCommandRegistrationService().setObjectInstantiator(new ObjectInstantiator());
         registerCommand(CommandDebug.class);
+
+        // Thread manager
+        threadManager = new ThreadManager();
+        ThreadManager.registerPrimaryThread();
 
         // protocol manager
         protocolManager = new CommonProtocolManager(this);

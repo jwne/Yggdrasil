@@ -10,8 +10,6 @@ public abstract class Cache<K, V> {
 
     public abstract void clear();
 
-    public abstract Cache<K, V> clone();
-
     public abstract boolean containsKey(Object key);
 
     public abstract boolean containsValue(Object value);
@@ -36,5 +34,9 @@ public abstract class Cache<K, V> {
 
     public static <K, V> SimpleCache<K, V> createSimpleCache() {
         return new SimpleCache<K, V>();
+    }
+
+    public static <K, V> TimedCache<K, V> createTimedCache(long time) {
+        return new TimedCache<K, V>(time);
     }
 }

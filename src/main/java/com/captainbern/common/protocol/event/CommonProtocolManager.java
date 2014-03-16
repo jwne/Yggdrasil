@@ -1,14 +1,9 @@
-package com.captainbern.common.protocol;
+package com.captainbern.common.protocol.event;
 
 import com.captainbern.common.internal.CBCommonLib;
-import com.captainbern.common.protocol.event.PacketAdapter;
-import com.captainbern.common.protocol.event.PacketEvent;
-import com.captainbern.common.protocol.event.PacketListener;
 import com.google.common.collect.ImmutableList;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
-
-import java.util.Collection;
 
 public class CommonProtocolManager extends ProtocolManager {
 
@@ -21,35 +16,33 @@ public class CommonProtocolManager extends ProtocolManager {
     }
 
     @Override
-    public void registerPacketListener(PacketListener packetListener, Plugin plugin) {
-
+    public void registerPacketListener(PacketListener packetListener) {
+        packetListenerMap.addPacketListener(packetListener);
     }
 
     @Override
     public void removePacketListener(PacketListener packetListener) {
-
+        packetListenerMap.removePacketListener(packetListener);
     }
 
     @Override
     public void removePacketListeners(Plugin plugin) {
-
+        packetListenerMap.removePacketListeners(plugin);
     }
 
     @Override
-    public void sendPacket(Packet packet, Player player) {
-        for(PacketListener listener : packetListenerMap.getListenersFor(packet.packetType)) {
-            listener.onPacketSending(new PacketEvent(packet.packetHandle, packet, player));
-        }
+    public PacketEvent handleSend(Player player, Object packet) {
+        return packetListenerMap.handlePacketSend(player, packet);
     }
 
     @Override
-    public void receivePacket(Packet packet, Player player) {
-
+    public PacketEvent handleReceived(Player player, Object packet) {
+        return packetListenerMap.handlePacketReceived(player, packet);
     }
 
     @Override
     public ImmutableList<PacketListener> getPacketListeners() {
-        return null;
+        return new ImmutableList.Builder<PacketListener>().addAll(packetListenerMap.values()).build();
     }
 
     @Override
