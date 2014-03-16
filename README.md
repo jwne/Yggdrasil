@@ -15,7 +15,7 @@ What needs to be done:
 * CommonPlayer needs to be finished, will also create a CommonEntity class etc.
 * More Refs
 * Wrappers
-* Chat needs to be done. This will allow one to send fancy messages, making use of the new cha features
+* Chat needs to be done. This will allow one to send fancy messages, making use of the new chat features
 * Protocol library needs to be finished
 * Handy Thread utils
 * Database Utils, MYSQL to SQLite etc. Also easy creation of a database and adding/removing data etc
