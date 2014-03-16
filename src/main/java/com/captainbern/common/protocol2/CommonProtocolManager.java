@@ -28,15 +28,13 @@ public class CommonProtocolManager implements ProtocolManager {
 
     private ChannelInjector injector;
 
-    private boolean closed;
-
     private static volatile List<ChannelPipelineInjector> injectorList = new ArrayList<ChannelPipelineInjector>();
     private static volatile List<ChannelPipelineInjector> injectors = Collections.synchronizedList(injectorList);
 
     public CommonProtocolManager(CBCommonLib cbCommonLib) {
         INSTANCE = this;
 
-        injectionManager = new InjectionManager();
+        injectionManager = new InjectionManager(cbCommonLib);
 
         this.injector = new ChannelInjectorHandler(injectionManager);
 

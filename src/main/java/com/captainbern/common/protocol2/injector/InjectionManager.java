@@ -1,6 +1,7 @@
 package com.captainbern.common.protocol2.injector;
 
 import com.captainbern.common.collection.PlayerHashMap;
+import com.captainbern.common.internal.CBCommonLib;
 import org.bukkit.entity.Player;
 
 /**
@@ -12,10 +13,21 @@ public class InjectionManager {
 
     private volatile boolean closed;
 
-    public InjectionManager() {}
+    private static ListenerInvoker invoker;
+
+    public InjectionManager(CBCommonLib cbCommonLib) {
+        invoker = new ListenerInvoker(cbCommonLib, this);
+    }
 
     public boolean isClosed() {
         return this.closed;
+    }
+
+    public ListenerInvoker getInvoker() {
+        if(invoker == null)
+            throw new RuntimeException("Well, this is embarrassing... The ListenerInvoker appears to be NULL!");
+
+        return invoker;
     }
 
     /**

@@ -37,7 +37,7 @@ public class ChannelPipelineInjectorHandler extends ChannelDuplexHandler impleme
     private Object networkManager;
     private Channel channel;
 
-    private ListenerInvoker invoker;
+    private InjectionManager injectionManager;
 
     private ChannelInjector listener;
 
@@ -47,6 +47,7 @@ public class ChannelPipelineInjectorHandler extends ChannelDuplexHandler impleme
         Preconditions.checkNotNull(listener, "The ChannelInjector can't be NULL!");
 
         this.player = player;
+        this.injectionManager = manager;
         this.listener = listener;
 
         /**
@@ -159,6 +160,13 @@ public class ChannelPipelineInjectorHandler extends ChannelDuplexHandler impleme
         return toString();
     }
 
+    private InjectionManager getInjectionManager() {
+        if(this.injectionManager == null)
+            throw new RuntimeException("The InjectionManager is NULL!");
+
+        return this.injectionManager;
+    }
+
     // Override the channel read/write methods so we can capture packets
     @Override
     public void write(ChannelHandlerContext ctx, Object msg, ChannelPromise promise) throws Exception {
@@ -206,12 +214,12 @@ public class ChannelPipelineInjectorHandler extends ChannelDuplexHandler impleme
 
     //@Override
     public PacketEvent handleReceive(ChannelPipelineInjector injector, Object packet) {
-        return this.listener.onPacketReceive(injector, packet);
+        return this.getInjectionManager().getInvoker().handleReceive(injector, packet);
     }
 
     //@Override
     public PacketEvent handleSend(ChannelPipelineInjector injector, Object packet) {
-        return this.listener.onPacketSend(injector, packet);
+        return this.getInjectionManager().getInvoker().handleSend(injector, packet);
     }
 
     @Override
