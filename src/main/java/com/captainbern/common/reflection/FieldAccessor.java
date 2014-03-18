@@ -1,6 +1,10 @@
 package com.captainbern.common.reflection;
 
+import java.lang.reflect.Field;
+
 public interface FieldAccessor<T> {
+
+    public Field getField();
 
     public ClassTemplate getType();
 
@@ -14,6 +18,6 @@ public interface FieldAccessor<T> {
 
     boolean isReadOnly();
 
-    public void setReadOnly(Object target, boolean value);
+    public void setFinalStatic(T newValue);
 
 }

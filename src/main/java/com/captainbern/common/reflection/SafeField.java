@@ -38,6 +38,13 @@ public class SafeField<T> implements FieldAccessor<T> {
     }
 
     @Override
+    public Field getField() {
+        if(this.field == null)
+            throw new RuntimeException("Field is NULL!");
+        return this.field;
+    }
+
+    @Override
     public ClassTemplate getType() {
         return ClassTemplate.create(field.getClass());
     }
@@ -53,6 +60,7 @@ public class SafeField<T> implements FieldAccessor<T> {
             return true;
         } catch (IllegalAccessException e) {
             CBCommonLib.LOGGER_REFLECTION.warning("Failed to set field: " + toString());
+            e.printStackTrace();
         }
         return false;
     }
@@ -115,15 +123,16 @@ public class SafeField<T> implements FieldAccessor<T> {
     }
 
     @Override
-    public void setReadOnly(Object target, boolean value) {
-        if(value)
-            set(target, "modifiers", field.getModifiers() | Modifier.FINAL);
-        else
-            set(target, "modifiers", field.getModifiers() & ~Modifier.FINAL);
+    public void setFinalStatic(T newValue) {
+        FieldAccessor<Integer> modifierField = new SafeField<Integer>(Field.class, "modifiers");
+
+        modifierField.set(getField(), getField().getModifiers() & ~Modifier.FINAL);
+
+        set(null, newValue);
     }
 
-    public static <T> T get(Class<?> clazz, String fieldname) {
-        return new SafeField<T>(clazz, fieldname).get(null);
+    public static <T> T get(Class<?> clazz, String fieldName) {
+        return new SafeField<T>(clazz, fieldName).get(null);
     }
 
     public static <T> T get(Object instance, String fieldName){

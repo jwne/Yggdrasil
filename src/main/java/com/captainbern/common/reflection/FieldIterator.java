@@ -1,4 +1,4 @@
-package com.captainbern.common.utils;
+package com.captainbern.common.reflection;
 
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
