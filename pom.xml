@@ -15,7 +15,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <minecraft-version-numeric>1.7.2</minecraft-version-numeric>
         <minecraft-package-versionized>v1_7_R1</minecraft-package-versionized>
-        <main-class>com.captainbern.common.internal.Yggdrasil</main-class>
+        <main-class>com.captainbern.yggdrasil.internal.Yggdrasil</main-class>
         <codename>Megatron</codename>
     </properties>
 
@@ -165,7 +165,7 @@
                 <configuration>
                     <archive>
                         <manifestEntries>
-                            <Main-Class>com.captainbern.common.internal.Yggdrasil</Main-Class>
+                            <Main-Class>com.captainbern.yggdrasil.internal.Yggdrasil</Main-Class>
                             <Plugin-Version>${project.version}</Plugin-Version>
                             <Minecraft-Version>${minecraft-version-numeric}</Minecraft-Version>
                             <NMS-Package>${minecraft-package-versionized}</NMS-Package>
