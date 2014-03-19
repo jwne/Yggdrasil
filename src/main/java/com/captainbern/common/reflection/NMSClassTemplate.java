@@ -1,6 +1,6 @@
 package com.captainbern.common.reflection;
 
-import com.captainbern.common.internal.CBCommonLib;
+import com.captainbern.common.internal.Yggdrasil;
 import com.captainbern.common.utils.CommonUtil;
 
 import java.util.logging.Level;
@@ -18,7 +18,7 @@ public class NMSClassTemplate extends ClassTemplate {
     protected void setNMSClass(String name){
         Class clazz = CommonUtil.getNMSClass(name);
         if(clazz == null){
-            CBCommonLib.LOGGER_REFLECTION.log(Level.WARNING, "Failed to find a valid class for: {0}!", name);
+            Yggdrasil.LOGGER_REFLECTION.log(Level.WARNING, "Failed to find a valid class for: {0}!", name);
         }
         setClass(clazz);
     }

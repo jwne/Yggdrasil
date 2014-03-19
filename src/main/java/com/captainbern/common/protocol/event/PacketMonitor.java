@@ -4,13 +4,13 @@ import org.bukkit.plugin.Plugin;
 
 public interface PacketMonitor {
 
-    public void onPacketSending(PacketEvent event);
+    public PacketTypeSet getSendingWhiteList();
 
-    public void onPacketReceiving(PacketEvent event);
+    public PacketTypeSet getReceivingWhiteList();
 
     public Plugin getPlugin();
 
-    public PacketList getSendPackets();
+    public void onPacketSend(PacketEvent event);
 
-    public PacketList getReceivePackets();
+    public void onPacketReceive(PacketEvent event);
 }

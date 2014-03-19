@@ -1,6 +1,8 @@
 package com.captainbern.common.nbt;
 
 import com.captainbern.common.nbt.exception.NBTException;
+import com.captainbern.common.reflection.FieldAccessor;
+import com.captainbern.common.reflection.refs.nbt.NBTRef;
 
 import java.io.DataInput;
 import java.io.DataOutput;
@@ -302,6 +304,22 @@ public class NBTTagCompound extends NBTBase {
     @Override
     public int hashCode() {
         return super.hashCode() ^ this.VALUES.hashCode();
+    }
+
+    @Override
+    public Object convertToVanilla() {
+        Object nmsHandle = NBTRef.NBT_TAG_COMPOUND.newInstance();
+        FieldAccessor<Map> dataMap = NBTRef.NBT_TAG_COMPOUND.getField("map");
+
+        Map nmsData = new HashMap();
+
+        for(String key : this.getKeys()) {
+            nmsData.put(key, this.get(key).convertToVanilla());
+        }
+
+        dataMap.set(nmsHandle, nmsData);
+
+        return nmsHandle;
     }
 
     @Override

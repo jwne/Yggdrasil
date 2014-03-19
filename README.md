@@ -1,7 +1,9 @@
-CBCommonLib
+Yggdrasil (aka CBCommonLib)
 ===========
 
-CaptainBernCommonLib - A Library with several tools I use in some of my plugins.
+Yggdrasil - also known as "the tree of life" or "tree of knowledge" in the
+Nordic mythology - is a library which contains several utils and tools that can be used
+across multiple plugins.
 
 What needs to be done:
 ======================

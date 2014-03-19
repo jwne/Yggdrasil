@@ -22,7 +22,7 @@ import com.captainbern.common.command.core.CommandAlias;
 import com.captainbern.common.command.core.CommandPermissions;
 import com.captainbern.common.command.core.NestedCommand;
 import com.captainbern.common.command.exceptions.*;
-import com.captainbern.common.internal.CBCommonLib;
+import com.captainbern.common.internal.Yggdrasil;
 import com.captainbern.common.utils.StringUtil;
 import org.bukkit.command.CommandSender;
 
@@ -428,10 +428,10 @@ public class CommandRegistrationService {
         try {
             method.invoke(instance, methodArgs);
         } catch (IllegalArgumentException e) {
-            CBCommonLib.LOGGER.warning("Failed to execute command!");
+            Yggdrasil.LOGGER.warning("Failed to execute command!");
             e.printStackTrace();
         } catch (IllegalAccessException e) {
-            CBCommonLib.LOGGER.warning("Failed to execute command!");
+            Yggdrasil.LOGGER.warning("Failed to execute command!");
             e.printStackTrace();
         } catch (InvocationTargetException e) {
             if (e.getCause() instanceof CommandException) {

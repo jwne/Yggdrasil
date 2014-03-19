@@ -1,13 +1,12 @@
 package com.captainbern.common.protection.region.plugins;
 
 import com.captainbern.common.exceptions.PluginHookException;
-import com.captainbern.common.internal.CBCommonLib;
+import com.captainbern.common.internal.Yggdrasil;
 import com.captainbern.common.protection.region.Region;
 import com.captainbern.common.protection.region.RegionFlag;
 import com.captainbern.common.protection.region.RegionProtectionProvider;
 import com.massivecraft.factions.Factions;
 import com.massivecraft.factions.Rel;
-import com.massivecraft.factions.entity.Board;
 import com.massivecraft.factions.entity.BoardColls;
 import com.massivecraft.factions.entity.Faction;
 import com.massivecraft.factions.entity.UPlayer;
@@ -27,19 +26,19 @@ import java.util.Set;
 
 public class RegionProtectionProvider_Factions extends RegionProtectionProvider<Factions> {
 
-    private CBCommonLib cbCommonLib;
+    private Yggdrasil yggdrasil;
     private Factions factionsPlugin;
     protected boolean hooked;
 
-    public RegionProtectionProvider_Factions(CBCommonLib cbCommonLib) {
-        this.cbCommonLib = cbCommonLib;
+    public RegionProtectionProvider_Factions(Yggdrasil yggdrasil) {
+        this.yggdrasil = yggdrasil;
 
         if(this.factionsPlugin == null) {
             this.factionsPlugin = (Factions) Bukkit.getPluginManager().getPlugin(getName());
 
             if(this.factionsPlugin != null && this.factionsPlugin.isEnabled()) {
                 this.hooked = true;
-                CBCommonLib.LOGGER.info("[" + getName() + "] Successfully hooked");
+                Yggdrasil.LOGGER.info("[" + getName() + "] Successfully hooked");
             }
         }
 
@@ -51,7 +50,7 @@ public class RegionProtectionProvider_Factions extends RegionProtectionProvider<
                     try {
                         factionsPlugin = (Factions) event.getPlugin();
                         hooked = true;
-                        CBCommonLib.LOGGER.info("[" + getName() + "] Successfully hooked");
+                        Yggdrasil.LOGGER.info("[" + getName() + "] Successfully hooked");
                     } catch (Exception e) {
                         throw new PluginHookException(event.getPlugin());
                     }
@@ -63,7 +62,7 @@ public class RegionProtectionProvider_Factions extends RegionProtectionProvider<
                 if((factionsPlugin != null) && (event.getPlugin().getName().equalsIgnoreCase(getName()))) {
                     factionsPlugin = null;
                     hooked = false;
-                    CBCommonLib.LOGGER.info("[" + getName() + "] Successfully unhooked");
+                    Yggdrasil.LOGGER.info("[" + getName() + "] Successfully unhooked");
                 }
             }
 
@@ -71,7 +70,7 @@ public class RegionProtectionProvider_Factions extends RegionProtectionProvider<
             public int hashCode() {
                 return super.hashCode();
             }
-        }, this.cbCommonLib);
+        }, this.yggdrasil);
     }
 
     @Override

@@ -1,7 +1,7 @@
-package com.captainbern.common.protocol2.injector;
+package com.captainbern.common.protocol.injector;
 
-import com.captainbern.common.protocol2.Protocol;
-import com.captainbern.common.protocol2.event.PacketEvent;
+import com.captainbern.common.protocol.Protocol;
+import com.captainbern.common.protocol.event.PacketEvent;
 import com.captainbern.common.reflection.refs.entity.EntityPlayerRef;
 import com.captainbern.common.reflection.refs.entity.craft.CraftEntityRef;
 import com.captainbern.common.reflection.refs.network.NetworkManagerRef;

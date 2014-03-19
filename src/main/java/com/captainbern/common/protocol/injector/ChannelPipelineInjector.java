@@ -1,6 +1,6 @@
-package com.captainbern.common.protocol2.injector;
+package com.captainbern.common.protocol.injector;
 
-import com.captainbern.common.protocol2.Protocol;
+import com.captainbern.common.protocol.Protocol;
 import net.minecraft.util.io.netty.channel.Channel;
 import org.bukkit.entity.Player;
 

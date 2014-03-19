@@ -13,11 +13,11 @@ import org.bukkit.plugin.ServicesManager;
 
 public class ExternalPluginAPILayer {
 
-    protected CBCommonLib cbCommonLib;
+    protected Yggdrasil yggdrasil;
     private ServicesManager servicesManager;
 
-    public ExternalPluginAPILayer(CBCommonLib cbCommonLib) {
-        this.cbCommonLib = cbCommonLib;
+    public ExternalPluginAPILayer(Yggdrasil yggdrasil) {
+        this.yggdrasil = yggdrasil;
         this.servicesManager = Bukkit.getServicesManager();
 
         loadEconomy();
@@ -37,14 +37,14 @@ public class ExternalPluginAPILayer {
         /**
          * Register the region protection providers first
          */
-        registerRegionProtection(new RegionProtectionProvider_WorldGuard(cbCommonLib), ServicePriority.Normal);
+        registerRegionProtection(new RegionProtectionProvider_WorldGuard(yggdrasil), ServicePriority.Normal);
 
-        registerRegionProtection(new RegionProtectionProvider_Factions(cbCommonLib), ServicePriority.Normal);
+        registerRegionProtection(new RegionProtectionProvider_Factions(yggdrasil), ServicePriority.Normal);
 
         /**
          * Register the block protection providers
          */
-        registerBlockProtection(new BlockProtectionProvider_LWC(cbCommonLib), ServicePriority.Normal);
+        registerBlockProtection(new BlockProtectionProvider_LWC(yggdrasil), ServicePriority.Normal);
     }
 
     /**
@@ -53,7 +53,7 @@ public class ExternalPluginAPILayer {
      * @param servicePriority
      */
     protected void registerEconomy(EconomyProvider economyProvider, ServicePriority servicePriority) {
-        getServicesManager().register(EconomyProvider.class, economyProvider, this.cbCommonLib, servicePriority);
+        getServicesManager().register(EconomyProvider.class, economyProvider, this.yggdrasil, servicePriority);
     }
 
     /**
@@ -62,7 +62,7 @@ public class ExternalPluginAPILayer {
      * @param servicePriority
      */
     protected void registerPermission(PermissionsProvider permissionsProvider, ServicePriority servicePriority) {
-        getServicesManager().register(PermissionsProvider.class, permissionsProvider, this.cbCommonLib, servicePriority);
+        getServicesManager().register(PermissionsProvider.class, permissionsProvider, this.yggdrasil, servicePriority);
     }
 
     /**
@@ -71,7 +71,7 @@ public class ExternalPluginAPILayer {
      * @param servicePriority
      */
     protected void registerBlockProtection(BlockProtectionProvider blockProtectionProvider, ServicePriority servicePriority) {
-        getServicesManager().register(BlockProtectionProvider.class, blockProtectionProvider, this.cbCommonLib, servicePriority);
+        getServicesManager().register(BlockProtectionProvider.class, blockProtectionProvider, this.yggdrasil, servicePriority);
     }
 
     /**
@@ -80,7 +80,7 @@ public class ExternalPluginAPILayer {
      * @param servicePriority
      */
     protected void registerRegionProtection(RegionProtectionProvider regionProtectionProvider, ServicePriority servicePriority) {
-        getServicesManager().register(RegionProtectionProvider.class, regionProtectionProvider, this.cbCommonLib, servicePriority);
+        getServicesManager().register(RegionProtectionProvider.class, regionProtectionProvider, this.yggdrasil, servicePriority);
     }
 
     public final ServicesManager getServicesManager() {

@@ -21,32 +21,6 @@ public class CommandDebug {
     )
     @CommandPermissions("cbcommonlib.debug")
     public static void debug(final CommandContext context, final CommandSender sender) {
-        sender.sendMessage(ChatColor.GREEN + "I failed at debugging");
 
-        if(context.getString(0).equalsIgnoreCase("protocol")) {
-            // debug protocol
-            if(context.hasFlag('c')) {
-                // debug client packets
-            } else if(context.hasFlag('s')) {
-                //debug server packets
-            }
-        }
-    }
-
-    private class DebugPacketAdapter extends PacketAdapter {
-
-        public DebugPacketAdapter(Plugin plugin, PacketType... packetTypes) {
-            super(plugin, packetTypes);
-        }
-
-        @Override
-        public void onPacketSending(PacketEvent event) {
-
-        }
-
-        @Override
-        public void onPacketReceiving(PacketEvent event) {
-
-        }
     }
 }

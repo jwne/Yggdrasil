@@ -27,7 +27,7 @@ public class CBCommonLibFormatter extends Formatter {
 
     @Override
     public String getHead(Handler handler) {
-        return line + "\r\nLog report from: " + getDate(System.currentTimeMillis()) + "\r\n" + line + "\r\n";
+        return line + "\r\nLog report made on: " + getDate(System.currentTimeMillis()) + "\r\n" + line + "\r\n";
     }
 
     @Override

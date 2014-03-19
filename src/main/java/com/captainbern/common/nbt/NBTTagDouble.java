@@ -2,6 +2,7 @@ package com.captainbern.common.nbt;
 
 import com.captainbern.common.nbt.exception.NBTReadException;
 import com.captainbern.common.nbt.exception.NBTWriteException;
+import com.captainbern.common.reflection.refs.nbt.NBTRef;
 
 import java.io.DataInput;
 import java.io.DataOutput;
@@ -48,6 +49,13 @@ public class NBTTagDouble extends NBTNumber<Double> {
         long i = Double.doubleToLongBits(this.data);
 
         return super.hashCode() ^ (int) (i ^ i >>> 32);
+    }
+
+    @Override
+    public Object convertToVanilla() {
+        Object nmsHandle = NBTRef.NBT_TAG_DOUBLE.newInstance();
+        NBTRef.NBT_TAG_DOUBLE.getField("data").set(nmsHandle, getValue());
+        return nmsHandle;
     }
 
     @Override

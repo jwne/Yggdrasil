@@ -1,6 +1,6 @@
 package com.captainbern.common.reflection;
 
-import com.captainbern.common.internal.CBCommonLib;
+import com.captainbern.common.internal.Yggdrasil;
 
 import java.lang.reflect.Constructor;
 import java.util.logging.Level;
@@ -19,7 +19,7 @@ public class SafeConstructor<T> {
             Constructor constructor = coreClass.getConstructor(params);
             setConstructor(constructor);
         } catch (NoSuchMethodException e) {
-            CBCommonLib.LOGGER_REFLECTION.log(Level.WARNING, "No such constructor! (className= {0})", coreClass.getSimpleName());
+            Yggdrasil.LOGGER_REFLECTION.log(Level.WARNING, "No such constructor! (className= {0})", coreClass.getSimpleName());
         }
     }
 

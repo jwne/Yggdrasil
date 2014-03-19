@@ -1,6 +1,6 @@
 package com.captainbern.common.reflection;
 
-import com.captainbern.common.internal.CBCommonLib;
+import com.captainbern.common.internal.Yggdrasil;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
@@ -20,7 +20,7 @@ public class SafeField<T> implements FieldAccessor<T> {
             Field field = coreClass.getDeclaredField(fieldName);
             setField(field);
         } catch (NoSuchFieldException e) {
-            CBCommonLib.LOGGER_REFLECTION.log(Level.WARNING, "Failed to find field: {0} in class: {1}!", new Object[]{coreClass.getSimpleName(), fieldName.toString()});
+            Yggdrasil.LOGGER_REFLECTION.log(Level.WARNING, "Failed to find field: {0} in class: {1}!", new Object[]{coreClass.getSimpleName(), fieldName.toString()});
         }
     }
 
@@ -59,7 +59,7 @@ public class SafeField<T> implements FieldAccessor<T> {
             this.field.set(instance, value);
             return true;
         } catch (IllegalAccessException e) {
-            CBCommonLib.LOGGER_REFLECTION.warning("Failed to set field: " + toString());
+            Yggdrasil.LOGGER_REFLECTION.warning("Failed to set field: " + toString());
             e.printStackTrace();
         }
         return false;
@@ -73,7 +73,7 @@ public class SafeField<T> implements FieldAccessor<T> {
         try {
             return (T) this.field.get(instance);
         } catch (IllegalAccessException e) {
-            CBCommonLib.LOGGER_REFLECTION.warning("Failed to access field: " + toString());
+            Yggdrasil.LOGGER_REFLECTION.warning("Failed to access field: " + toString());
         }
         return null;
     }

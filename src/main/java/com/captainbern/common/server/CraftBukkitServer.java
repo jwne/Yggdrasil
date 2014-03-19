@@ -1,6 +1,6 @@
 package com.captainbern.common.server;
 
-import com.captainbern.common.internal.CBCommonLib;
+import com.captainbern.common.internal.Yggdrasil;
 import com.captainbern.common.reflection.FieldAccessor;
 import com.captainbern.common.reflection.SafeField;
 import org.bukkit.Bukkit;
@@ -23,18 +23,18 @@ public class CraftBukkitServer implements CommonServer {
     public boolean init() {
         String serverPath = Bukkit.getServer().getClass().getName();
 
-        if(!serverPath.startsWith(CBCommonLib.getCraftBukkitRoot())) {
+        if(!serverPath.startsWith(Yggdrasil.getCraftBukkitRoot())) {
             return false;
         }
 
         MC_VERSION = Bukkit.getServer().getClass().getPackage().getName().replace(".", ",").split(",")[3];
 
         if(MC_VERSION.isEmpty()) {
-            CRAFTBUKKIT_VERSIONED = CBCommonLib.getCraftBukkitRoot();
-            MINECRAFT_VERSIONED = CBCommonLib.getNMSRoot();
+            CRAFTBUKKIT_VERSIONED = Yggdrasil.getCraftBukkitRoot();
+            MINECRAFT_VERSIONED = Yggdrasil.getNMSRoot();
         } else {
-            CRAFTBUKKIT_VERSIONED = CBCommonLib.getCraftBukkitRoot() + "." + MC_VERSION;
-            MINECRAFT_VERSIONED = CBCommonLib.getNMSRoot() + "." + MC_VERSION;
+            CRAFTBUKKIT_VERSIONED = Yggdrasil.getCraftBukkitRoot() + "." + MC_VERSION;
+            MINECRAFT_VERSIONED = Yggdrasil.getNMSRoot() + "." + MC_VERSION;
         }
 
       MC_VERSION_NUMERIC = Integer.valueOf(MC_VERSION.replaceAll("[^0-9]", ""));
@@ -52,7 +52,7 @@ public class CraftBukkitServer implements CommonServer {
         try{
             return Class.forName(name);
         }catch(Exception e){
-            CBCommonLib.LOGGER_REFLECTION.warning("Failed to find matching class for: " + name);
+            Yggdrasil.LOGGER_REFLECTION.warning("Failed to find matching class for: " + name);
             return null;
         }
     }
@@ -84,7 +84,7 @@ public class CraftBukkitServer implements CommonServer {
 
     @Override
     public boolean isCompatible() {
-        return (CBCommonLib.getSupportedVersionNumeric() == MC_VERSION_NUMERIC) ? true : false;
+        return (Yggdrasil.getSupportedVersionNumeric() == MC_VERSION_NUMERIC) ? true : false;
     }
 
     @Override

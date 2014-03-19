@@ -1,7 +1,7 @@
-package com.captainbern.common.protocol2.injector;
+package com.captainbern.common.protocol.injector;
 
 import com.captainbern.common.collection.PlayerHashMap;
-import com.captainbern.common.internal.CBCommonLib;
+import com.captainbern.common.internal.Yggdrasil;
 import org.bukkit.entity.Player;
 
 /**
@@ -15,8 +15,8 @@ public class InjectionManager {
 
     private static ListenerInvoker invoker;
 
-    public InjectionManager(CBCommonLib cbCommonLib) {
-        invoker = new ListenerInvoker(cbCommonLib, this);
+    public InjectionManager(Yggdrasil yggdrasil) {
+        invoker = new ListenerInvoker(yggdrasil, this);
     }
 
     public boolean isClosed() {

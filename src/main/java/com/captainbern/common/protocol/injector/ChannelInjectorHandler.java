@@ -1,4 +1,4 @@
-package com.captainbern.common.protocol2.injector;
+package com.captainbern.common.protocol.injector;
 
 import com.google.common.base.Preconditions;
 import org.bukkit.entity.Player;

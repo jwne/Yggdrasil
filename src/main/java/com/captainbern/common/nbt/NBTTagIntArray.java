@@ -2,6 +2,7 @@ package com.captainbern.common.nbt;
 
 import com.captainbern.common.nbt.exception.NBTReadException;
 import com.captainbern.common.nbt.exception.NBTWriteException;
+import com.captainbern.common.reflection.refs.nbt.NBTRef;
 
 import java.io.DataInput;
 import java.io.DataOutput;
@@ -51,6 +52,13 @@ public class NBTTagIntArray extends NBTReturnable<int[]> {
     @Override
     public int hashCode() {
         return super.hashCode() ^ Arrays.hashCode(this.data);
+    }
+
+    @Override
+    public Object convertToVanilla() {
+        Object nmsHandle = NBTRef.NBT_TAG_INT_ARRAY.newInstance();
+        NBTRef.NBT_TAG_INT_ARRAY.getField("data").set(nmsHandle, getValue());
+        return nmsHandle;
     }
 
     @Override

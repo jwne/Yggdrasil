@@ -1,6 +1,6 @@
 package com.captainbern.common.reflection;
 
-import com.captainbern.common.internal.CBCommonLib;
+import com.captainbern.common.internal.Yggdrasil;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -24,13 +24,13 @@ public class SafeMethod<T> implements MethodAccessor<T> {
             Method method = coreClass.getDeclaredMethod(methodname, params);
             setMethod(method);
         } catch (NoSuchMethodException e) {
-            CBCommonLib.LOGGER_REFLECTION.log(Level.WARNING, "Failed to find method: {0} in class: {1}!", new Object[]{coreClass.getSimpleName(), methodname});
+            Yggdrasil.LOGGER_REFLECTION.log(Level.WARNING, "Failed to find method: {0} in class: {1}!", new Object[]{coreClass.getSimpleName(), methodname});
         }
     }
 
     protected void setMethod(Method method){
         if(method == null){
-            CBCommonLib.LOGGER_REFLECTION.log(Level.WARNING, "Cannot create a new SafeMethod with a null instance passed in!");
+            Yggdrasil.LOGGER_REFLECTION.log(Level.WARNING, "Cannot create a new SafeMethod with a null instance passed in!");
         }
         if(!method.isAccessible()){
             method.setAccessible(true);

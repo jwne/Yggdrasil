@@ -1,9 +1,9 @@
-package com.captainbern.common.protocol2;
+package com.captainbern.common.protocol;
 
-import com.captainbern.common.internal.CBCommonLib;
-import com.captainbern.common.protocol2.event.PacketListener;
-import com.captainbern.common.protocol2.event.PacketMonitor;
-import com.captainbern.common.protocol2.injector.*;
+import com.captainbern.common.internal.Yggdrasil;
+import com.captainbern.common.protocol.event.PacketListener;
+import com.captainbern.common.protocol.event.PacketMonitor;
+import com.captainbern.common.protocol.injector.*;
 
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -31,14 +31,14 @@ public class CommonProtocolManager implements ProtocolManager {
     private static volatile List<ChannelPipelineInjector> injectorList = new ArrayList<ChannelPipelineInjector>();
     private static volatile List<ChannelPipelineInjector> injectors = Collections.synchronizedList(injectorList);
 
-    public CommonProtocolManager(CBCommonLib cbCommonLib) {
+    public CommonProtocolManager(Yggdrasil yggdrasil) {
         INSTANCE = this;
 
-        injectionManager = new InjectionManager(cbCommonLib);
+        injectionManager = new InjectionManager(yggdrasil);
 
         this.injector = new ChannelInjectorHandler(injectionManager);
 
-        registerEvents(cbCommonLib.getServer().getPluginManager(), cbCommonLib);
+        registerEvents(yggdrasil.getServer().getPluginManager(), yggdrasil);
     }
 
     private void registerEvents(PluginManager pluginManager, Plugin plugin) {

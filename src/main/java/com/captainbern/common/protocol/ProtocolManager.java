@@ -1,8 +1,8 @@
-package com.captainbern.common.protocol2;
+package com.captainbern.common.protocol;
 
-import com.captainbern.common.protocol2.event.PacketListener;
-import com.captainbern.common.protocol2.event.PacketMonitor;
-import com.captainbern.common.protocol2.injector.InjectionManager;
+import com.captainbern.common.protocol.event.PacketListener;
+import com.captainbern.common.protocol.event.PacketMonitor;
+import com.captainbern.common.protocol.injector.InjectionManager;
 import org.bukkit.plugin.Plugin;
 
 import java.util.Set;

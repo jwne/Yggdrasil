@@ -122,4 +122,6 @@ public abstract class NBTBase implements Cloneable {
     public int hashCode() {
         return this.getTypeId();
     }
+
+    public abstract Object convertToVanilla();
 }

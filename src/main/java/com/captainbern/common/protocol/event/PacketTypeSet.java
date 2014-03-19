@@ -1,4 +1,4 @@
-package com.captainbern.common.protocol2.event;
+package com.captainbern.common.protocol.event;
 
 import com.captainbern.common.protocol.PacketType;
 
@@ -7,7 +7,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
-public class PacketTypeSet {
+public class PacketTypeSet implements Iterable<PacketType> {
 
     private final Set<PacketType> delegate = new HashSet<PacketType>();
 

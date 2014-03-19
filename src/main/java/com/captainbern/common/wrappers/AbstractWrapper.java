@@ -1,6 +1,6 @@
 package com.captainbern.common.wrappers;
 
-import com.captainbern.common.internal.CBCommonLib;
+import com.captainbern.common.internal.Yggdrasil;
 import com.captainbern.common.utils.LogicUtil;
 
 public class AbstractWrapper {
@@ -9,7 +9,7 @@ public class AbstractWrapper {
     protected Class<?> handleType;
 
     public AbstractWrapper(final Class<?> handleType) {
-        this.handleType = LogicUtil.notNull(handleType, "HandleType may not be null!", CBCommonLib.LOGGER_REFLECTION);
+        this.handleType = LogicUtil.notNull(handleType, "HandleType may not be null!", Yggdrasil.LOGGER_REFLECTION);
     }
 
     protected void setHandle(final Object handle) {

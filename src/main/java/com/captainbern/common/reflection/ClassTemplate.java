@@ -1,6 +1,6 @@
 package com.captainbern.common.reflection;
 
-import com.captainbern.common.internal.CBCommonLib;
+import com.captainbern.common.internal.Yggdrasil;
 import com.captainbern.common.utils.CommonUtil;
 
 import java.lang.reflect.Field;
@@ -51,7 +51,7 @@ public class ClassTemplate<T> {
 
     public T newInstance(){
         if(this.type == null){
-            CBCommonLib.LOGGER_REFLECTION.warning("Class not set!");
+            Yggdrasil.LOGGER_REFLECTION.warning("Class not set!");
             return null;
         }
 
@@ -67,7 +67,7 @@ public class ClassTemplate<T> {
 
     public T new0Instance(Class... args) {
         if(this.type == null){
-            CBCommonLib.LOGGER_REFLECTION.warning("Class not set!");
+            Yggdrasil.LOGGER_REFLECTION.warning("Class not set!");
             return null;
         }
 
@@ -93,7 +93,7 @@ public class ClassTemplate<T> {
 
     public static ClassTemplate<?> create(Class<?> type){
         if(type == null){
-            CBCommonLib.LOGGER_REFLECTION.log(Level.WARNING, "Cannot set class type to null!");
+            Yggdrasil.LOGGER_REFLECTION.log(Level.WARNING, "Cannot set class type to null!");
             return null;
         }
         return new ClassTemplate(type);
@@ -109,7 +109,7 @@ public class ClassTemplate<T> {
         Class clazz = CommonUtil.getClass(className);
 
         if(clazz == null){
-            CBCommonLib.LOGGER_REFLECTION.log(Level.WARNING, "Failed to find a valid class for: {0}!", className);
+            Yggdrasil.LOGGER_REFLECTION.log(Level.WARNING, "Failed to find a valid class for: {0}!", className);
             return null;
         }
         return new ClassTemplate<Object>(clazz);

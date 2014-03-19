@@ -1,6 +1,6 @@
 package com.captainbern.common.protocol;
 
-import com.captainbern.common.internal.CBCommonLib;
+import com.captainbern.common.internal.Yggdrasil;
 import com.google.common.collect.Maps;
 
 import java.util.HashMap;
@@ -30,7 +30,7 @@ public class PacketLookup {
             case LOGIN :
                 return sender == Sender.CLIENT ? LOGIN_CLIENT : LOGIN_SERVER;
             default :
-                CBCommonLib.LOGGER_PROTOCOL.warning("Unable to find protocol: " + protocol);
+                Yggdrasil.LOGGER_PROTOCOL.warning("Unable to find protocol: " + protocol);
                 return null;
         }
     }

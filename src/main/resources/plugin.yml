@@ -1,4 +1,4 @@
 name: CBCommonLib
 description: A library with several tools
 version: ${project.version}
-main: com.captainbern.common.internal.CBCommonLib
+main: ${main.class}

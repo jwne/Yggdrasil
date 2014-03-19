@@ -19,7 +19,7 @@ package com.captainbern.common.command;
 
 import com.captainbern.common.command.core.Command;
 import com.captainbern.common.command.core.CommandPermissions;
-import com.captainbern.common.internal.CBCommonLib;
+import com.captainbern.common.internal.Yggdrasil;
 import com.captainbern.common.reflection.FieldAccessor;
 import com.captainbern.common.reflection.SafeField;
 import org.bukkit.Bukkit;
@@ -97,12 +97,12 @@ public class CommandManager {
     }
 
     protected CommandMap getCommandMap() {
-        CommandMap commandMap = CBCommonLib.getCommonServer().getCommandMap();
+        CommandMap commandMap = Yggdrasil.getCommonServer().getCommandMap();
         if(commandMap == null) {
             if(fallbackCommandmap != null) {
                 commandMap = fallbackCommandmap;
             } else {
-                CBCommonLib.LOGGER.warning("[" + plugin.getDescription().getName() + "] Failed to retrieve the server command-map, using fallback command-service instead!");
+                Yggdrasil.LOGGER.warning("[" + plugin.getDescription().getName() + "] Failed to retrieve the server command-map, using fallback command-service instead!");
                 fallbackCommandmap = commandMap = new SimpleCommandMap(Bukkit.getServer());
                 Bukkit.getServer().getPluginManager().registerEvents(new FallbackCommandRegistrationService(fallbackCommandmap), plugin);
             }

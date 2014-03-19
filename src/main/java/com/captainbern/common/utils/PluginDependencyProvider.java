@@ -1,7 +1,7 @@
 package com.captainbern.common.utils;
 
 import com.captainbern.common.exceptions.PluginHookException;
-import com.captainbern.common.internal.CBCommonLib;
+import com.captainbern.common.internal.Yggdrasil;
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -27,10 +27,10 @@ public abstract class PluginDependencyProvider<T extends Plugin> {
 
                 if(this.dependency != null && this.dependency.isEnabled()) {
                     this.hooked = true;
-                    CBCommonLib.LOGGER.info("[" + this.dependency.getName() + "] Successfully hooked");
+                    Yggdrasil.LOGGER.info("[" + this.dependency.getName() + "] Successfully hooked");
                 }
             } catch (Exception e) {
-                CBCommonLib.LOGGER_REFLECTION.warning("Could not create a PluginDependencyProvider for: " + getDependencyName() + "! (Are you sure the type is valid?)");
+                Yggdrasil.LOGGER_REFLECTION.warning("Could not create a PluginDependencyProvider for: " + getDependencyName() + "! (Are you sure the type is valid?)");
             }
         }
 
@@ -42,7 +42,7 @@ public abstract class PluginDependencyProvider<T extends Plugin> {
                     try {
                         dependency = (T) event.getPlugin();
                         hooked = true;
-                        CBCommonLib.LOGGER.info("[" + getDependencyName() + "] Successfully hooked");
+                        Yggdrasil.LOGGER.info("[" + getDependencyName() + "] Successfully hooked");
                     } catch (Exception e) {
                         throw new PluginHookException(event.getPlugin());
                     }
@@ -54,7 +54,7 @@ public abstract class PluginDependencyProvider<T extends Plugin> {
                 if((dependency != null) && (event.getPlugin().getName().equalsIgnoreCase(getDependencyName()))) {
                     dependency = null;
                     hooked = false;
-                    CBCommonLib.LOGGER.info("[" + getDependencyName() + "] Successfully unhooked");
+                    Yggdrasil.LOGGER.info("[" + getDependencyName() + "] Successfully unhooked");
                 }
             }
 

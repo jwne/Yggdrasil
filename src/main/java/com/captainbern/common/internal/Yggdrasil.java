@@ -5,11 +5,8 @@ import com.captainbern.common.ModuleLogger;
 import com.captainbern.common.command.ObjectInstantiator;
 import com.captainbern.common.debug.CommandDebug;
 import com.captainbern.common.logging.CBCommonLibFormatter;
-import com.captainbern.common.protocol.event.CommonProtocolManager;
-import com.captainbern.common.protocol.PacketType;
-import com.captainbern.common.protocol.event.ProtocolManager;
-import com.captainbern.common.protocol.event.PacketAdapter;
-import com.captainbern.common.protocol.event.PacketEvent;
+import com.captainbern.common.protocol.CommonProtocolManager;
+import com.captainbern.common.protocol.ProtocolManager;
 import com.captainbern.common.server.*;
 import com.captainbern.common.threading.ThreadManager;
 import org.bukkit.Bukkit;
@@ -19,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.FileHandler;
 
-public class CBCommonLib extends BukkitPlugin {
+public class Yggdrasil extends BukkitPlugin {
 
     public static final String VERSION = "0.0.1";
 
@@ -28,9 +25,10 @@ public class CBCommonLib extends BukkitPlugin {
     /**
      * Several loggers
      */
-    public static final ModuleLogger LOGGER = new ModuleLogger("CBCommonLib");
+    public static final ModuleLogger LOGGER = new ModuleLogger("Yggdrasil");
     public static final ModuleLogger LOGGER_REFLECTION = LOGGER.getModule("Reflection");
     public static final ModuleLogger LOGGER_PROTOCOL = LOGGER.getModule("Protocol");
+    public static final ModuleLogger LOGGER_NBT = LOGGER.getModule("NBT");
 
     /**
      * The supported minecraft version (packaged)
@@ -55,7 +53,7 @@ public class CBCommonLib extends BukkitPlugin {
     /**
      * The current instance
      */
-    private static CBCommonLib instance;
+    private static Yggdrasil instance;
 
 
     /**
@@ -78,7 +76,7 @@ public class CBCommonLib extends BukkitPlugin {
      * Returns the current instance
      * @return
      */
-    public static CBCommonLib getInstance() {
+    public static Yggdrasil getInstance() {
         if(instance == null) {
             throw new RuntimeException("Instance is NULL!");
         }
@@ -123,7 +121,7 @@ public class CBCommonLib extends BukkitPlugin {
         } else {
             if(!commonServer.isCompatible()) {
                 LOGGER.warning("It seems like this server is not compatible with " +
-                        "this version of CBCommonLib! Let's try anyways...");
+                        "this version of Yggdrasil! Let's try anyways...");
             }
         }
 

@@ -1,6 +1,7 @@
 package com.captainbern.common.protocol.event;
 
 import com.captainbern.common.protocol.PacketType;
+import com.captainbern.common.protocol.event.Packet;
 import org.bukkit.entity.Player;
 
 public class PacketEvent {

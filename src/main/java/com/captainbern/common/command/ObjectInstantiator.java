@@ -17,7 +17,7 @@
 */
 package com.captainbern.common.command;
 
-import com.captainbern.common.internal.CBCommonLib;
+import com.captainbern.common.internal.Yggdrasil;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
@@ -42,19 +42,19 @@ public class ObjectInstantiator {
             constructor.setAccessible(true);
             return constructor.newInstance(this.argInstances);
         } catch (InvocationTargetException e) {
-            CBCommonLib.LOGGER_REFLECTION.warning("Failed to instantiate commands class: " + clazz.getName());
+            Yggdrasil.LOGGER_REFLECTION.warning("Failed to instantiate commands class: " + clazz.getName());
             e.printStackTrace();
             return null;
         } catch (NoSuchMethodException e) {
-            CBCommonLib.LOGGER_REFLECTION.warning("Failed to instantiate commands class: " + clazz.getName());
+            Yggdrasil.LOGGER_REFLECTION.warning("Failed to instantiate commands class: " + clazz.getName());
             e.printStackTrace();
             return null;
         } catch (InstantiationException e) {
-            CBCommonLib.LOGGER_REFLECTION.warning("Failed to instantiate commands class: " + clazz.getName());
+            Yggdrasil.LOGGER_REFLECTION.warning("Failed to instantiate commands class: " + clazz.getName());
             e.printStackTrace();
             return null;
         } catch (IllegalAccessException e) {
-            CBCommonLib.LOGGER_REFLECTION.warning("Failed to instantiate commands class: " + clazz.getName());
+            Yggdrasil.LOGGER_REFLECTION.warning("Failed to instantiate commands class: " + clazz.getName());
             e.printStackTrace();
             return null;
         }

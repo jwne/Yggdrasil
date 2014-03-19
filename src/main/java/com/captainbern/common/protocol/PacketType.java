@@ -1,7 +1,7 @@
 package com.captainbern.common.protocol;
 
-import com.captainbern.common.internal.CBCommonLib;
-import com.captainbern.common.utils.FieldIterator;
+import com.captainbern.common.internal.Yggdrasil;
+import com.captainbern.common.reflection.FieldIterator;
 import com.captainbern.common.utils.LogicUtil;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
@@ -354,8 +354,8 @@ public class PacketType {
     }
 
     public PacketType(Protocol protocol, Sender sender, int id) {
-        this.protocol = LogicUtil.notNull(protocol, "Protocol type may not be null!", CBCommonLib.LOGGER_PROTOCOL);
-        this.sender = LogicUtil.notNull(sender, "Sender type may not be null!", CBCommonLib.LOGGER_PROTOCOL);
+        this.protocol = LogicUtil.notNull(protocol, "Protocol type may not be null!", Yggdrasil.LOGGER_PROTOCOL);
+        this.sender = LogicUtil.notNull(sender, "Sender type may not be null!", Yggdrasil.LOGGER_PROTOCOL);
         this.id = id;
     }
 
@@ -389,5 +389,20 @@ public class PacketType {
 
     public static PacketType getTypeFrom(Class<?> clazz) {
         return getRegistry().getTypeLookup().get(clazz);
+    }
+
+    public String name() {
+        return getFieldIterator(this).getName(this);
+    }
+
+    public static FieldIterator<PacketType> getFieldIterator(final PacketType packetType) {
+        switch (packetType.getProtocol()) {
+            case HANDSHAKING: return packetType.isClient() ? HandShaking.Client.getInstance() : HandShaking.Server.getInstance();
+            case PLAY:  return packetType.isClient() ? Play.Client.getInstance() : Play.Server.getInstance();
+            case STATUS: return packetType.isClient() ? Status.Client.getInstance() : Status.Server.getInstance();
+            case LOGIN: return packetType.isClient() ? Login.Client.getInstance() : Login.Server.getInstance();
+            default:
+                throw new IllegalArgumentException("Unexpected protocol: " + packetType.getProtocol());
+        }
     }
 }

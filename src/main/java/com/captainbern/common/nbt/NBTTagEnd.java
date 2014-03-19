@@ -1,5 +1,7 @@
 package com.captainbern.common.nbt;
 
+import com.captainbern.common.reflection.refs.nbt.NBTRef;
+
 import java.io.DataInput;
 import java.io.DataOutput;
 
@@ -23,5 +25,10 @@ public class NBTTagEnd extends NBTBase {
     @Override
     public NBTBase clone() {
         return new NBTTagEnd();
+    }
+
+    @Override
+    public Object convertToVanilla() {
+        return NBTRef.NBT_TAG_END.newInstance();
     }
 }

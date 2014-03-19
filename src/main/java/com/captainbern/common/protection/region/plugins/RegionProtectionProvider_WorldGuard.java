@@ -1,7 +1,7 @@
 package com.captainbern.common.protection.region.plugins;
 
 import com.captainbern.common.exceptions.PluginHookException;
-import com.captainbern.common.internal.CBCommonLib;
+import com.captainbern.common.internal.Yggdrasil;
 import com.captainbern.common.protection.region.Region;
 import com.captainbern.common.protection.region.RegionFlag;
 import com.captainbern.common.protection.region.RegionProtectionProvider;
@@ -25,19 +25,19 @@ import java.util.Set;
 
 public class RegionProtectionProvider_WorldGuard extends RegionProtectionProvider<WorldGuardPlugin> {
 
-    private CBCommonLib cbCommonLib;
+    private Yggdrasil yggdrasil;
     private WorldGuardPlugin worldGuardPlugin;
     protected boolean hooked;
 
-    public RegionProtectionProvider_WorldGuard(CBCommonLib cbCommonLib) {
-        this.cbCommonLib = cbCommonLib;
+    public RegionProtectionProvider_WorldGuard(Yggdrasil yggdrasil) {
+        this.yggdrasil = yggdrasil;
 
         if(this.worldGuardPlugin == null) {
             this.worldGuardPlugin = (WorldGuardPlugin) Bukkit.getPluginManager().getPlugin(getName());
 
             if(this.worldGuardPlugin != null && this.worldGuardPlugin.isEnabled()) {
                 this.hooked = true;
-                CBCommonLib.LOGGER.info("[" + getName() + "] Successfully hooked");
+                Yggdrasil.LOGGER.info("[" + getName() + "] Successfully hooked");
             }
         }
 
@@ -49,7 +49,7 @@ public class RegionProtectionProvider_WorldGuard extends RegionProtectionProvide
                     try {
                         worldGuardPlugin = (WorldGuardPlugin) event.getPlugin();
                         hooked = true;
-                        CBCommonLib.LOGGER.info("[" + getName() + "] Successfully hooked");
+                        Yggdrasil.LOGGER.info("[" + getName() + "] Successfully hooked");
                     } catch (Exception e) {
                         throw new PluginHookException(event.getPlugin());
                     }
@@ -61,7 +61,7 @@ public class RegionProtectionProvider_WorldGuard extends RegionProtectionProvide
                 if((worldGuardPlugin != null) && (event.getPlugin().getName().equalsIgnoreCase(getName()))) {
                     worldGuardPlugin = null;
                     hooked = false;
-                    CBCommonLib.LOGGER.info("[" + getName() + "] Successfully unhooked");
+                    Yggdrasil.LOGGER.info("[" + getName() + "] Successfully unhooked");
                 }
             }
 
@@ -69,7 +69,7 @@ public class RegionProtectionProvider_WorldGuard extends RegionProtectionProvide
             public int hashCode() {
                 return super.hashCode();
             }
-        }, this.cbCommonLib);
+        }, this.yggdrasil);
     }
 
     @Override

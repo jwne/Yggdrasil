@@ -1,7 +1,7 @@
 package com.captainbern.common.protection.block.plugins;
 
 import com.captainbern.common.exceptions.PluginHookException;
-import com.captainbern.common.internal.CBCommonLib;
+import com.captainbern.common.internal.Yggdrasil;
 import com.captainbern.common.protection.block.BlockProtectionProvider;
 import com.griefcraft.lwc.LWC;
 import com.griefcraft.lwc.LWCPlugin;
@@ -15,20 +15,20 @@ import org.bukkit.event.server.PluginEnableEvent;
 
 public class BlockProtectionProvider_LWC extends BlockProtectionProvider<LWCPlugin> {
 
-    private CBCommonLib cbCommonLib;
+    private Yggdrasil yggdrasil;
     private LWCPlugin lwcPlugin;
     private LWC lwc;
     protected boolean hooked;
 
-    public BlockProtectionProvider_LWC(CBCommonLib cbCommonLib) {
-        this.cbCommonLib = cbCommonLib;
+    public BlockProtectionProvider_LWC(Yggdrasil yggdrasil) {
+        this.yggdrasil = yggdrasil;
 
         if(this.lwcPlugin == null && this.lwc == null) {
             this.lwcPlugin = (LWCPlugin) Bukkit.getPluginManager().getPlugin(getName());
             this.lwc = this.lwcPlugin.getLWC();
             if((this.lwcPlugin != null) && (this.lwcPlugin.isEnabled())) {
                 this.hooked = true;
-                CBCommonLib.LOGGER.info("[" + getName() + "] Successfully hooked");
+                Yggdrasil.LOGGER.info("[" + getName() + "] Successfully hooked");
             }
         }
 
@@ -41,7 +41,7 @@ public class BlockProtectionProvider_LWC extends BlockProtectionProvider<LWCPlug
                         lwcPlugin = (LWCPlugin) event.getPlugin();
                         lwc = lwcPlugin.getLWC();
                         hooked = true;
-                        CBCommonLib.LOGGER.info("[" + getName() + "] Successfully hooked");
+                        Yggdrasil.LOGGER.info("[" + getName() + "] Successfully hooked");
                     } catch (Exception e) {
                         throw new PluginHookException(event.getPlugin());
                     }
@@ -54,7 +54,7 @@ public class BlockProtectionProvider_LWC extends BlockProtectionProvider<LWCPlug
                     lwcPlugin = null;
                     lwc = null;
                     hooked = false;
-                    CBCommonLib.LOGGER.info("[" + getName() + "] Successfully unhooked");
+                    Yggdrasil.LOGGER.info("[" + getName() + "] Successfully unhooked");
                 }
             }
 
@@ -62,7 +62,7 @@ public class BlockProtectionProvider_LWC extends BlockProtectionProvider<LWCPlug
             public int hashCode() {
                 return super.hashCode();
             }
-        }, this.cbCommonLib);
+        }, this.yggdrasil);
     }
 
     @Override

@@ -1,7 +1,10 @@
 package com.captainbern.common.nbt;
 
+import com.captainbern.common.internal.Yggdrasil;
 import com.captainbern.common.nbt.exception.NBTReadException;
 import com.captainbern.common.nbt.exception.NBTWriteException;
+import com.captainbern.common.reflection.MethodAccessor;
+import com.captainbern.common.reflection.refs.nbt.NBTRef;
 
 import java.io.DataInput;
 import java.io.DataOutput;
@@ -26,7 +29,7 @@ public class NBTTagList extends NBTBase {
         if (this.type == 0) {
             this.type = nbtbase.getTypeId();
         } else if (this.type != nbtbase.getTypeId()) {
-            System.out.println("WARNING: Tried adding mismatching data-types to tag-list!");
+            Yggdrasil.LOGGER_NBT.warning("Tried adding mismatching data-types to tag-list!");
             return;
         }
 
@@ -73,6 +76,21 @@ public class NBTTagList extends NBTBase {
     @Override
     public int hashCode() {
         return super.hashCode() ^ this.list.hashCode();
+    }
+
+    @Override
+    public Object convertToVanilla() {
+        Object nmsHandle = NBTRef.NBT_TAG_LIST.newInstance();
+        NBTRef.NBT_TAG_LIST.getField("type").set(nmsHandle, this.type);
+        MethodAccessor<Void> add = NBTRef.NBT_TAG_LIST.getMethod("add", NBTRef.NBT_BASE.getType());
+        for(Object base : this.list) {
+             if(base instanceof NBTBase) {
+                 NBTBase tag = (NBTBase) base;
+                 add.invoke(nmsHandle, tag.convertToVanilla());
+             }
+        }
+
+        return nmsHandle;
     }
 
     @Override
