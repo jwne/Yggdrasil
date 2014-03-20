@@ -11,15 +11,18 @@ import org.bukkit.plugin.Plugin;
 
 public abstract class PluginDependencyProvider<T extends Plugin> {
 
-    private T dependency;
+    protected PluginDependencyProvider<T> instance;
+    protected T dependency;
     protected boolean hooked;
-    private Plugin myPluginInstance;
-    private String dependencyName;
+    protected Plugin myPluginInstance;
+    protected String dependencyName;
 
     // TODO: add more utils, plugin stuff mostly.
 
     public PluginDependencyProvider(Plugin myPluginInstance, String dependencyName) {
+        this.instance = this;
         this.myPluginInstance = myPluginInstance;
+        this.dependencyName = dependencyName;
 
         if(dependency == null && !this.hooked) {
             try {
@@ -27,6 +30,7 @@ public abstract class PluginDependencyProvider<T extends Plugin> {
 
                 if(this.dependency != null && this.dependency.isEnabled()) {
                     this.hooked = true;
+                    onHook();
                     Yggdrasil.LOGGER.info("[" + this.dependency.getName() + "] Successfully hooked");
                 }
             } catch (Exception e) {
@@ -42,6 +46,7 @@ public abstract class PluginDependencyProvider<T extends Plugin> {
                     try {
                         dependency = (T) event.getPlugin();
                         hooked = true;
+                        onHook();
                         Yggdrasil.LOGGER.info("[" + getDependencyName() + "] Successfully hooked");
                     } catch (Exception e) {
                         throw new PluginHookException(event.getPlugin());
@@ -54,6 +59,7 @@ public abstract class PluginDependencyProvider<T extends Plugin> {
                 if((dependency != null) && (event.getPlugin().getName().equalsIgnoreCase(getDependencyName()))) {
                     dependency = null;
                     hooked = false;
+                    onUnhook();
                     Yggdrasil.LOGGER.info("[" + getDependencyName() + "] Successfully unhooked");
                 }
             }
@@ -65,7 +71,14 @@ public abstract class PluginDependencyProvider<T extends Plugin> {
         }, getHandlingPlugin());
     }
 
+    public abstract void onHook();
+
+    public abstract void onUnhook();
+
     public T getDependency() {
+        if(this.dependency == null) {
+            throw new RuntimeException("Dependency is NULL!");
+        }
         return this.dependency;
     }
 
@@ -74,10 +87,16 @@ public abstract class PluginDependencyProvider<T extends Plugin> {
     }
 
     public Plugin getHandlingPlugin() {
+        if(this.myPluginInstance == null) {
+            throw new RuntimeException("HandlingPlugin is NULL!");
+        }
         return this.myPluginInstance;
     }
 
     public String getDependencyName() {
+        if(this.dependencyName == null) {
+            throw new RuntimeException("Dependency name is NULL!");
+        }
         return this.dependencyName;
     }
 }

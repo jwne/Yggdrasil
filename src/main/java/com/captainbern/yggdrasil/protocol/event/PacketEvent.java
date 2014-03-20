@@ -1,7 +1,6 @@
 package com.captainbern.yggdrasil.protocol.event;
 
 import com.captainbern.yggdrasil.protocol.PacketType;
-import com.captainbern.yggdrasil.protocol.event.Packet;
 import org.bukkit.entity.Player;
 
 public class PacketEvent {

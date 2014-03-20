@@ -7,15 +7,15 @@ import java.util.logging.Level;
 
 public class CBClassTemplate extends ClassTemplate<Object> {
 
-    public CBClassTemplate(){
+    public CBClassTemplate() {
         setCBClass(getClass().getSimpleName());
     }
 
-    public CBClassTemplate(String className){
+    public CBClassTemplate(String className) {
         setCBClass(className);
     }
 
-    protected void setCBClass(String name){
+    protected void setCBClass(String name) {
         Class clazz = CommonUtil.getCBClass(name);
         if(clazz == null){
             Yggdrasil.LOGGER_REFLECTION.log(Level.WARNING, "Failed to find a valid class for: {0}!", name);
@@ -23,7 +23,7 @@ public class CBClassTemplate extends ClassTemplate<Object> {
         setClass(clazz);
     }
 
-    public static CBClassTemplate create(String className){
+    public static CBClassTemplate create(String className) {
         return new CBClassTemplate(className);
     }
 }

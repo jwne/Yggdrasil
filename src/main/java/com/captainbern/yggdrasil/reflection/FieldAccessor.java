@@ -18,6 +18,6 @@ public interface FieldAccessor<T> {
 
     boolean isReadOnly();
 
-    public void setFinalStatic(T newValue);
+    public void setReadOnly(boolean readOnly);
 
 }

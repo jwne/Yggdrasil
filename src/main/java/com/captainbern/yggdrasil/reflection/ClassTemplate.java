@@ -2,11 +2,16 @@ package com.captainbern.yggdrasil.reflection;
 
 import com.captainbern.yggdrasil.internal.Yggdrasil;
 import com.captainbern.yggdrasil.utils.CommonUtil;
+import com.google.common.collect.BiMap;
+import com.google.common.collect.HashBiMap;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Modifier;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 import java.util.logging.Level;
 
 public class ClassTemplate<T> {
@@ -16,11 +21,14 @@ public class ClassTemplate<T> {
 
     public ClassTemplate(){ }
 
-    public ClassTemplate(Class<T> clazz){
+    public ClassTemplate(Class<T> clazz) {
         setClass(clazz);
     }
 
-    protected void setClass(Class<T> clazz){
+    protected void setClass(Class<T> clazz) {
+        if(clazz == null) {
+            throw new IllegalArgumentException("Can't create a ClassTemplate with a NULL-class!");
+        }
         this.type = clazz;
     }
 
@@ -49,7 +57,7 @@ public class ClassTemplate<T> {
         return populateFieldList(fields, clazz.getSuperclass());
     }
 
-    public T newInstance(){
+    public T newInstance() {
         if(this.type == null){
             Yggdrasil.LOGGER_REFLECTION.warning("Class not set!");
             return null;
@@ -87,11 +95,11 @@ public class ClassTemplate<T> {
         return null;
     }
 
-    public Class<T> getType(){
+    public Class<T> getType() {
         return this.type;
     }
 
-    public static ClassTemplate<?> create(Class<?> type){
+    public static ClassTemplate<?> create(Class<?> type) {
         if(type == null){
             Yggdrasil.LOGGER_REFLECTION.log(Level.WARNING, "Cannot set class type to null!");
             return null;
@@ -105,7 +113,7 @@ public class ClassTemplate<T> {
         }
     }
 
-    public static ClassTemplate<?> create(String className){
+    public static ClassTemplate<?> create(String className) {
         Class clazz = CommonUtil.getClass(className);
 
         if(clazz == null){
@@ -115,11 +123,11 @@ public class ClassTemplate<T> {
         return new ClassTemplate<Object>(clazz);
     }
 
-    public boolean isAssignableFrom(Class<?> clazz){
+    public boolean isAssignableFrom(Class<?> clazz) {
         return this.getType().isAssignableFrom(clazz);
     }
 
-    public boolean isInstanceOf(Object object){
+    public boolean isInstanceOf(Object object) {
         return this.getType().isInstance(object);
     }
 
@@ -143,15 +151,15 @@ public class ClassTemplate<T> {
         return null;
     }
 
-    public <K> SafeMethod<K> getMethod(String methodName, Class<?>... params){
+    public <K> SafeMethod<K> getMethod(String methodName, Class<?>... params) {
         return new SafeMethod<K>(this.getType(), methodName, params);
     }
 
-    public <K> FieldAccessor<K> getField(String fieldName){
+    public <K> FieldAccessor<K> getField(String fieldName) {
         return new SafeField<K>(getType(), fieldName);
     }
 
-    public <K> SafeConstructor<K> getConstructor(Class<?>... params){
+    public <K> SafeConstructor<K> getConstructor(Class<?>... params) {
         return new SafeConstructor<K>(getType(), params);
     }
 
@@ -161,5 +169,33 @@ public class ClassTemplate<T> {
 
     public <K> void setStaticFieldValue(String name, K value) {
         SafeField.setStatic(getType(), name, value);
+    }
+
+    private static final BiMap<Class, Class> boxedTypes = HashBiMap.create();
+    static {
+        boxedTypes.put(byte.class, Byte.class);
+        boxedTypes.put(boolean.class, Boolean.class);
+        boxedTypes.put(short.class, Short.class);
+        boxedTypes.put(char.class, Character.class);
+        boxedTypes.put(int.class, Integer.class);
+        boxedTypes.put(float.class, Float.class);
+        boxedTypes.put(long.class, Long.class);
+        boxedTypes.put(double.class, Double.class);
+    }
+
+    public static Class getUnBoxedType(Class clazz) {
+        return boxedTypes.inverse().get(clazz);
+    }
+
+    public static Class getBoxedType(Class clazz) {
+        return boxedTypes.get(clazz);
+    }
+
+    public static boolean hasBoxedType(Class clazz) {
+        return getBoxedType(clazz) != null;
+    }
+
+    public static boolean hasUnBoxedType(Class clazz) {
+        return getUnBoxedType(clazz) != null;
     }
 }

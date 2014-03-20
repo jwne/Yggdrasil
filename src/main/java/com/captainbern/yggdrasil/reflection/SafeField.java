@@ -9,6 +9,7 @@ import java.util.logging.Level;
 public class SafeField<T> implements FieldAccessor<T> {
 
     private Field field;
+    private ClassTemplate fieldTemplate;
     private boolean isStatic;
 
     public SafeField(Field field){
@@ -25,6 +26,10 @@ public class SafeField<T> implements FieldAccessor<T> {
     }
 
     protected void setField(Field field){
+        if(field == null) {
+            throw new IllegalArgumentException("Field can't be NULL!");
+        }
+
         if(!field.isAccessible()){
             try{
                 field.setAccessible(true);
@@ -34,6 +39,7 @@ public class SafeField<T> implements FieldAccessor<T> {
             }
         }
         this.field = field;
+        this.fieldTemplate = NMSClassTemplate.create(field.getType());
         this.isStatic = Modifier.isStatic(field.getModifiers());
     }
 
@@ -46,7 +52,10 @@ public class SafeField<T> implements FieldAccessor<T> {
 
     @Override
     public ClassTemplate getType() {
-        return ClassTemplate.create(field.getClass());
+        if(this.fieldTemplate == null) {
+            this.fieldTemplate = ClassTemplate.create(this.field.getType());
+        }
+        return this.fieldTemplate;
     }
 
     @Override
@@ -88,11 +97,11 @@ public class SafeField<T> implements FieldAccessor<T> {
         return old;
     }
 
-    public String getName(){
+    public String getName() {
         return this.field.getName();
     }
 
-    public String toString(){
+    public String toString() {
         StringBuilder string = new StringBuilder(75);
         int mod = this.field.getModifiers();
         if(Modifier.isPublic(mod)){
@@ -123,27 +132,29 @@ public class SafeField<T> implements FieldAccessor<T> {
     }
 
     @Override
-    public void setFinalStatic(T newValue) {
+    public void setReadOnly(boolean readOnly) {
         FieldAccessor<Integer> modifierField = new SafeField<Integer>(Field.class, "modifiers");
 
-        modifierField.set(getField(), getField().getModifiers() & ~Modifier.FINAL);
-
-        set(null, newValue);
+        if(readOnly) {
+            modifierField.set(getField(), getField().getModifiers() | Modifier.FINAL);
+        } else {
+            modifierField.set(getField(), getField().getModifiers() & ~Modifier.FINAL);
+        }
     }
 
     public static <T> T get(Class<?> clazz, String fieldName) {
         return new SafeField<T>(clazz, fieldName).get(null);
     }
 
-    public static <T> T get(Object instance, String fieldName){
+    public static <T> T get(Object instance, String fieldName) {
         return new SafeField<T>(instance.getClass(), fieldName).get(instance);
     }
 
-    public static <T> void set(Object instance, String fieldName, T value){
+    public static <T> void set(Object instance, String fieldName, T value) {
         new SafeField<T>(instance.getClass(), fieldName).set(instance, value);
     }
 
-    public static <T> void setStatic(Class<?> clazz, String fieldname, T value) {
-        new SafeField<T>(clazz, fieldname).set(null, value);
+    public static <T> void setStatic(Class<?> clazz, String fieldName, T value) {
+        new SafeField<T>(clazz, fieldName).set(null, value);
     }
 }

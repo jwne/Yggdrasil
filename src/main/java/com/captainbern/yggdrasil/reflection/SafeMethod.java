@@ -13,13 +13,13 @@ public class SafeMethod<T> implements MethodAccessor<T> {
     private Class[] params;
     private boolean isStatic;
 
-    public SafeMethod(){ }
+    public SafeMethod() {}
 
-    public SafeMethod(Method method){
+    public SafeMethod(Method method) {
         setMethod(method);
     }
 
-    public SafeMethod(Class<?> coreClass, String methodname, Class<?>... params){
+    public SafeMethod(Class<?> coreClass, String methodname, Class<?>... params) {
         try {
             Method method = coreClass.getDeclaredMethod(methodname, params);
             setMethod(method);
@@ -28,7 +28,7 @@ public class SafeMethod<T> implements MethodAccessor<T> {
         }
     }
 
-    protected void setMethod(Method method){
+    protected void setMethod(Method method) {
         if(method == null){
             Yggdrasil.LOGGER_REFLECTION.log(Level.WARNING, "Cannot create a new SafeMethod with a null instance passed in!");
         }
@@ -49,7 +49,7 @@ public class SafeMethod<T> implements MethodAccessor<T> {
                 throw new UnsupportedOperationException("Non-static methods require a valid instance passed in!");
             }
 
-            //check if param lenght is right
+            //check if param length is right
             if(args.length != this.params.length){
                 throw new UnsupportedOperationException("Not enough arguments!");
             }
