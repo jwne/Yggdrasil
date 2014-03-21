@@ -1,4 +1,4 @@
-package com.captainbern.yggdrasil.internal;
+package com.captainbern.yggdrasil.core;
 
 import com.captainbern.yggdrasil.economy.EconomyProvider;
 import com.captainbern.yggdrasil.permissions.PermissionsProvider;

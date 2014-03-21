@@ -1,7 +1,7 @@
 package com.captainbern.yggdrasil.protection.region.plugins;
 
 import com.captainbern.yggdrasil.exceptions.PluginHookException;
-import com.captainbern.yggdrasil.internal.Yggdrasil;
+import com.captainbern.yggdrasil.core.Yggdrasil;
 import com.captainbern.yggdrasil.protection.region.Region;
 import com.captainbern.yggdrasil.protection.region.RegionFlag;
 import com.captainbern.yggdrasil.protection.region.RegionProtectionProvider;

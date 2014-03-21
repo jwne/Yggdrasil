@@ -1,4 +1,4 @@
-package com.captainbern.yggdrasil.internal;
+package com.captainbern.yggdrasil.core;
 
 import com.captainbern.yggdrasil.BukkitPlugin;
 import com.captainbern.yggdrasil.ModuleLogger;

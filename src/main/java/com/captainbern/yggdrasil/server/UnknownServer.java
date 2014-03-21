@@ -1,7 +1,7 @@
 package com.captainbern.yggdrasil.server;
 
 
-import com.captainbern.yggdrasil.internal.Yggdrasil;
+import com.captainbern.yggdrasil.core.Yggdrasil;
 
 public class UnknownServer extends CraftBukkitServer { //we do not know this server brand so let's guess it's some random bukkit server.
 

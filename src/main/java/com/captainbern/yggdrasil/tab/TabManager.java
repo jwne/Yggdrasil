@@ -1,6 +1,6 @@
 package com.captainbern.yggdrasil.tab;
 
-import com.captainbern.yggdrasil.internal.Yggdrasil;
+import com.captainbern.yggdrasil.core.Yggdrasil;
 
 public class TabManager {
 

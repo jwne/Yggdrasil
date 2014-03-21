@@ -1,7 +1,7 @@
 package com.captainbern.yggdrasil.protection.block.plugins;
 
 import com.captainbern.yggdrasil.exceptions.PluginHookException;
-import com.captainbern.yggdrasil.internal.Yggdrasil;
+import com.captainbern.yggdrasil.core.Yggdrasil;
 import com.captainbern.yggdrasil.protection.block.BlockProtectionProvider;
 import com.griefcraft.lwc.LWC;
 import com.griefcraft.lwc.LWCPlugin;

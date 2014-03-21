@@ -28,10 +28,6 @@ public class FieldVisitor<T> {
      */
     protected Map<Class, FieldVisitor> cache;
 
-    public FieldVisitor() {
-        this(null);
-    }
-
     public FieldVisitor(Object handle) {
         this(handle, ClassTemplate.create(handle.getClass()));
     }
@@ -193,7 +189,7 @@ public class FieldVisitor<T> {
      * @return
      */
     protected FieldVisitor<T> constructNewVisitor(Class type, List<FieldAccessor> fields, Map<Class, FieldVisitor> visitorMap) {
-        FieldVisitor<T> visitor = new FieldVisitor<T>();
+        FieldVisitor<T> visitor = new FieldVisitor<T>(this.handle);
         visitor.initialize(getHandle(), ClassTemplate.create(type), fields, visitorMap);
         return visitor;
     }

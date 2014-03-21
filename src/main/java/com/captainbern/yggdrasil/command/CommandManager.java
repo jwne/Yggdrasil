@@ -19,7 +19,7 @@ package com.captainbern.yggdrasil.command;
 
 import com.captainbern.yggdrasil.command.core.Command;
 import com.captainbern.yggdrasil.command.core.CommandPermissions;
-import com.captainbern.yggdrasil.internal.Yggdrasil;
+import com.captainbern.yggdrasil.core.Yggdrasil;
 import com.captainbern.yggdrasil.reflection.FieldAccessor;
 import com.captainbern.yggdrasil.reflection.SafeField;
 import org.bukkit.Bukkit;

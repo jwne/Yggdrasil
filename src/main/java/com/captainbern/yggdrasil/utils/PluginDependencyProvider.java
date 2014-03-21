@@ -1,7 +1,7 @@
 package com.captainbern.yggdrasil.utils;
 
 import com.captainbern.yggdrasil.exceptions.PluginHookException;
-import com.captainbern.yggdrasil.internal.Yggdrasil;
+import com.captainbern.yggdrasil.core.Yggdrasil;
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;

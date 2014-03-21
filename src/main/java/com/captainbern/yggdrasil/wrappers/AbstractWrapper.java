@@ -1,6 +1,6 @@
 package com.captainbern.yggdrasil.wrappers;
 
-import com.captainbern.yggdrasil.internal.Yggdrasil;
+import com.captainbern.yggdrasil.core.Yggdrasil;
 import com.captainbern.yggdrasil.utils.LogicUtil;
 
 public class AbstractWrapper {

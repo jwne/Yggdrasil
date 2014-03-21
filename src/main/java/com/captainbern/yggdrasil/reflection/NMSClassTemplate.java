@@ -1,6 +1,6 @@
 package com.captainbern.yggdrasil.reflection;
 
-import com.captainbern.yggdrasil.internal.Yggdrasil;
+import com.captainbern.yggdrasil.core.Yggdrasil;
 import com.captainbern.yggdrasil.utils.CommonUtil;
 
 import java.util.logging.Level;

@@ -17,7 +17,7 @@
 */
 package com.captainbern.yggdrasil.command;
 
-import com.captainbern.yggdrasil.internal.Yggdrasil;
+import com.captainbern.yggdrasil.core.Yggdrasil;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;

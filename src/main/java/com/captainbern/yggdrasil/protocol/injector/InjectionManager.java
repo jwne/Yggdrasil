@@ -1,7 +1,7 @@
 package com.captainbern.yggdrasil.protocol.injector;
 
 import com.captainbern.yggdrasil.collection.PlayerHashMap;
-import com.captainbern.yggdrasil.internal.Yggdrasil;
+import com.captainbern.yggdrasil.core.Yggdrasil;
 import org.bukkit.entity.Player;
 
 /**

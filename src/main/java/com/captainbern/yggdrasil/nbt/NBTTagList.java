@@ -1,6 +1,6 @@
 package com.captainbern.yggdrasil.nbt;
 
-import com.captainbern.yggdrasil.internal.Yggdrasil;
+import com.captainbern.yggdrasil.core.Yggdrasil;
 import com.captainbern.yggdrasil.nbt.exception.NBTReadException;
 import com.captainbern.yggdrasil.nbt.exception.NBTWriteException;
 import com.captainbern.yggdrasil.reflection.MethodAccessor;

@@ -1,6 +1,6 @@
 package com.captainbern.yggdrasil.reflection;
 
-import com.captainbern.yggdrasil.internal.Yggdrasil;
+import com.captainbern.yggdrasil.core.Yggdrasil;
 import com.captainbern.yggdrasil.utils.CommonUtil;
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
@@ -101,7 +101,7 @@ public class ClassTemplate<T> {
 
     public static ClassTemplate<?> create(Class<?> type) {
         if(type == null){
-            Yggdrasil.LOGGER_REFLECTION.log(Level.WARNING, "Cannot set class type to null!");
+            Yggdrasil.LOGGER_REFLECTION.log(Level.WARNING, "Cannot set class type to NULL!");
             return null;
         }
         return new ClassTemplate(type);
@@ -157,6 +157,14 @@ public class ClassTemplate<T> {
 
     public <K> FieldAccessor<K> getField(String fieldName) {
         return new SafeField<K>(getType(), fieldName);
+    }
+
+    public <K> FieldAccessor<K> getField(int index) {
+        if(index < 0 || index >= this.fields.size()) {
+            throw new IndexOutOfBoundsException("Size: " + this.fields.size() + ". Requested: " + index);
+        }
+
+        return this.fields.get(index);
     }
 
     public <K> SafeConstructor<K> getConstructor(Class<?>... params) {

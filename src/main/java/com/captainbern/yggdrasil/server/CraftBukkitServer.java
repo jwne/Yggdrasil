@@ -1,6 +1,6 @@
 package com.captainbern.yggdrasil.server;
 
-import com.captainbern.yggdrasil.internal.Yggdrasil;
+import com.captainbern.yggdrasil.core.Yggdrasil;
 import com.captainbern.yggdrasil.reflection.FieldAccessor;
 import com.captainbern.yggdrasil.reflection.SafeField;
 import org.bukkit.Bukkit;

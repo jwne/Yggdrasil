@@ -1,6 +1,6 @@
 package com.captainbern.yggdrasil.protocol;
 
-import com.captainbern.yggdrasil.internal.Yggdrasil;
+import com.captainbern.yggdrasil.core.Yggdrasil;
 import com.captainbern.yggdrasil.protocol.event.PacketListener;
 import com.captainbern.yggdrasil.protocol.event.PacketMonitor;
 import com.captainbern.yggdrasil.protocol.injector.*;

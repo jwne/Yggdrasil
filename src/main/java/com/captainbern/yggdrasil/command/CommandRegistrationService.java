@@ -22,7 +22,7 @@ import com.captainbern.yggdrasil.command.core.CommandAlias;
 import com.captainbern.yggdrasil.command.core.CommandPermissions;
 import com.captainbern.yggdrasil.command.core.NestedCommand;
 import com.captainbern.yggdrasil.command.exceptions.*;
-import com.captainbern.yggdrasil.internal.Yggdrasil;
+import com.captainbern.yggdrasil.core.Yggdrasil;
 import com.captainbern.yggdrasil.utils.StringUtil;
 import org.bukkit.command.CommandSender;
 
