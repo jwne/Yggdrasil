@@ -11,7 +11,7 @@ public @interface Command {
 
     String name();
 
-    String[] aliases();
+    String[] aliases() default "";
 
     String usage() default "";
 
