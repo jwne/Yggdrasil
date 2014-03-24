@@ -93,7 +93,7 @@
 
         <!--
         Because factions is pretty
-        annoying, we also need to include "MCore" to check wheter or not Factions
+        annoying, we also need to include "MCore" to check whether or not Factions
         is enabled
         -->
         <dependency>
@@ -102,6 +102,16 @@
             <version>LATEST</version>
             <scope>system</scope>
             <systemPath>${basedir}/lib/mcore.jar</systemPath>
+            <optional>true</optional>
+        </dependency>
+
+        <!-- GriefPrevention -->
+        <dependency>
+            <groupId>me.ryanhamshire</groupId>
+            <artifactId>GriefPrevention</artifactId>
+            <version>LATEST</version>
+            <scope>system</scope>
+            <systemPath>${basedir}/lib/GriefPrevention.jar</systemPath>
             <optional>true</optional>
         </dependency>
 
@@ -134,6 +144,8 @@
                 <includes>
                     <include>*.yml</include>
                     <include>*.txt</include>
+                    <include>mappings/**/*.csv</include>
+                    <include>mappings/**/version.json</include>
                 </includes>
             </resource>
         </resources>

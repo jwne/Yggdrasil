@@ -7,7 +7,7 @@ import java.util.logging.Formatter;
 import java.util.logging.Handler;
 import java.util.logging.LogRecord;
 
-public class CBCommonLibFormatter extends Formatter {
+public class LogFileHandler extends Formatter {
 
     private final String line = "======================================================================";
 

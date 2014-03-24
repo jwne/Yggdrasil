@@ -1,6 +1,5 @@
 package com.captainbern.yggdrasil.protection.region.plugins;
 
-import com.captainbern.yggdrasil.exceptions.PluginHookException;
 import com.captainbern.yggdrasil.core.Yggdrasil;
 import com.captainbern.yggdrasil.protection.region.Region;
 import com.captainbern.yggdrasil.protection.region.RegionFlag;
@@ -15,81 +14,31 @@ import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
-import org.bukkit.event.server.PluginDisableEvent;
-import org.bukkit.event.server.PluginEnableEvent;
 
 import java.util.HashSet;
 import java.util.Set;
 
 public class RegionProtectionProvider_WorldGuard extends RegionProtectionProvider<WorldGuardPlugin> {
 
-    private Yggdrasil yggdrasil;
-    private WorldGuardPlugin worldGuardPlugin;
-    protected boolean hooked;
-
     public RegionProtectionProvider_WorldGuard(Yggdrasil yggdrasil) {
-        this.yggdrasil = yggdrasil;
-
-        if(this.worldGuardPlugin == null) {
-            this.worldGuardPlugin = (WorldGuardPlugin) Bukkit.getPluginManager().getPlugin(getName());
-
-            if(this.worldGuardPlugin != null && this.worldGuardPlugin.isEnabled()) {
-                this.hooked = true;
-                Yggdrasil.LOGGER.info("[" + getName() + "] Successfully hooked");
-            }
-        }
-
-        Bukkit.getPluginManager().registerEvents(new Listener() {
-
-            @EventHandler
-            protected void onEnable(PluginEnableEvent event) {
-                if((worldGuardPlugin == null) && (event.getPlugin().getName().equalsIgnoreCase(getName()))) {
-                    try {
-                        worldGuardPlugin = (WorldGuardPlugin) event.getPlugin();
-                        hooked = true;
-                        Yggdrasil.LOGGER.info("[" + getName() + "] Successfully hooked");
-                    } catch (Exception e) {
-                        throw new PluginHookException(event.getPlugin());
-                    }
-                }
-            }
-
-            @EventHandler
-            protected void onDisable(PluginDisableEvent event) {
-                if((worldGuardPlugin != null) && (event.getPlugin().getName().equalsIgnoreCase(getName()))) {
-                    worldGuardPlugin = null;
-                    hooked = false;
-                    Yggdrasil.LOGGER.info("[" + getName() + "] Successfully unhooked");
-                }
-            }
-
-            @Override
-            public int hashCode() {
-                return super.hashCode();
-            }
-        }, this.yggdrasil);
+        super(yggdrasil, "WorldGuard");
     }
 
     @Override
-    public String getName() {
-        return "WorldGuard";
+    public void onHook() {
+        // Ignore
     }
 
     @Override
-    public WorldGuardPlugin getProviderClass() {
-        return this.worldGuardPlugin;
+    public void onUnhook() {
+        // Ignore
     }
 
-    @Override
-    public boolean isHooked() {
-        return this.hooked;
-    }
+    // API
 
     @Override
     public boolean isInRegion(Location location) {
-        RegionManager regionManager = this.worldGuardPlugin.getRegionManager(location.getWorld());
+        RegionManager regionManager = this.getDependency().getRegionManager(location.getWorld());
         ApplicableRegionSet regions = regionManager.getApplicableRegions(location);
 
         if(regions.size() > 0) {
@@ -112,7 +61,7 @@ public class RegionProtectionProvider_WorldGuard extends RegionProtectionProvide
     public Set<Region> getRegionOf(Location location) {
         Set<Region> returnSet = new HashSet<Region>();
 
-        RegionManager regionManager = this.worldGuardPlugin.getRegionManager(location.getWorld());
+        RegionManager regionManager = this.getDependency().getRegionManager(location.getWorld());
         ApplicableRegionSet regions = regionManager.getApplicableRegions(location);
 
         for(ProtectedRegion protectedRegion : regions) {
@@ -135,8 +84,8 @@ public class RegionProtectionProvider_WorldGuard extends RegionProtectionProvide
     @Override
     public boolean hasRegions(Player player) {
         for(World world : Bukkit.getWorlds()) {
-            RegionManager regionManager = this.worldGuardPlugin.getRegionManager(world);
-            if(regionManager.getRegionCountOfPlayer(this.worldGuardPlugin.wrapPlayer(player)) > 0) {
+            RegionManager regionManager = this.getDependency().getRegionManager(world);
+            if(regionManager.getRegionCountOfPlayer(this.getDependency().wrapPlayer(player)) > 0) {
                 return true;
             }
         }
@@ -165,12 +114,12 @@ public class RegionProtectionProvider_WorldGuard extends RegionProtectionProvide
 
     @Override
     protected boolean canBuild(Player player, Location location) {
-        return getProviderClass().canBuild(player, location);
+        return this.getDependency().canBuild(player, location);
     }
 
     @Override
     protected boolean canBuild(Player player, Block block) {
-        return getProviderClass().canBuild(player, block);
+        return this.getDependency().canBuild(player, block);
     }
 
     /**

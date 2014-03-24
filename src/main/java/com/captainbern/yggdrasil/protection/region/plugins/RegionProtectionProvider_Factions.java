@@ -1,6 +1,5 @@
 package com.captainbern.yggdrasil.protection.region.plugins;
 
-import com.captainbern.yggdrasil.exceptions.PluginHookException;
 import com.captainbern.yggdrasil.core.Yggdrasil;
 import com.captainbern.yggdrasil.protection.region.Region;
 import com.captainbern.yggdrasil.protection.region.RegionFlag;
@@ -16,77 +15,27 @@ import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
-import org.bukkit.event.server.PluginDisableEvent;
-import org.bukkit.event.server.PluginEnableEvent;
 
 import java.util.HashSet;
 import java.util.Set;
 
 public class RegionProtectionProvider_Factions extends RegionProtectionProvider<Factions> {
 
-    private Yggdrasil yggdrasil;
-    private Factions factionsPlugin;
-    protected boolean hooked;
-
     public RegionProtectionProvider_Factions(Yggdrasil yggdrasil) {
-        this.yggdrasil = yggdrasil;
-
-        if(this.factionsPlugin == null) {
-            this.factionsPlugin = (Factions) Bukkit.getPluginManager().getPlugin(getName());
-
-            if(this.factionsPlugin != null && this.factionsPlugin.isEnabled()) {
-                this.hooked = true;
-                Yggdrasil.LOGGER.info("[" + getName() + "] Successfully hooked");
-            }
-        }
-
-        Bukkit.getPluginManager().registerEvents(new Listener() {
-
-            @EventHandler
-            protected void onEnable(PluginEnableEvent event) {
-                if((factionsPlugin == null) && (event.getPlugin().getName().equalsIgnoreCase(getName()))) {
-                    try {
-                        factionsPlugin = (Factions) event.getPlugin();
-                        hooked = true;
-                        Yggdrasil.LOGGER.info("[" + getName() + "] Successfully hooked");
-                    } catch (Exception e) {
-                        throw new PluginHookException(event.getPlugin());
-                    }
-                }
-            }
-
-            @EventHandler
-            protected void onDisable(PluginDisableEvent event) {
-                if((factionsPlugin != null) && (event.getPlugin().getName().equalsIgnoreCase(getName()))) {
-                    factionsPlugin = null;
-                    hooked = false;
-                    Yggdrasil.LOGGER.info("[" + getName() + "] Successfully unhooked");
-                }
-            }
-
-            @Override
-            public int hashCode() {
-                return super.hashCode();
-            }
-        }, this.yggdrasil);
+        super(yggdrasil, "Factions");
     }
 
     @Override
-    public String getName() {
-        return "Factions";
+    public void onHook() {
+        // Ignore
     }
 
     @Override
-    public Factions getProviderClass() {
-        return this.factionsPlugin;
+    public void onUnhook() {
+        // Ignore
     }
 
-    @Override
-    public boolean isHooked() {
-        return this.hooked;
-    }
+    // API
 
     @Override
     public boolean isInRegion(Location location) {

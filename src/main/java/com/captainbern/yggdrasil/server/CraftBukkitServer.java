@@ -27,7 +27,8 @@ public class CraftBukkitServer implements CommonServer {
             return false;
         }
 
-        MC_VERSION = Bukkit.getServer().getClass().getPackage().getName().replace(".", ",").split(",")[3];
+        final String PACKAGE_NAME = Bukkit.getServer().getClass().getPackage().getName();
+        MC_VERSION = PACKAGE_NAME.substring(PACKAGE_NAME.lastIndexOf('.') + 1);
 
         if(MC_VERSION.isEmpty()) {
             CRAFTBUKKIT_VERSIONED = Yggdrasil.getCraftBukkitRoot();

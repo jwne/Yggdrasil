@@ -1,19 +1,19 @@
 package com.captainbern.yggdrasil.protection.region;
 
+import com.captainbern.yggdrasil.utils.PluginDependencyProvider;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.Plugin;
 
 import java.util.Set;
 
-public abstract class RegionProtectionProvider<T> {
+public abstract class RegionProtectionProvider<T extends Plugin> extends PluginDependencyProvider<T> {
 
-    abstract public String getName();
-
-    abstract public T getProviderClass();
-
-    abstract public boolean isHooked();
+    public RegionProtectionProvider(Plugin myPluginInstance, String dependencyName) {
+        super(myPluginInstance, dependencyName);
+    }
 
     abstract public boolean isInRegion(Location location);
 

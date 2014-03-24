@@ -4,7 +4,8 @@ import com.captainbern.yggdrasil.BukkitPlugin;
 import com.captainbern.yggdrasil.ModuleLogger;
 import com.captainbern.yggdrasil.command.ObjectInstantiator;
 import com.captainbern.yggdrasil.debug.CommandDebug;
-import com.captainbern.yggdrasil.logging.CBCommonLibFormatter;
+import com.captainbern.yggdrasil.logging.LogFileHandler;
+import com.captainbern.yggdrasil.mapper.MapManager;
 import com.captainbern.yggdrasil.protocol.CommonProtocolManager;
 import com.captainbern.yggdrasil.protocol.ProtocolManager;
 import com.captainbern.yggdrasil.server.*;
@@ -12,6 +13,7 @@ import com.captainbern.yggdrasil.threading.ThreadManager;
 import org.bukkit.Bukkit;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.FileHandler;
@@ -55,6 +57,10 @@ public class Yggdrasil extends BukkitPlugin {
      */
     private static Yggdrasil instance;
 
+    /**
+     * The MapManager
+     */
+    private static MapManager mapManager;
 
     /**
      * The server brand
@@ -102,7 +108,7 @@ public class Yggdrasil extends BukkitPlugin {
             }
 
             FileHandler fileHandler = new FileHandler(getDataFolder() + File.separator + "logs" + File.separator + "lib.log", true);
-            CBCommonLibFormatter formatter = new CBCommonLibFormatter();
+            LogFileHandler formatter = new LogFileHandler();
             fileHandler.setFormatter(formatter);
 
             LOGGER.addHandler(fileHandler);
@@ -123,6 +129,12 @@ public class Yggdrasil extends BukkitPlugin {
                 LOGGER.warning("It seems like this server is not compatible with " +
                         "this version of Yggdrasil! Let's try anyways...");
             }
+        }
+
+        try {
+            mapManager = new MapManager(this.getClass(), commonServer.getMCVersion());
+        } catch (IOException e) {
+            e.printStackTrace();
         }
 
         // register commands

@@ -5,6 +5,7 @@ import com.captainbern.yggdrasil.reflection.ClassTemplate;
 import com.captainbern.yggdrasil.reflection.FieldAccessor;
 import com.captainbern.yggdrasil.reflection.FieldVisitor;
 import com.captainbern.yggdrasil.reflection.NMSClassTemplate;
+import net.minecraft.util.io.netty.buffer.ByteBuf;
 
 import java.io.Serializable;
 
@@ -166,5 +167,17 @@ public class Packet implements Serializable {
 
     public FieldVisitor<Double> getDoubles() {
         return this.visitor.withType(double.class);
+    }
+
+    public ByteBuf toByteBuf() {
+        return null;
+    }
+
+    public static void read() {
+
+    }
+
+    public static void write() {
+
     }
 }

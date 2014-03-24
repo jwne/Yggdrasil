@@ -8,7 +8,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public abstract class BukkitPlugin extends JavaPlugin {
 
-    private CommandManager commandManager;
+    protected CommandManager commandManager;
 
     @Override
     public void onDisable() {
@@ -29,14 +29,6 @@ public abstract class BukkitPlugin extends JavaPlugin {
     public abstract void load();
 
     public abstract void unLoad();
-
-    public String getVersion() {
-        return super.getDescription().getVersion();
-    }
-
-    public String getPluginDescription() {
-        return super.getDescription().getDescription();
-    }
 
     public CommandManager getCommandManager() {
         return this.commandManager;

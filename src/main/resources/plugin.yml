@@ -1,4 +1,4 @@
-name: CBCommonLib
+name: Yggdrasil
 description: A library with several tools
 version: ${project.version}
-main: ${main.class}
+main: com.captainbern.yggdrasil.core.Yggdrasil
