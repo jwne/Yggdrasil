@@ -371,7 +371,100 @@ public class IOUtils {
     }
 
     /**
+     * Converts a string to a byte-array
+     * @param data
+     * @return
+     */
+    public static byte[] toByteArray(final String data) {
+        if(data == null) {
+            return null;
+        }
+
+        return data.getBytes();
+    }
+
+    /**
+     * Converts a string-array to a byte-array.
+     * @param data
+     * @return
+     */
+    public static byte[] toByteArray(final String[] data) {
+        if (data == null) {
+            return null;
+        }
+
+        int totalLength = 0;
+        int bytesPos = 0;
+
+        byte[] dLen = toByteArray(data.length);
+        totalLength += dLen.length;
+        int[] sLens = new int[data.length];
+        totalLength += (sLens.length * 4);
+        byte[][] strings = new byte[data.length][];
+
+        for (int i = 0; i < data.length; i++) {
+            if (data[i] != null) {
+                strings[i] = toByteArray(data[i]);
+                sLens[i] = strings[i].length;
+                totalLength += strings[i].length;
+            } else {
+                sLens[i] = 0;
+                strings[i] = new byte[0];
+            }
+        }
+
+        byte[] bytes = new byte[totalLength];
+        System.arraycopy(dLen, 0, bytes, 0, 4);
+        byte[] bsLens = toByteArray(sLens);
+        System.arraycopy(bsLens, 0, bytes, 4, bsLens.length);
+
+        bytesPos += 4 + bsLens.length;
+
+        for (byte[] sba : strings) {
+            System.arraycopy(sba, 0, bytes, bytesPos, sba.length);
+            bytesPos += sba.length;
+        }
+
+        return bytes;
+    }
+
+    /**
+     * Converts a boolean to a byte-array
+     * @param data
+     * @return
+     */
+    public static byte[] toByteArray(final boolean data) {
+        return new byte[]{(byte) (data? 0x01 : 0x00)};
+    }
+
+    /**
+     * Converts a boolean-array to a byte-array
+     * @param data
+     * @return
+     */
+    public static byte[] toByteArray(final boolean[] data) {
+        if (data == null) {
+            return null;
+        }
+
+        int len = data.length;
+        byte[] lena = toByteArray(len);
+        byte[] bytes = new byte[lena.length + (len / 8) + (len % 8 != 0 ? 1 : 0)];
+
+        System.arraycopy(lena, 0, bytes, 0, lena.length);
+
+        for (int i = 0, j = lena.length, k = 7; i < data.length; i++) {
+            bytes[j] |= (data[i] ? 1 : 0) << k--;
+            if (k < 0) { j++; k = 7; }
+        }
+
+        return bytes;
+    }
+
+    /**
+     * -------------------------------------------------------------------------
      * Read methods
+     * -------------------------------------------------------------------------
      */
 
     /**
@@ -551,17 +644,101 @@ public class IOUtils {
         long[] longs = new long[bytes.length / 8];
         for(int i = 0; i < longs.length; i++) {
             longs[i] = readLong(new byte[]{
-                    bytes[(i*8)],
-                    bytes[(i*8)+1],
-                    bytes[(i*8)+2],
-                    bytes[(i*8)+3],
-                    bytes[(i*8)+4],
-                    bytes[(i*8)+5],
-                    bytes[(i*8)+6],
-                    bytes[(i*8)+7],
+                    bytes[(i * 8)],
+                    bytes[(i * 8) + 1],
+                    bytes[(i * 8) + 2],
+                    bytes[(i * 8) + 3],
+                    bytes[(i * 8) + 4],
+                    bytes[(i * 8) + 5],
+                    bytes[(i * 8) + 6],
+                    bytes[(i * 8) + 7],
             }, 0);
         }
 
         return longs;
+    }
+
+    /**
+     * Converts a byte-array to a string-array
+     * @param bytes
+     * @return
+     */
+    public static String readString(final byte[] bytes) {
+        if(bytes == null) {
+            return null;
+        }
+
+        return new String(bytes);
+    }
+
+    /**
+     * Converts a byte-array to a string-array
+     * @param bytes
+     * @return
+     */
+    public static String[] toStringArray(final byte[] bytes) {
+        if (bytes == null || bytes.length < 4) {
+            return null;
+        }
+
+        byte[] bBuff = new byte[4]; // Buffer
+
+        System.arraycopy(bytes, 0, bBuff, 0, 4);
+        int saLen = readInt(bBuff, 0);
+        if (bytes.length < (4 + (saLen * 4))) return null;
+
+        bBuff = new byte[saLen * 4];
+        System.arraycopy(bytes, 4, bBuff, 0, bBuff.length);
+        int[] sLens = toIntArray(bBuff);
+        if (sLens == null) return null;
+
+        String[] strings = new String[saLen];
+        for (int i = 0, dataPos = 4 + (saLen * 4); i < saLen; i++) {
+            if (sLens[i] > 0) {
+                if (bytes.length >= (dataPos + sLens[i])) {
+                    bBuff = new byte[sLens[i]];
+                    System.arraycopy(bytes, dataPos, bBuff, 0, sLens[i]);
+                    dataPos += sLens[i];
+                    strings[i] = readString(bBuff);
+                } else return null;
+            }
+        }
+
+        return strings;
+    }
+
+    /**
+     * Converts a byte-array to a boolean
+     * @param bytes
+     * @return
+     */
+    public static boolean readBoolean(final byte[] bytes) {
+        return (bytes == null || bytes.length == 0) ? false : bytes[0] != 0x00;
+    }
+
+    /**
+     * Converts a byte-array to a boolean array
+     * @param bytes
+     * @return
+     */
+    public static boolean[] toBooleanArray(final byte[] bytes) {
+        if (bytes == null || bytes.length < 4) {
+            return null;
+        }
+
+        int len = readInt(new byte[]{
+                bytes[0],
+                bytes[1],
+                bytes[2],
+                bytes[3]
+        }, 0);
+
+        boolean[] booleans = new boolean[len];
+        for (int i = 0, j = 4, k = 7; i < booleans.length; i++) {
+            booleans[i] = ((bytes[j] >> k--) & 0x01) == 1;
+            if (k < 0) { j++; k = 7; }
+        }
+
+        return booleans;
     }
 }
