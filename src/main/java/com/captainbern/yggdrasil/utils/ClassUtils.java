@@ -19,6 +19,10 @@ public class ClassUtils {
 
     public static final String PACKAGE_SEPARATOR = String.valueOf(PACKAGE_SEPARATOR_CHAR);
 
+    public ClassUtils() {
+        super();
+    }
+
     private static final HashMap<Class, Class> wrapperToPrimitive = new HashMap<Class, Class>();
 
     static {
@@ -133,11 +137,7 @@ public class ClassUtils {
      * @throws IOException
      */
     public static byte[] classToBytes(String source) throws IOException {
-        return IOUtils.toByteArray(ClassLoader.getSystemResourceAsStream(source.replace(PACKAGE_SEPARATOR, IOUtils.DIR_SEPARATOR) + CLASS_FILE_SUFFIX));
-    }
-
-    public static byte[] classToBytes(Class clazz) throws IOException {
-        return classToBytes(clazz.getCanonicalName());
+        return IOUtils.toByteArray(ClassLoader.getSystemResourceAsStream(source.replace('.', '/') + ".class"));
     }
 
     /**
@@ -166,14 +166,14 @@ public class ClassUtils {
      * @return
      * @throws IOException
      */
-    public static int getMagic(final Class clazz) throws IOException {
+    public static int getMagic(final String clazz) throws IOException {
         if(clazz == null) {
             return 0;
         }
 
         byte[] bytes = classToBytes(clazz);
 
-        return IOUtils.readUnsignedShort(bytes, 0);
+        return IOUtils.readInt(bytes, 0);
     }
 
     /**
@@ -182,14 +182,14 @@ public class ClassUtils {
      * @return
      * @throws IOException
      */
-    public static int getMinorVersion(Class clazz) throws IOException {
+    public static int getMinorVersion(final String clazz) throws IOException {
         if(clazz == null) {
             return 0;
         }
 
         byte[] bytes = classToBytes(clazz);
 
-        return IOUtils.readUnsignedShort(bytes, 4);
+        return IOUtils.readShort(bytes, 4);
     }
 
     /**
@@ -198,13 +198,13 @@ public class ClassUtils {
      * @return
      * @throws IOException
      */
-    public static final int getMajorVersion(Class clazz) throws IOException {
+    public static final int getMajorVersion(final String clazz) throws IOException {
         if(clazz == null) {
             return 0;
         }
 
         byte[] bytes = classToBytes(clazz);
 
-        return IOUtils.readUnsignedShort(bytes, 6);
+        return IOUtils.readShort(bytes, 6);
     }
 }

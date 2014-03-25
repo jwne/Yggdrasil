@@ -8,6 +8,10 @@ public class IOUtils {
 
     public static final int DEFAULT_BUFFER_SIZE = 0x1060;
 
+    public IOUtils() {
+        super();
+    }
+
     /**
      * Close methods
      */
@@ -487,7 +491,7 @@ public class IOUtils {
      * @return
      */
     public static int readUnsignedShort(final byte[] bytes, final int index) {
-        if (bytes == null || bytes.length != 2) {
+        if (bytes == null || (bytes.length - index) < 2) {
             return 0x0;
         }
 
@@ -504,7 +508,7 @@ public class IOUtils {
      * @return
      */
     public static short readShort(final byte[] bytes, final int index) {
-        if(bytes == null || bytes.length != 2) {
+        if(bytes == null || (bytes.length - index) < 2) {
             return 0x0;
         }
 
@@ -542,7 +546,7 @@ public class IOUtils {
      * @return
      */
     public static char readChar(final byte[] bytes, final int index) {
-        if(bytes == null || bytes.length != 2) {
+        if(bytes == null || (bytes.length - index) < 2) {
             return 0x0;
         }
 
@@ -580,13 +584,13 @@ public class IOUtils {
      * @return
      */
     public static int readInt(final byte[] bytes, final int index) {
-        if(bytes == null || bytes.length != 4) {
+        if(bytes == null || (bytes.length - index) < 4) {
             return 0x0;
         }
 
         return (
                 (bytes[index] & 0xFF) << 24) |
-                ((bytes[index + 1] & 0xFF) << 16)|
+                ((bytes[index + 1] & 0xFF) << 16) |
                 ((bytes[index + 2] & 0xFF) << 8) |
                 (bytes[index + 3] & 0xFF
                 );
@@ -622,7 +626,7 @@ public class IOUtils {
      * @return
      */
     public static long readLong(final byte[] bytes, final int index) {
-        if(bytes == null || bytes.length != 8) {
+        if(bytes == null || (bytes.length - index) < 8) {
             return 0x0;
         }
 
