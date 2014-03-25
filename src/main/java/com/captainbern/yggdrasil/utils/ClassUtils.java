@@ -137,7 +137,7 @@ public class ClassUtils {
      * @throws IOException
      */
     public static byte[] classToBytes(String source) throws IOException {
-        return IOUtils.toByteArray(ClassLoader.getSystemResourceAsStream(source.replace('.', '/') + ".class"));
+        return IOUtils.toByteArray(ClassLoader.getSystemResourceAsStream(source.replace(PACKAGE_SEPARATOR_CHAR, IOUtils.DIR_SEPARATOR_CHAR) + CLASS_FILE_SUFFIX));
     }
 
     /**
@@ -145,7 +145,7 @@ public class ClassUtils {
      * @param clazz
      * @return
      */
-    public static final File getJarLocation(Class clazz) {
+    public static File getJarLocation(Class clazz) {
         CodeSource source = clazz.getProtectionDomain().getCodeSource();
 
         try {
@@ -162,49 +162,56 @@ public class ClassUtils {
 
     /**
      * Returns the magic of a class file. (Default: 0xCAFEBABE)
-     * @param clazz
+     * @param bytes
      * @return
      * @throws IOException
      */
-    public static int getMagic(final String clazz) throws IOException {
-        if(clazz == null) {
+    public static int getMagic(final byte[] bytes) throws IOException {
+        if(bytes == null) {
             return 0;
         }
-
-        byte[] bytes = classToBytes(clazz);
 
         return IOUtils.readInt(bytes, 0);
     }
 
     /**
      * Returns the minor version of a class file.
-     * @param clazz
+     * @param bytes
      * @return
      * @throws IOException
      */
-    public static int getMinorVersion(final String clazz) throws IOException {
-        if(clazz == null) {
+    public static int getMinorVersion(final byte[] bytes) throws IOException {
+        if(bytes == null) {
             return 0;
         }
-
-        byte[] bytes = classToBytes(clazz);
 
         return IOUtils.readShort(bytes, 4);
     }
 
     /**
      * Returns the major version of a class file.
-     * @param clazz
+     * @param bytes
      * @return
      * @throws IOException
      */
-    public static final int getMajorVersion(final String clazz) throws IOException {
-        if(clazz == null) {
+    public static int getMajorVersion(final byte[] bytes) throws IOException {
+        if(bytes == null) {
             return 0;
         }
 
-        byte[] bytes = classToBytes(clazz);
-
         return IOUtils.readShort(bytes, 6);
+    }
+
+    /**
+     * Returns the constant-pool size of the given class.
+     * @param bytes
+     * @return
+     */
+    public static int getConstantPoolSize(final byte[] bytes) {
+        if(bytes == null) {
+            return 0;
+        }
+
+        return IOUtils.readShort(bytes, 8);
     }
 }

@@ -4,6 +4,8 @@ import java.io.*;
 
 public class IOUtils {
 
+    public static final char DIR_SEPARATOR_CHAR = '/';
+
     public static final String DIR_SEPARATOR = File.pathSeparator;
 
     public static final int DEFAULT_BUFFER_SIZE = 0x1060;
