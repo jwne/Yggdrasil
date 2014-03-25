@@ -4,6 +4,8 @@ import java.io.*;
 
 public class IOUtils {
 
+    public static final String DIR_SEPARATOR = File.pathSeparator;
+
     public static final int DEFAULT_BUFFER_SIZE = 0x1060;
 
     /**
@@ -162,5 +164,85 @@ public class IOUtils {
             copy(reader, outputStream, encoding);
             return outputStream.toByteArray();
         }
+    }
+
+    public static byte[] toByteArray(final byte data) {
+        return new byte[]{data};
+    }
+
+    public static byte[] toByteArray(final short data) {
+        return new byte[]{
+                (byte) ((data >> 8) & 0xFF),
+                (byte) ((data >> 0) & 0xFF)
+        };
+    }
+
+    public static byte[] toByteArray(final char data) {
+        return new byte[]{
+                (byte) ((data >> 8) & 0xFF),
+                (byte) ((data >> 0) & 0xFF)
+        };
+    }
+
+    public static byte[] toByteArray(final int data) {
+        return new byte[]{
+                (byte) ((data >> 24) & 0xFF),
+                (byte) ((data >> 16) & 0xFF),
+                (byte) ((data >> 8) & 0xFF),
+                (byte) ((data >> 0) & 0xFF)
+        };
+    }
+
+    public static byte[] toByteArray(final long data) {
+        return new byte[]{
+                (byte) ((data >> 56) & 0xFF),
+                (byte) ((data >> 48) & 0xFF),
+                (byte) ((data >> 40) & 0xFF),
+                (byte) ((data >> 32) & 0xFF),
+                (byte) ((data >> 24) & 0xFF),
+                (byte) ((data >> 16) & 0xFF),
+                (byte) ((data >> 8) & 0xFF),
+                (byte) ((data >> 0) & 0xFF)
+        };
+    }
+
+    /**
+     * Read methods
+     */
+    public static int readByte(final byte[] bytes, final int index) {
+        return bytes[index] & 0xFF;
+    }
+
+    public static int readUnsignedShort(final byte[] bytes, final int index) {
+        return (
+                (bytes[index] & 0xFF) << 8) |
+                (bytes[index + 1] & 0xFF
+                );
+    }
+
+    public static short readShort(final byte[] bytes, final int index) {
+        return (short) readUnsignedShort(bytes, index);
+    }
+
+    public static char readChar(final byte[] bytes, final int index) {
+        return (char) ((
+                (bytes[index] & 0xFF) << 8) |
+                (bytes[index] & 0xFF) << 0
+        );
+    }
+
+    public static int readInt(final byte[] bytes, final int index) {
+        return (
+                (bytes[index] & 0xFF) << 24) |
+                ((bytes[index + 1] & 0xFF) << 16)|
+                ((bytes[index + 2] & 0xFF) << 8) |
+                (bytes[index + 3] & 0xFF
+                );
+    }
+
+    public static long readLong(final byte[] bytes, final int index) {
+        long l1 = readInt(bytes, index);
+        long l0 = readInt(bytes, index + 4) & 0xFFFFFFFFL;
+        return (l1 << 32) | l0;
     }
 }
