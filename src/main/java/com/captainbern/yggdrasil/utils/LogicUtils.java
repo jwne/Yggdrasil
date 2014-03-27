@@ -7,7 +7,7 @@ import java.lang.reflect.Array;
 import java.util.Collection;
 import java.util.Map;
 
-public class LogicUtil {
+public class LogicUtils {
 
     public static String toString(final Object object){
         return object == null ? "" : object.toString();

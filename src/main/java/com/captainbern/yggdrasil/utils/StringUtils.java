@@ -4,7 +4,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
 
-public class StringUtil {
+public class StringUtils {
 
     private final static String EMPTY = "";
 
@@ -20,7 +20,7 @@ public class StringUtil {
         }
         Object first = iterator.next();
         if (!iterator.hasNext()) {
-            return LogicUtil.toString(first);
+            return LogicUtils.toString(first);
         }
 
         StringBuilder buf = new StringBuilder(256);
@@ -48,7 +48,7 @@ public class StringUtil {
         }
         Object first = iterator.next();
         if (!iterator.hasNext()) {
-            return LogicUtil.toString(first);
+            return LogicUtils.toString(first);
         }
 
         StringBuilder buf = new StringBuilder(256);

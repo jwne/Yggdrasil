@@ -2,7 +2,7 @@ package com.captainbern.yggdrasil.utils;
 
 import com.captainbern.yggdrasil.core.Yggdrasil;
 
-public class CommonUtil {
+public class CommonUtils {
 
     public static Class<?> getNMSClass(String className){
         return Yggdrasil.getCommonServer().getNMSClass(className);

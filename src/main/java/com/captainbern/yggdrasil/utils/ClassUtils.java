@@ -2,6 +2,8 @@ package com.captainbern.yggdrasil.utils;
 
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Method;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.security.CodeSource;
@@ -24,7 +26,6 @@ public class ClassUtils {
     }
 
     private static final HashMap<Class, Class> wrapperToPrimitive = new HashMap<Class, Class>();
-
     static {
         wrapperToPrimitive.put(Boolean.class, boolean.class);
         wrapperToPrimitive.put(Byte.class, byte.class);
@@ -45,6 +46,19 @@ public class ClassUtils {
                 primitiveToWrapper.put(primitive, wrapper);
             }
         }
+    }
+
+    private static final HashMap<Class, Character> typeToDescriptor = new HashMap<Class, Character>();
+    static {
+        typeToDescriptor.put(Integer.TYPE, 'I');
+        typeToDescriptor.put(Void.TYPE, 'V');
+        typeToDescriptor.put(Boolean.TYPE, 'Z');
+        typeToDescriptor.put(Byte.TYPE, 'B');
+        typeToDescriptor.put(Character.TYPE, 'C');
+        typeToDescriptor.put(Short.TYPE, 'S');
+        typeToDescriptor.put(Double.TYPE, 'D');
+        typeToDescriptor.put(Float.TYPE, 'F');
+        typeToDescriptor.put(Long.TYPE, 'J');
     }
 
     /**
@@ -130,6 +144,10 @@ public class ClassUtils {
         return loader;
     }
 
+    public static String getClassName(Class<?> clazz) {
+        return clazz.getName().replace(PACKAGE_SEPARATOR_CHAR, IOUtils.DIR_SEPARATOR_CHAR) + CLASS_FILE_SUFFIX;
+    }
+
     /**
      * Converts a class to a byte-array or bytecode.
      * @param source
@@ -203,15 +221,76 @@ public class ClassUtils {
     }
 
     /**
-     * Returns the constant-pool size of the given class.
-     * @param bytes
+     * Returns the descriptor of a given class
+     * @param clazz
      * @return
      */
-    public static int getConstantPoolSize(final byte[] bytes) {
-        if(bytes == null) {
-            return 0;
+    public static String getClassDescriptor(final Class<?> clazz) {
+        StringBuffer buffer = new StringBuffer();
+        getDescriptor(buffer, clazz);
+        return buffer.toString();
+    }
+
+    /**
+     * Returns a constructor descriptor
+     * @param constructor
+     * @return
+     */
+    public static String getConstructorDescriptor(final Constructor constructor) {
+        StringBuffer buffer = new StringBuffer();
+        buffer.append('(');
+
+        Class[] parameters = constructor.getParameterTypes();
+        for(Class<?> param : parameters) {
+            getDescriptor(buffer, param);
         }
 
-        return IOUtils.readShort(bytes, 8);
+        return buffer.append(")V").toString();
+    }
+
+    /**
+     * Returns the method-descriptor of a method
+     * @param method
+     * @return
+     */
+    public static String getMethodDescriptor(final Method method) {
+        Class<?>[] parameters = method.getParameterTypes();
+        StringBuffer buf = new StringBuffer();
+        buf.append('(');
+        for (int i = 0; i < parameters.length; ++i) {
+            getDescriptor(buf, parameters[i]);
+        }
+        buf.append(')');
+        getDescriptor(buf, method.getReturnType());
+        return buf.toString();
+    }
+
+    /**
+     * Returns the descriptor of a given class.
+     * @param buffer
+     * @param clazz
+     */
+    public static void getDescriptor(final StringBuffer buffer, final Class<?> clazz) {
+        Class<?> d = clazz;
+        while (true) {
+            if (d.isPrimitive()) {
+                char car = typeToDescriptor.get(clazz);
+                buffer.append(car);
+                return;
+            } else if (d.isArray()) {
+                buffer.append('[');
+                d = d.getComponentType();
+            } else {
+                buffer.append('L');
+                String name = d.getName();
+                int len = name.length();
+                for (int i = 0; i < len; ++i) {
+                    char car = name.charAt(i);
+                    buffer.append(car == '.' ? '/' : car);
+                }
+                buffer.append(';');
+                return;
+            }
+        }
     }
 }

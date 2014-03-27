@@ -3,7 +3,7 @@ package com.captainbern.yggdrasil.wrappers;
 import com.captainbern.yggdrasil.reflection.NMSClassTemplate;
 import com.captainbern.yggdrasil.reflection.refs.entity.DataWatcherRef;
 import com.captainbern.yggdrasil.reflection.refs.entity.EntityRef;
-import com.captainbern.yggdrasil.utils.EntityUtil;
+import com.captainbern.yggdrasil.utils.EntityUtils;
 import org.bukkit.entity.Entity;
 
 public class WrappedDataWatcher extends AbstractWrapper {
@@ -22,7 +22,7 @@ public class WrappedDataWatcher extends AbstractWrapper {
     public WrappedDataWatcher(Entity entity) {
         super(DataWatcherRef.TEMPLATE.getType());
 
-        setHandle(DataWatcherRef.CONSTRUCTOR.newInstance(EntityUtil.getHandle(entity)));
+        setHandle(DataWatcherRef.CONSTRUCTOR.newInstance(EntityUtils.getHandle(entity)));
     }
 
     public static WrappedDataWatcher withEntity(Entity entity) {

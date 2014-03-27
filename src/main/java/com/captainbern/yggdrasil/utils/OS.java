@@ -44,7 +44,7 @@ public enum OS {
     }
 
     public String getOsName() {
-        return StringUtil.join(this.names, "/");
+        return StringUtils.join(this.names, "/");
     }
 
     public String getKernelVersion() {

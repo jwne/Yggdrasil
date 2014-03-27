@@ -1,7 +1,7 @@
 package com.captainbern.yggdrasil;
 
-import com.captainbern.yggdrasil.utils.LogicUtil;
-import com.captainbern.yggdrasil.utils.StringUtil;
+import com.captainbern.yggdrasil.utils.LogicUtils;
+import com.captainbern.yggdrasil.utils.StringUtils;
 import org.bukkit.Bukkit;
 
 import java.util.logging.Level;
@@ -18,7 +18,7 @@ public class ModuleLogger extends Logger{
     }
 
     public ModuleLogger(Logger parent, String... modulePath) {
-        super(StringUtil.join(modulePath, "."), null);
+        super(StringUtils.join(modulePath, "."), null);
         this.setParent(parent);
         this.setLevel(Level.ALL);
         this.modulePath = modulePath;
@@ -30,7 +30,7 @@ public class ModuleLogger extends Logger{
     }
 
     public ModuleLogger getModule(String... path) {
-        return new ModuleLogger(this.getParent(), LogicUtil.appendArray(this.modulePath, path));
+        return new ModuleLogger(this.getParent(), LogicUtils.appendArray(this.modulePath, path));
     }
 
     @Override

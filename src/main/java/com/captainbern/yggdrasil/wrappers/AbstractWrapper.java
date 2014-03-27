@@ -1,7 +1,7 @@
 package com.captainbern.yggdrasil.wrappers;
 
 import com.captainbern.yggdrasil.core.Yggdrasil;
-import com.captainbern.yggdrasil.utils.LogicUtil;
+import com.captainbern.yggdrasil.utils.LogicUtils;
 
 public class AbstractWrapper {
 
@@ -9,7 +9,7 @@ public class AbstractWrapper {
     protected Class<?> handleType;
 
     public AbstractWrapper(final Class<?> handleType) {
-        this.handleType = LogicUtil.notNull(handleType, "HandleType may not be null!", Yggdrasil.LOGGER_REFLECTION);
+        this.handleType = LogicUtils.notNull(handleType, "HandleType may not be null!", Yggdrasil.LOGGER_REFLECTION);
     }
 
     protected void setHandle(final Object handle) {
