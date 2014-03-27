@@ -12,6 +12,8 @@ public class ClassReader {
 
     protected final int major;
 
+    protected ConstantPool pool;
+
     public ClassReader(final byte[] bytes) {
         this(bytes, 0);
     }
@@ -27,6 +29,8 @@ public class ClassReader {
 
         this.minor = IOUtils.readShort(bytes, offset + 4);
         this.major = IOUtils.readShort(bytes, offset + 6);
+
+        this.pool = new ConstantPool(bytes);
     }
 
     public final byte[] getBytes() {
@@ -43,5 +47,9 @@ public class ClassReader {
 
     public int getMajor() {
         return this.major;
+    }
+
+    public ConstantPool getConstantPool() {
+        return this.pool;
     }
 }

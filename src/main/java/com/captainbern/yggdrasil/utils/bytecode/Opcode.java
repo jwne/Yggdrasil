@@ -2,6 +2,15 @@ package com.captainbern.yggdrasil.utils.bytecode;
 
 public interface Opcode {
 
+    int JDK_1_1         = 0x2D; // Starting from 45 -> 52
+    int JDK_1_2         = 0x2E;
+    int JDK_1_3         = 0x2F;
+    int JDK_1_4         = 0x30;
+    int JDK_5           = 0x31;
+    int JDK_6           = 0x32;
+    int JDK_7           = 0x33;
+    int JDK_8           = 0x34;
+
     int AALOAD          = 50;
     int AASTORE         = 83;
     int ACONST_NULL     = 1;
@@ -270,15 +279,6 @@ public interface Opcode {
                         = 8;
     int H_INVOKEINTERFACE
                         = 9;
-
-    int JDK_1_1         = 45;
-    int JDK_1_2         = 46;
-    int JDK_1_3         = 47;
-    int JDK_1_4         = 48;
-    int JDK_5           = 49;
-    int JDK_6           = 50;
-    int JDK_7           = 51;
-    int JDK_8           = 52;
 
     //Credit: Javaassist
     int[] STACK_GROWTH = {
