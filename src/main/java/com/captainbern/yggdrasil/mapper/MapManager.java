@@ -1,6 +1,7 @@
 package com.captainbern.yggdrasil.mapper;
 
-import net.minecraft.util.org.apache.commons.io.IOUtils;
+import com.captainbern.yggdrasil.core.Yggdrasil;
+import com.captainbern.yggdrasil.utils.IOUtils;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -9,27 +10,51 @@ import java.io.InputStream;
 
 public class MapManager {
 
-    protected Mapper nms_mapper;
-    protected Mapper cb_mapper;
+    protected final String MAPPINGS_DIR = "/mappings/%VERSION%/";
 
-    public MapManager(Class clazz, String packageVersion) throws IOException {
-        File cbFields = createVirtualFile(clazz.getResourceAsStream("/mappings/" + packageVersion + "/cb/fields.csv"), "cb_fields");
-        File cbMethods = createVirtualFile(clazz.getResourceAsStream("/mappings/" + packageVersion + "/cb/methods.csv"), "cb_methods");
+    private File versionFile;
+    private Mapper CB_MAPPER;
+    private Mapper NMS_MAPPER;
 
-        File nmsFields = createVirtualFile(clazz.getResourceAsStream("/mappings/" + packageVersion + "/nms/fields.csv"), "nms_fields");
-        File nmsMethods = createVirtualFile(clazz.getResourceAsStream("/mappings/" + packageVersion + "/nms/methods.csv"), "nms_methods");
+    public MapManager(Yggdrasil yggdrasil) {
+        try {
+            final File versions = File.createTempFile("versions.json", ".tmp");
+            versions.deleteOnExit();
 
-        cb_mapper = new Mapper(cbFields, cbMethods);
-        nms_mapper = new Mapper(nmsFields, nmsMethods);
+            InputStream inputStream = yggdrasil.getClass().getResourceAsStream("/mappings/versions.json");
+            FileOutputStream outputStream = new FileOutputStream(versions);
+
+            IOUtils.copy(inputStream, outputStream);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
-    protected File createVirtualFile(InputStream in, String fileName) throws IOException {
-        final File tempFile = File.createTempFile(fileName, ".temp.csv");
+    private File loadFile(Class clazz, String version, String fileName) throws IOException {
+        final File tempFile = File.createTempFile(fileName, ".tmp");
         tempFile.deleteOnExit();
 
-        FileOutputStream out = new FileOutputStream(tempFile);
-        IOUtils.copy(in, out);
+        InputStream stream = null;
+        try {
+            stream = clazz.getResourceAsStream(MAPPINGS_DIR.replace("%VERSION%", version) + fileName);
+        } catch (NullPointerException e) {
+            Yggdrasil.LOGGER.warning("Failed to find a valid mapping-file for: " + fileName);
+            Yggdrasil.LOGGER.warning("Using fallback mapping file instead... (Cross your fingers and hope it works)");
+        }
 
+        stream = clazz.getResourceAsStream(MAPPINGS_DIR.replace("%VERSION%", "latest") + fileName);
+        FileOutputStream outputStream = new FileOutputStream(tempFile);
+
+        IOUtils.copy(stream, outputStream);
         return tempFile;
+    }
+
+    public Mapper getNMSMapper() {
+        return this.NMS_MAPPER;
+    }
+
+    public Mapper getCBMapper() {
+        return this.CB_MAPPER;
     }
 }
