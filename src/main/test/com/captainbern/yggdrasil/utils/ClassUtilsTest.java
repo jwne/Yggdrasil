@@ -1,5 +1,6 @@
 package com.captainbern.yggdrasil.utils;
 
+import com.captainbern.yggdrasil.reflection.bytecode.ClassFile;
 import org.junit.Test;
 
 import java.io.IOException;
@@ -10,14 +11,21 @@ public class ClassUtilsTest {
     public void onTestClass() {
         try {
 
-            byte[] bytes = IOUtils.toByteArray(ClassLoader.getSystemResourceAsStream(IOUtils.class.getName().replace('.', '/') + ".class"));
+            byte[] bytes = ClassUtils.classToBytes(IOUtils.class.getName());
 
-            System.out.println(ClassUtils.getMagic(bytes) == 0xCAFEBABE ? "YAY" : "AWW");
-            System.out.println(ClassUtils.getMinorVersion(bytes));
-            System.out.println(ClassUtils.getMajorVersion(bytes));
+            ClassFile classFile = new ClassFile(bytes);
+
+            print("Magic: " + Integer.toHexString(classFile.getMagic()));
+            print("Minor: " + classFile.getMinor());
+            print("Major: " + classFile.getMagic());
+            print("ClassName: " + classFile.getClassName());
 
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    protected void print(Object message) {
+        System.out.println(message);
     }
 }

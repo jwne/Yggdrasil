@@ -17,7 +17,7 @@
 */
 package com.captainbern.yggdrasil.command;
 
-import com.captainbern.yggdrasil.utils.StringUtil;
+import com.captainbern.yggdrasil.utils.StringUtils;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -55,7 +55,7 @@ public class DynamicPluginCommand extends Command implements PluginIdentifiableC
     public void setPermissions(String[] permissions) {
         this.permissions = permissions;
         if (permissions != null) {
-            super.setPermission(StringUtil.join(permissions, ";"));
+            super.setPermission(StringUtils.join(permissions, ";"));
         }
     }
 

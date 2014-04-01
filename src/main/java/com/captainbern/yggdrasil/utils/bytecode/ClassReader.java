@@ -2,11 +2,32 @@ package com.captainbern.yggdrasil.utils.bytecode;
 
 import com.captainbern.yggdrasil.utils.IOUtils;
 
-import java.io.UnsupportedEncodingException;
-
 import static com.captainbern.yggdrasil.utils.bytecode.Opcode.*;
 
 public class ClassReader {
+
+    /**
+     * Default class-structure:
+     *
+      ClassFile {
+          u4             magic;
+          u2             minor_version;
+          u2             major_version;
+          u2             constant_pool_count;
+          cp_info        constant_pool[constant_pool_count-1];
+          u2             access_flags;
+          u2             this_class;
+          u2             super_class;
+          u2             interfaces_count;
+          u2             interfaces[interfaces_count];
+          u2             fields_count;
+          field_info     fields[fields_count];
+          u2             methods_count;
+          method_info    methods[methods_count];
+          u2             attributes_count;
+          attribute_info attributes[attributes_count];
+      }
+     */
 
     protected final byte[] bytes;
 
@@ -24,8 +45,6 @@ public class ClassReader {
 
     protected int header;
 
-    private String className;
-
     public ClassReader(final byte[] bytes) {
         this(bytes, 0);
     }
@@ -37,6 +56,7 @@ public class ClassReader {
     public ClassReader(final byte[] bytes, int offset, int length) {
         this.bytes = bytes;
 
+        // We don't really care about the magic, it should be 0xcafebabe by default.
         this.magic = IOUtils.readInt(bytes, offset);
 
         this.minor = IOUtils.readShort(bytes, offset + 4);
@@ -89,24 +109,7 @@ public class ClassReader {
             index += size;
         }
         maxStringLength = max;
-        // the class header information starts just after the constant pool
         header = index;
-
-        // Define the class name
-        int classNameIndex = items[IOUtils.readUnsignedShort(this.bytes, header + 2)];
-        int item = IOUtils.readUnsignedShort(this.bytes, classNameIndex);
-        int stringLength = IOUtils.readUnsignedShort(this.bytes, item);
-        int stringReadIndex = classNameIndex + 2;
-
-        byte[] nameBytes = new byte[stringLength];
-
-        System.arraycopy(this.bytes, stringReadIndex, nameBytes, 0, stringLength);
-
-        try {
-            System.out.println(new String(nameBytes, "UTF-8"));
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
     }
 
     public final byte[] getBytes() {
@@ -135,5 +138,90 @@ public class ClassReader {
 
     public int getAccess() {
         return IOUtils.readUnsignedShort(this.bytes, header);
+    }
+
+    public String getClassName() {
+        return readClass(header + 2, new char[maxStringLength]);
+    }
+
+    public String getSuperName() {
+        return readClass(header + 4, new char[maxStringLength]);
+    }
+
+    public int getInterfacesCount() {
+        return IOUtils.readUnsignedShort(this.bytes, header + 6);
+    }
+
+    public String[] getInterfaces() {
+        int index = header + 6;
+        String[] interfaces = new String[getInterfacesCount()];
+        if(getInterfacesCount() > 0) {
+            char[] buffer = new char[maxStringLength];
+            for(int i = 0; i < getInterfacesCount(); i++) {
+                index += 2;
+                interfaces[i] = readClass(index, buffer);
+            }
+        }
+
+        return interfaces;
+    }
+
+    /**************************************************************/
+
+    public String readClass(final int index, final char[] buf) {
+        // computes the start index of the CONSTANT_Class item in b
+        // and reads the CONSTANT_Utf8 item designated by
+        // the first two bytes of this CONSTANT_Class item
+        //return IOUtils.readString(items[IOUtils.readUnsignedShort(bytes, index)]);
+        return readUTF8(items[IOUtils.readUnsignedShort(this.bytes, index)], buf);
+    }
+
+    private String readUTF(byte[] bytes, int index, final int utfLen, final char[] buf) {
+        int endIndex = index + utfLen;
+        int strLen = 0;
+        int c;
+        int st = 0;
+        char cc = 0;
+        while (index < endIndex) {
+            c = bytes[index++];
+            switch (st) {
+                case 0:
+                    c = c & 0xFF;
+                    if (c < 0x80) { // 0xxxxxxx
+                        buf[strLen++] = (char) c;
+                    } else if (c < 0xE0 && c > 0xBF) { // 110x xxxx 10xx xxxx
+                        cc = (char) (c & 0x1F);
+                        st = 1;
+                    } else { // 1110 xxxx 10xx xxxx 10xx xxxx
+                        cc = (char) (c & 0x0F);
+                        st = 2;
+                    }
+                    break;
+
+                case 1: // byte 2 of 2-byte char or byte 3 of 3-byte char
+                    buf[strLen++] = (char) ((cc << 6) | (c & 0x3F));
+                    st = 0;
+                    break;
+
+                case 2: // byte 2 of 3-byte char
+                    cc = (char) ((cc << 6) | (c & 0x3F));
+                    st = 1;
+                    break;
+            }
+        }
+        return new String(buf, 0, strLen);
+    }
+
+    private String readUTF8(int index, final char[] buf) {
+        int item = IOUtils.readUnsignedShort(this.bytes, index);
+        if (index == 0 || item == 0) {
+            return null;
+        }
+        String s = strings[item];
+        if (s != null) {
+            return s;
+        }
+        index = items[item];
+        return strings[item] = readUTF(this.bytes, index + 2, IOUtils.readUnsignedShort(this.bytes, index), buf);
     }
 }

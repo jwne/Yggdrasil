@@ -23,7 +23,7 @@ import com.captainbern.yggdrasil.command.core.CommandPermissions;
 import com.captainbern.yggdrasil.command.core.NestedCommand;
 import com.captainbern.yggdrasil.command.exceptions.*;
 import com.captainbern.yggdrasil.core.Yggdrasil;
-import com.captainbern.yggdrasil.utils.StringUtil;
+import com.captainbern.yggdrasil.utils.StringUtils;
 import org.bukkit.command.CommandSender;
 
 import java.lang.reflect.InvocationTargetException;
@@ -251,7 +251,7 @@ public class CommandRegistrationService {
         }
 
         if (allowedCommands.size() > 0) {
-            command.append(StringUtil.join(allowedCommands, "|"));
+            command.append(StringUtils.join(allowedCommands, "|"));
         } else {
             if (!found) {
                 command.append("?");

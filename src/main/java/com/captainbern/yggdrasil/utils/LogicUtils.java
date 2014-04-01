@@ -9,6 +9,10 @@ import java.util.Map;
 
 public class LogicUtils {
 
+    public LogicUtils() {
+        super();
+    }
+
     public static String toString(final Object object){
         return object == null ? "" : object.toString();
     }

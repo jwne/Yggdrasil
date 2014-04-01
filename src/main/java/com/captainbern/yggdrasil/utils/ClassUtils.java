@@ -7,7 +7,10 @@ import java.lang.reflect.Method;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.security.CodeSource;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
 
 public class ClassUtils {
 
@@ -62,7 +65,7 @@ public class ClassUtils {
     }
 
     /**
-     * Returns whether or not the given class is a primitive
+     * Returns whether or not the given class is a primitive.
      * @param clazz
      * @return
      */
@@ -71,7 +74,7 @@ public class ClassUtils {
     }
 
     /**
-     * Returns whether or not the given class is a wrapper for a primitive type
+     * Returns whether or not the given class is a wrapper for a primitive type.
      * @param clazz
      * @return
      */
@@ -80,7 +83,7 @@ public class ClassUtils {
     }
 
     /**
-     * Returns whether or not the given class is a primitive or wrapper
+     * Returns whether or not the given class is a primitive or wrapper.
      * @param clazz
      * @return
      */
@@ -125,7 +128,7 @@ public class ClassUtils {
     }
 
     /**
-     * Returns the current ClassLoader
+     * Returns the current ClassLoader.
      * @return
      */
     public static ClassLoader getCurrentClassLoader() {
@@ -144,6 +147,87 @@ public class ClassUtils {
         return loader;
     }
 
+    /**
+     * Returns a class with the given name.
+     * @param name
+     * @return
+     */
+    public static Class getClass(String name) {
+        try {
+            return Class.forName(name);
+        } catch (ClassNotFoundException e) {
+            return null;
+        }
+    }
+
+    /**
+     * Casts an object to the given class.
+     * @param source
+     * @param cast
+     * @return
+     */
+    public static Object tryCast(Object source, Class cast) {
+        return cast.cast(source);
+    }
+
+    /**
+     * Returns a list of all superClasses of a given class.
+     * @param clazz
+     * @return
+     */
+    public static List<Class<?>> getSuperClasses(final Class<?> clazz) {
+        if(clazz == null) {
+            return null;
+        }
+
+        List<Class<?>> classes = new ArrayList<>();
+        Class<?> superClass = clazz.getSuperclass();
+
+        while (superClass != null) {
+            classes.add(superClass);
+            superClass = superClass.getSuperclass();
+        }
+
+        return classes;
+    }
+
+    /**
+     * Returns a list of all interfaces the given class implements. (and all it's superClasses)
+     * @param clazz
+     * @return
+     */
+    public static List<Class<?>> getInterfaces(final Class<?> clazz) {
+        if(clazz == null) {
+            return null;
+        }
+
+        final LinkedList<Class<?>> interfaces = new LinkedList<>();
+        getInterfaces(clazz, interfaces);
+
+        return interfaces;
+    }
+
+    /**
+     * Populates a given list with all the interfaces the given class implements. (and it's superClasses)
+     * @param clazz
+     * @param interfaces
+     */
+    public static void getInterfaces(Class<?> clazz, final List<Class<?>> interfaces) {
+         while (clazz != null) {
+             for(Class<?> interfaceClazz : clazz.getInterfaces()) {
+                 interfaces.add(interfaceClazz);
+                 getInterfaces(interfaceClazz, interfaces);
+             }
+
+             clazz = clazz.getSuperclass();
+         }
+    }
+
+    /**
+     * Returns the name of a class as a system-resource.
+     * @param clazz
+     * @return
+     */
     public static String getClassName(Class<?> clazz) {
         return clazz.getName().replace(PACKAGE_SEPARATOR_CHAR, IOUtils.DIR_SEPARATOR_CHAR) + CLASS_FILE_SUFFIX;
     }
@@ -179,49 +263,7 @@ public class ClassUtils {
     }
 
     /**
-     * Returns the magic of a class file. (Default: 0xCAFEBABE)
-     * @param bytes
-     * @return
-     * @throws IOException
-     */
-    public static int getMagic(final byte[] bytes) throws IOException {
-        if(bytes == null) {
-            return 0;
-        }
-
-        return IOUtils.readInt(bytes, 0);
-    }
-
-    /**
-     * Returns the minor version of a class file.
-     * @param bytes
-     * @return
-     * @throws IOException
-     */
-    public static int getMinorVersion(final byte[] bytes) throws IOException {
-        if(bytes == null) {
-            return 0;
-        }
-
-        return IOUtils.readShort(bytes, 4);
-    }
-
-    /**
-     * Returns the major version of a class file.
-     * @param bytes
-     * @return
-     * @throws IOException
-     */
-    public static int getMajorVersion(final byte[] bytes) throws IOException {
-        if(bytes == null) {
-            return 0;
-        }
-
-        return IOUtils.readShort(bytes, 6);
-    }
-
-    /**
-     * Returns the descriptor of a given class
+     * Returns the descriptor of a given class.
      * @param clazz
      * @return
      */
@@ -232,7 +274,7 @@ public class ClassUtils {
     }
 
     /**
-     * Returns a constructor descriptor
+     * Returns a constructor descriptor.
      * @param constructor
      * @return
      */
@@ -249,7 +291,7 @@ public class ClassUtils {
     }
 
     /**
-     * Returns the method-descriptor of a method
+     * Returns the method-descriptor of a method.
      * @param method
      * @return
      */

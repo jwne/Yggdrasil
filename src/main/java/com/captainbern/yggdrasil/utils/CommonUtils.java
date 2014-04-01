@@ -4,6 +4,10 @@ import com.captainbern.yggdrasil.core.Yggdrasil;
 
 public class CommonUtils {
 
+    public CommonUtils() {
+        super();
+    }
+
     public static Class<?> getNMSClass(String className){
         return Yggdrasil.getCommonServer().getNMSClass(className);
     }

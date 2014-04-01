@@ -1,7 +1,7 @@
 package com.captainbern.yggdrasil.reflection;
 
 import com.captainbern.yggdrasil.core.Yggdrasil;
-import com.captainbern.yggdrasil.utils.CommonUtil;
+import com.captainbern.yggdrasil.utils.CommonUtils;
 
 import java.util.logging.Level;
 
@@ -16,7 +16,7 @@ public class CBClassTemplate extends ClassTemplate<Object> {
     }
 
     protected void setCBClass(String name) {
-        Class clazz = CommonUtil.getCBClass(name);
+        Class clazz = CommonUtils.getCBClass(name);
         if(clazz == null){
             Yggdrasil.LOGGER_REFLECTION.log(Level.WARNING, "Failed to find a valid class for: {0}!", name);
         }

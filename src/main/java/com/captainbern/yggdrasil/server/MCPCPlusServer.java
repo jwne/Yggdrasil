@@ -10,8 +10,6 @@ public class MCPCPlusServer extends SpigotServer {
             return false;
         }
 
-        this.MINECRAFT_VERSIONED = "net.minecraft.server";  // in mcpc+ there is no versioning :/
-
         return true;
     }
 

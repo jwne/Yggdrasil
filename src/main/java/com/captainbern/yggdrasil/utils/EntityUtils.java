@@ -5,6 +5,10 @@ import org.bukkit.entity.Entity;
 
 public class EntityUtils {
 
+    public EntityUtils() {
+        super();
+    }
+
     public static Object getHandle(Entity entity) {
         return CraftEntityRef.GET_HANDLE.invoke(entity);
     }

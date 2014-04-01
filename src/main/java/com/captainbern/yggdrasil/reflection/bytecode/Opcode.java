@@ -1,4 +1,4 @@
-package com.captainbern.yggdrasil.utils.bytecode;
+package com.captainbern.yggdrasil.reflection.bytecode;
 
 public interface Opcode {
 

@@ -8,6 +8,10 @@ public class StringUtils {
 
     private final static String EMPTY = "";
 
+    public StringUtils() {
+        super();
+    }
+
     /**
      * Join
      */

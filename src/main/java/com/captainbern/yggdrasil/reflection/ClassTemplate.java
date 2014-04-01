@@ -1,7 +1,7 @@
 package com.captainbern.yggdrasil.reflection;
 
 import com.captainbern.yggdrasil.core.Yggdrasil;
-import com.captainbern.yggdrasil.utils.CommonUtil;
+import com.captainbern.yggdrasil.utils.CommonUtils;
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
 
@@ -114,7 +114,7 @@ public class ClassTemplate<T> {
     }
 
     public static ClassTemplate<?> create(String className) {
-        Class clazz = CommonUtil.getClass(className);
+        Class clazz = CommonUtils.getClass(className);
 
         if(clazz == null){
             Yggdrasil.LOGGER_REFLECTION.log(Level.WARNING, "Failed to find a valid class for: {0}!", className);

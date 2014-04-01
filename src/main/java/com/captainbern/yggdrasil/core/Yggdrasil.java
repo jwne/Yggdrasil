@@ -13,7 +13,6 @@ import com.captainbern.yggdrasil.threading.ThreadManager;
 import org.bukkit.Bukkit;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.FileHandler;
@@ -129,12 +128,6 @@ public class Yggdrasil extends BukkitPlugin {
                 LOGGER.warning("It seems like this server is not compatible with " +
                         "this version of Yggdrasil! Let's try anyways...");
             }
-        }
-
-        try {
-            mapManager = new MapManager(this.getClass(), commonServer.getMCVersion());
-        } catch (IOException e) {
-            e.printStackTrace();
         }
 
         // register commands

@@ -664,6 +664,59 @@ public class IOUtils {
         return longs;
     }
 
+    public static float readFloat(byte[] data, int index) {
+        if (data == null || (data.length - index) < 4) {
+            return 0x0;
+        }
+
+        return Float.intBitsToFloat(readInt(data, index));
+    }
+    public static float[] toFloatArray(byte[] data) {
+        if (data == null || data.length % 4 != 0) {
+            return null;
+        }
+
+        float[] floats = new float[data.length / 4];
+        for (int i = 0; i < floats.length; i++) {
+            floats[i] = readFloat( new byte[] {
+                    data[(i*4)],
+                    data[(i*4)+1],
+                    data[(i*4)+2],
+                    data[(i*4)+3],
+            }, 0);
+        }
+        return floats;
+    }
+
+    public static double readDouble(byte[] data, int index) {
+        if (data == null || (data.length - index) < 8) {
+            return 0x0;
+        }
+
+        return Double.longBitsToDouble(readLong(data, index));
+    }
+    public static double[] toDoubleArray(byte[] data) {
+        if (data == null) {
+            return null;
+        }
+
+        if (data.length % 8 != 0) return null;
+        double[] doubles = new double[data.length / 8];
+        for (int i = 0; i < doubles.length; i++) {
+            doubles[i] = readDouble( new byte[] {
+                    data[(i*8)],
+                    data[(i*8)+1],
+                    data[(i*8)+2],
+                    data[(i*8)+3],
+                    data[(i*8)+4],
+                    data[(i*8)+5],
+                    data[(i*8)+6],
+                    data[(i*8)+7],
+            }, 0);
+        }
+        return doubles;
+    }
+
     /**
      * Converts a byte-array to a string-array
      * @param bytes

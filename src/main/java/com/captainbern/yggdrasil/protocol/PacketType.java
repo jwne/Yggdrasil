@@ -2,7 +2,7 @@ package com.captainbern.yggdrasil.protocol;
 
 import com.captainbern.yggdrasil.core.Yggdrasil;
 import com.captainbern.yggdrasil.reflection.FieldIterator;
-import com.captainbern.yggdrasil.utils.LogicUtil;
+import com.captainbern.yggdrasil.utils.LogicUtils;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 
@@ -354,8 +354,8 @@ public class PacketType {
     }
 
     public PacketType(Protocol protocol, Sender sender, int id) {
-        this.protocol = LogicUtil.notNull(protocol, "Protocol type may not be null!", Yggdrasil.LOGGER_PROTOCOL);
-        this.sender = LogicUtil.notNull(sender, "Sender type may not be null!", Yggdrasil.LOGGER_PROTOCOL);
+        this.protocol = LogicUtils.notNull(protocol, "Protocol type may not be null!", Yggdrasil.LOGGER_PROTOCOL);
+        this.sender = LogicUtils.notNull(sender, "Sender type may not be null!", Yggdrasil.LOGGER_PROTOCOL);
         this.id = id;
     }
 
