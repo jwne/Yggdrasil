@@ -1,26 +1,22 @@
 package com.captainbern.yggdrasil.reflection.bytecode.constant;
 
+import java.io.DataInput;
 import java.io.IOException;
 
 import static com.captainbern.yggdrasil.reflection.bytecode.Opcode.TAG_FIELD;
 
 public class FieldConstant extends MemberConstant {
 
-    public FieldConstant(byte[] bytes, int index) throws IOException {
-        super(bytes, index);
+    public FieldConstant(DataInput stream) throws IOException {
+        super(TAG_FIELD, stream);
     }
 
-    public FieldConstant(int classIndex, int nameAndType, int index) {
-        super(classIndex, nameAndType, index);
+    public FieldConstant(int classIndex, int nameAndType) {
+        super(TAG_FIELD, classIndex, nameAndType);
     }
 
     @Override
     public String getTagName() {
         return "Field";
-    }
-
-    @Override
-    public int getTag() {
-        return TAG_FIELD;
     }
 }

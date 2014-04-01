@@ -1,30 +1,25 @@
 package com.captainbern.yggdrasil.reflection.bytecode.constant;
 
-import com.captainbern.yggdrasil.utils.IOUtils;
-
+import java.io.DataInput;
 import java.io.IOException;
 
 import static com.captainbern.yggdrasil.reflection.bytecode.Opcode.TAG_CLASS;
 
 public class ClassConstant extends Constant {
 
-    private int cname;
+    private int name;
 
-    public ClassConstant(byte[] bytes, int index) throws IOException {
-        this(IOUtils.readUnsignedShort(bytes, index), index);
+    public ClassConstant(DataInput stream) throws IOException {
+        this(stream.readUnsignedShort());
     }
 
-    public ClassConstant(int cname, int index) {
-        super(index);
-        this.cname = cname;
+    public ClassConstant(int name) {
+        super(TAG_CLASS);
+        this.name = name;
     }
 
     public int getName() {
-        return this.cname;
+        return this.name;
     }
 
-    @Override
-    public int getTag() {
-        return TAG_CLASS;
-    }
 }

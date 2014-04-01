@@ -1,12 +1,11 @@
 package com.captainbern.yggdrasil.reflection.bytecode;
 
-import com.captainbern.yggdrasil.utils.IOUtils;
+import com.captainbern.yggdrasil.reflection.bytecode.exception.ClassFormatException;
 
+import java.io.ByteArrayInputStream;
 import java.io.DataInputStream;
-import java.io.DataOutputStream;
 import java.io.IOException;
 
-import static com.captainbern.yggdrasil.reflection.bytecode.Opcode.JDK_1_1;
 import static com.captainbern.yggdrasil.reflection.bytecode.Opcode.JDK_8;
 
 public class ClassFile {
@@ -17,39 +16,27 @@ public class ClassFile {
     private int minor;
     private int major;
     private ConstantPool constantPool;
-    private int thisClass;
     private int accessFlags;
+    private int thisClass;
     private int superClass;
     private int[] interfaces;
 
-    private String thisClassName;
-
-    protected int index;
-
-    public ClassFile(final byte[] bytes) throws IOException {
-        this(bytes, 0, bytes.length);
-    }
-
-    public ClassFile(final byte[] bytes, final int offset) throws IOException {
-        this(bytes, offset, bytes.length);
-    }
-
-    public ClassFile(final byte[] bytes, final int offset, final int length) throws IOException {
-        this.index = offset;
-        this.magic = IOUtils.readInt(bytes, offset);
+    public ClassFile(final byte[] bytes) throws IOException, ClassFormatException {
+        DataInputStream codeStream = new DataInputStream(new ByteArrayInputStream(bytes));
+        this.magic = codeStream.readInt();
 
         if(magic != 0xCAFEBABE) {
             throw new IOException("Invalid ClassFile! Magic returned: \'" + Integer.toHexString(magic) + "\'");
         }
 
-        this.minor = IOUtils.readUnsignedShort(bytes, index += 2);
-        this.major = IOUtils.readUnsignedShort(bytes, index += 2);
+        this.minor = codeStream.readUnsignedShort();
+        this.major = codeStream.readUnsignedShort();
 
-        if(major > JDK_8 || major < JDK_1_1) {
+        if(major > JDK_8) {
             throw new IllegalArgumentException("Unsupported ClassFile!");
         }
 
-        this.constantPool = new ConstantPool(bytes, offset + 8);
+        this.constantPool = new ConstantPool(codeStream);
 
         this.accessFlags = codeStream.readUnsignedShort();
         this.thisClass = codeStream.readUnsignedShort();
@@ -69,12 +56,6 @@ public class ClassFile {
         // Fields
 
         // Methods
-
-        this.thisClassName = constantPool.getClassConstant(this.thisClass);
-    }
-
-    public void write(DataOutputStream codeStream) {
-
     }
 
     public byte[] getByteCode() {
@@ -97,7 +78,15 @@ public class ClassFile {
         return this.constantPool;
     }
 
+    public int getAccessFlags() {
+        return this.accessFlags;
+    }
+
     public String getClassName() {
-        return this.thisClassName;
+        return this.constantPool.getClassConstant(this.thisClass);
+    }
+
+    public String getSuperClassName() {
+        return this.constantPool.getClassConstant(this.superClass);
     }
 }

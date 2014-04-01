@@ -1,7 +1,6 @@
 package com.captainbern.yggdrasil.reflection.bytecode.constant;
 
-import com.captainbern.yggdrasil.utils.IOUtils;
-
+import java.io.DataInput;
 import java.io.IOException;
 
 import static com.captainbern.yggdrasil.reflection.bytecode.Opcode.TAG_INVOKEDYNAMIC;
@@ -11,12 +10,12 @@ public class InvokeDynamicConstant extends Constant {
     private int bootstrap;
     private int nameAndType;
 
-    public InvokeDynamicConstant(byte[] bytes, int index) throws IOException {
-        this(IOUtils.readUnsignedShort(bytes, index), IOUtils.readUnsignedShort(bytes, index + 2), index);
+    public InvokeDynamicConstant(DataInput stream) throws IOException {
+        this(stream.readUnsignedShort(), stream.readUnsignedShort());
     }
 
-    public InvokeDynamicConstant(int bootstrap, int nameAndType, int index) {
-        super(index);
+    public InvokeDynamicConstant(int bootstrap, int nameAndType) {
+        super(TAG_INVOKEDYNAMIC);
         this.bootstrap = bootstrap;
         this.nameAndType = nameAndType;
     }
@@ -28,10 +27,4 @@ public class InvokeDynamicConstant extends Constant {
     public int getNameAndType() {
         return this.nameAndType;
     }
-
-    @Override
-    public int getTag() {
-        return TAG_INVOKEDYNAMIC;
-    }
-
 }

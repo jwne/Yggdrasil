@@ -248,22 +248,22 @@ public interface Opcode {
     int ACC_ANNOTATION  = 0x2000;
     int ACC_ENUM        = 0x4000;
 
-    int TAG_UTF_STRING  = 1;
-    int TAG_INTEGER     = 3;
-    int TAG_FLOAT       = 4;
-    int TAG_LONG        = 5;
-    int TAG_DOUBLE      = 6;
-    int TAG_CLASS       = 7;
-    int TAG_STRING      = 8;
-    int TAG_FIELD       = 9;
-    int TAG_METHOD      = 10;
-    int TAG_INTERFACE_METHOD
+    byte TAG_UTF_STRING  = 1;
+    byte TAG_INTEGER     = 3;
+    byte TAG_FLOAT       = 4;
+    byte TAG_LONG        = 5;
+    byte TAG_DOUBLE      = 6;
+    byte TAG_CLASS       = 7;
+    byte TAG_STRING      = 8;
+    byte TAG_FIELD       = 9;
+    byte TAG_METHOD      = 10;
+    byte TAG_INTERFACE_METHOD
                         = 11;
-    int TAG_DESCRIPTOR  = 12;
-    int TAG_METHOD_HANDLE
+    byte TAG_DESCRIPTOR  = 12;
+    byte TAG_METHOD_HANDLE
                         = 15;
-    int TAG_METHOD_TYPE = 16;
-    int TAG_INVOKEDYNAMIC
+    byte TAG_METHOD_TYPE = 16;
+    byte TAG_INVOKEDYNAMIC
                         = 18;
 
     //For invokedynamic opcodes

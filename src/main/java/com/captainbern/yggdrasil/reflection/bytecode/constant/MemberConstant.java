@@ -1,7 +1,6 @@
 package com.captainbern.yggdrasil.reflection.bytecode.constant;
 
-import com.captainbern.yggdrasil.utils.IOUtils;
-
+import java.io.DataInput;
 import java.io.IOException;
 
 public abstract class MemberConstant extends Constant {
@@ -9,12 +8,12 @@ public abstract class MemberConstant extends Constant {
     private int classIndex;
     private int nameAndType;
 
-    public MemberConstant(byte[] bytes, int index) throws IOException {
-        this(IOUtils.readUnsignedShort(bytes, index), IOUtils.readUnsignedShort(bytes, index + 2), index);
+    public MemberConstant(byte tag, DataInput stream) throws IOException {
+        this(tag, stream.readUnsignedShort(), stream.readUnsignedShort());
     }
 
-    public MemberConstant(int cindex, int nameAndType, int index) {
-        super(index);
+    public MemberConstant(byte tag, int cindex, int nameAndType) {
+        super(tag);
         this.classIndex = cindex;
         this.nameAndType = nameAndType;
     }

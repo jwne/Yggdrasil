@@ -1,28 +1,22 @@
 package com.captainbern.yggdrasil.reflection.bytecode.constant;
 
-import com.captainbern.yggdrasil.utils.IOUtils;
-
+import java.io.DataInput;
 import java.io.IOException;
 
 import static com.captainbern.yggdrasil.reflection.bytecode.Opcode.TAG_INTERFACE_METHOD;
 
 public class InterfaceMethodConstant extends MemberConstant {
 
-    public InterfaceMethodConstant(byte[] bytes, int index) throws IOException {
-        super(IOUtils.readUnsignedShort(bytes, index), IOUtils.readUnsignedShort(bytes, index + 2), index);
+    public InterfaceMethodConstant(DataInput stream) throws IOException {
+        super(TAG_INTERFACE_METHOD, stream);
     }
 
-    public InterfaceMethodConstant(int cindex, int nameAndType, int index) {
-        super(cindex, nameAndType, index);
+    public InterfaceMethodConstant(int cindex, int nameAndType) {
+        super(TAG_INTERFACE_METHOD, cindex, nameAndType);
     }
 
     @Override
     public String getTagName() {
         return "Interface";
-    }
-
-    @Override
-    public int getTag() {
-        return TAG_INTERFACE_METHOD;
     }
 }
