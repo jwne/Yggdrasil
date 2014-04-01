@@ -3,7 +3,7 @@ package com.captainbern.yggdrasil.reflection.bytecode.constant;
 import java.io.DataInput;
 import java.io.IOException;
 
-import static com.captainbern.yggdrasil.reflection.bytecode.Opcode.TAG_UTF_STRING;
+import static com.captainbern.yggdrasil.reflection.bytecode.Opcode.CONSTANT_Utf8;
 
 public class Utf8Constant extends Constant {
 
@@ -14,7 +14,7 @@ public class Utf8Constant extends Constant {
     }
 
     public Utf8Constant(String cstring) {
-        super(TAG_UTF_STRING);
+        super(CONSTANT_Utf8);
         this.cstring = cstring;
     }
 

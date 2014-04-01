@@ -3,7 +3,7 @@ package com.captainbern.yggdrasil.reflection.bytecode.constant;
 import java.io.DataInput;
 import java.io.IOException;
 
-import static com.captainbern.yggdrasil.reflection.bytecode.Opcode.TAG_LONG;
+import static com.captainbern.yggdrasil.reflection.bytecode.Opcode.CONSTANT_Long;
 
 public class LongConstant extends Constant {
 
@@ -14,7 +14,7 @@ public class LongConstant extends Constant {
     }
 
     public LongConstant(long clong) {
-        super(TAG_LONG);
+        super(CONSTANT_Long);
         this.clong = clong;
     }
 

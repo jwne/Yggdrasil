@@ -2,285 +2,349 @@ package com.captainbern.yggdrasil.reflection.bytecode;
 
 public interface Opcode {
 
-    int JDK_1_1         = 0x2D; // Starting from 45 -> 52
-    int JDK_1_2         = 0x2E;
-    int JDK_1_3         = 0x2F;
-    int JDK_1_4         = 0x30;
-    int JDK_5           = 0x31;
-    int JDK_6           = 0x32;
-    int JDK_7           = 0x33;
-    int JDK_8           = 0x34;
+    /**
+     * JDK versions
+     */
+    public static final int JDK_1_1         = 0x2D; // Starting from 45 -> 52
+    public static final int JDK_1_2         = 0x2E;
+    public static final int JDK_1_3         = 0x2F;
+    public static final int JDK_1_4         = 0x30;
+    public static final int JDK_5           = 0x31;
+    public static final int JDK_6           = 0x32;
+    public static final int JDK_7           = 0x33;
+    public static final int JDK_8           = 0x34;
 
-    int AALOAD          = 50;
-    int AASTORE         = 83;
-    int ACONST_NULL     = 1;
-    int ALOAD           = 25;
-    int ALOAD_0         = 42;
-    int ALOAD_1         = 43;
-    int ALOAD_2         = 44;
-    int ALOAD_3         = 45;
-    int ANEWARRAY       = 189;
-    int ARETURN         = 176;
-    int ARRAYLENGTH     = 190;
-    int ASTORE          = 58;
-    int ASTORE_0        = 75;
-    int ASTORE_1        = 76;
-    int ASTORE_2        = 77;
-    int ASTORE_3        = 78;
-    int ATHROW          = 191;
-    int BALOAD          = 51;
-    int BASTORE         = 84;
-    int BIPUSH          = 16;
-    int CALOAD          = 52;
-    int CASTORE         = 85;
-    int CHECKCAST       = 192;
-    int D2F             = 144;
-    int D2I             = 142;
-    int D2L             = 143;
-    int DADD            = 99;
-    int DALOAD          = 49;
-    int DASTORE         = 82;
-    int DCMPG           = 152;
-    int DCMPL           = 151;
-    int DCONST_0        = 14;
-    int DCONST_1        = 15;
-    int DDIV            = 111;
-    int DLOAD           = 24;
-    int DLOAD_0         = 38;
-    int DLOAD_1         = 39;
-    int DLOAD_2         = 40;
-    int DLOAD_3         = 41;
-    int DMUL            = 107;
-    int DNEG            = 119;
-    int DREM            = 115;
-    int DRETURN         = 175;
-    int DSTORE          = 57;
-    int DSTORE_0        = 71;
-    int DSTORE_1        = 72;
-    int DSTORE_2        = 73;
-    int DSTORE_3        = 74;
-    int DSUB            = 103;
-    int DUP             = 89;
-    int DUP2            = 92;
-    int DUP2_X1         = 93;
-    int DUP2_X2         = 94;
-    int DUP_X1          = 90;
-    int DUP_X2          = 91;
-    int F2D             = 141;
-    int F2I             = 139;
-    int F2L             = 140;
-    int FADD            = 98;
-    int FALOAD          = 48;
-    int FASTORE         = 81;
-    int FCMPG           = 150;
-    int FCMPL           = 149;
-    int FCONST_0        = 11;
-    int FCONST_1        = 12;
-    int FCONST_2        = 13;
-    int FDIV            = 110;
-    int FLOAD           = 23;
-    int FLOAD_0         = 34;
-    int FLOAD_1         = 35;
-    int FLOAD_2         = 36;
-    int FLOAD_3         = 37;
-    int FMUL            = 106;
-    int FNEG            = 118;
-    int FREM            = 114;
-    int FRETURN         = 174;
-    int FSTORE          = 56;
-    int FSTORE_0        = 67;
-    int FSTORE_1        = 68;
-    int FSTORE_2        = 69;
-    int FSTORE_3        = 70;
-    int FSUB            = 102;
-    int GETFIELD        = 180;
-    int GETSTATIC       = 178;
-    int GOTO            = 167;
-    int GOTO_W          = 200;
-    int I2B             = 145;
-    int I2C             = 146;
-    int I2D             = 135;
-    int I2F             = 134;
-    int I2L             = 133;
-    int I2S             = 147;
-    int IADD            = 96;
-    int IALOAD          = 46;
-    int IAND            = 126;
-    int IASTORE         = 79;
-    int ICONST_0        = 3;
-    int ICONST_1        = 4;
-    int ICONST_2        = 5;
-    int ICONST_3        = 6;
-    int ICONST_4        = 7;
-    int ICONST_5        = 8;
-    int ICONST_M1       = 2;
-    int IDIV            = 108;
-    int IFEQ            = 153;
-    int IFGE            = 156;
-    int IFGT            = 157;
-    int IFLE            = 158;
-    int IFLT            = 155;
-    int IFNE            = 154;
-    int IFNONNULL       = 199;
-    int IFNULL          = 198;
-    int IF_ACMPEQ       = 165;
-    int IF_ACMPNE       = 166;
-    int IF_ICMPEQ       = 159;
-    int IF_ICMPGE       = 162;
-    int IF_ICMPGT       = 163;
-    int IF_ICMPLE       = 164;
-    int IF_ICMPLT       = 161;
-    int IF_ICMPNE       = 160;
-    int IINC            = 132;
-    int ILOAD           = 21;
-    int ILOAD_0         = 26;
-    int ILOAD_1         = 27;
-    int ILOAD_2         = 28;
-    int ILOAD_3         = 29;
-    int IMUL            = 104;
-    int INEG            = 116;
-    int INSTANCEOF      = 193;
-    int INVOKEINTERFACE = 185;
-    int INVOKESPECIAL   = 183;
-    int INVOKESTATIC    = 184;
-    int INVOKEVIRTUAL   = 182;
-    int IOR             = 128;
-    int IREM            = 112;
-    int IRETURN         = 172;
-    int ISHL            = 120;
-    int ISHR            = 122;
-    int ISTORE          = 54;
-    int ISTORE_0        = 59;
-    int ISTORE_1        = 60;
-    int ISTORE_2        = 61;
-    int ISTORE_3        = 62;
-    int ISUB            = 100;
-    int IUSHR           = 124;
-    int IXOR            = 130;
-    int JSR             = 168;
-    int JSR_W           = 201;
-    int L2D             = 138;
-    int L2F             = 137;
-    int L2I             = 136;
-    int LADD            = 97;
-    int LALOAD          = 47;
-    int LAND            = 127;
-    int LASTORE         = 80;
-    int LCMP            = 148;
-    int LCONST_0        = 9;
-    int LCONST_1        = 10;
-    int LDC             = 18;
-    int LDC2_W          = 20;
-    int LDC_W           = 19;
-    int LDIV            = 109;
-    int LLOAD           = 22;
-    int LLOAD_0         = 30;
-    int LLOAD_1         = 31;
-    int LLOAD_2         = 32;
-    int LLOAD_3         = 33;
-    int LMUL            = 105;
-    int LNEG            = 117;
-    int LOOKUPSWITCH    = 171;
-    int LOR             = 129;
-    int LREM            = 113;
-    int LRETURN         = 173;
-    int LSHL            = 121;
-    int LSHR            = 123;
-    int LSTORE          = 55;
-    int LSTORE_0        = 63;
-    int LSTORE_1        = 64;
-    int LSTORE_2        = 65;
-    int LSTORE_3        = 66;
-    int LSUB            = 101;
-    int LUSHR           = 125;
-    int LXOR            = 131;
-    int MONITORENTER    = 194;
-    int MONITOREXIT     = 195;
-    int MULTIANEWARRAY  = 197;
-    int NEW             = 187;
-    int NEWARRAY        = 188;
-    int NOP             = 0;
-    int POP             = 87;
-    int POP2            = 88;
-    int PUTFIELD        = 181;
-    int PUTSTATIC       = 179;
-    int RET             = 169;
-    int RETURN          = 177;
-    int SALOAD          = 53;
-    int SASTORE         = 86;
-    int SIPUSH          = 17;
-    int SWAP            = 95;
-    int TABLESWITCH     = 170;
-    int WIDE            = 196;
-    int INVOKEDYNAMIC   = 186;
+    /**
+     * Opcodes
+     */
+    public static final int AALOAD          = 50;
+    public static final int AASTORE         = 83;
+    public static final int ACONST_NULL     = 1;
+    public static final int ALOAD           = 25;
+    public static final int ALOAD_0         = 42;
+    public static final int ALOAD_1         = 43;
+    public static final int ALOAD_2         = 44;
+    public static final int ALOAD_3         = 45;
+    public static final int ANEWARRAY       = 189;
+    public static final int ARETURN         = 176;
+    public static final int ARRAYLENGTH     = 190;
+    public static final int ASTORE          = 58;
+    public static final int ASTORE_0        = 75;
+    public static final int ASTORE_1        = 76;
+    public static final int ASTORE_2        = 77;
+    public static final int ASTORE_3        = 78;
+    public static final int ATHROW          = 191;
+    public static final int BALOAD          = 51;
+    public static final int BASTORE         = 84;
+    public static final int BIPUSH          = 16;
+    public static final int CALOAD          = 52;
+    public static final int CASTORE         = 85;
+    public static final int CHECKCAST       = 192;
+    public static final int D2F             = 144;
+    public static final int D2I             = 142;
+    public static final int D2L             = 143;
+    public static final int DADD            = 99;
+    public static final int DALOAD          = 49;
+    public static final int DASTORE         = 82;
+    public static final int DCMPG           = 152;
+    public static final int DCMPL           = 151;
+    public static final int DCONST_0        = 14;
+    public static final int DCONST_1        = 15;
+    public static final int DDIV            = 111;
+    public static final int DLOAD           = 24;
+    public static final int DLOAD_0         = 38;
+    public static final int DLOAD_1         = 39;
+    public static final int DLOAD_2         = 40;
+    public static final int DLOAD_3         = 41;
+    public static final int DMUL            = 107;
+    public static final int DNEG            = 119;
+    public static final int DREM            = 115;
+    public static final int DRETURN         = 175;
+    public static final int DSTORE          = 57;
+    public static final int DSTORE_0        = 71;
+    public static final int DSTORE_1        = 72;
+    public static final int DSTORE_2        = 73;
+    public static final int DSTORE_3        = 74;
+    public static final int DSUB            = 103;
+    public static final int DUP             = 89;
+    public static final int DUP2            = 92;
+    public static final int DUP2_X1         = 93;
+    public static final int DUP2_X2         = 94;
+    public static final int DUP_X1          = 90;
+    public static final int DUP_X2          = 91;
+    public static final int F2D             = 141;
+    public static final int F2I             = 139;
+    public static final int F2L             = 140;
+    public static final int FADD            = 98;
+    public static final int FALOAD          = 48;
+    public static final int FASTORE         = 81;
+    public static final int FCMPG           = 150;
+    public static final int FCMPL           = 149;
+    public static final int FCONST_0        = 11;
+    public static final int FCONST_1        = 12;
+    public static final int FCONST_2        = 13;
+    public static final int FDIV            = 110;
+    public static final int FLOAD           = 23;
+    public static final int FLOAD_0         = 34;
+    public static final int FLOAD_1         = 35;
+    public static final int FLOAD_2         = 36;
+    public static final int FLOAD_3         = 37;
+    public static final int FMUL            = 106;
+    public static final int FNEG            = 118;
+    public static final int FREM            = 114;
+    public static final int FRETURN         = 174;
+    public static final int FSTORE          = 56;
+    public static final int FSTORE_0        = 67;
+    public static final int FSTORE_1        = 68;
+    public static final int FSTORE_2        = 69;
+    public static final int FSTORE_3        = 70;
+    public static final int FSUB            = 102;
+    public static final int GETFIELD        = 180;
+    public static final int GETSTATIC       = 178;
+    public static final int GOTO            = 167;
+    public static final int GOTO_W          = 200;
+    public static final int I2B             = 145;
+    public static final int I2C             = 146;
+    public static final int I2D             = 135;
+    public static final int I2F             = 134;
+    public static final int I2L             = 133;
+    public static final int I2S             = 147;
+    public static final int IADD            = 96;
+    public static final int IALOAD          = 46;
+    public static final int IAND            = 126;
+    public static final int IASTORE         = 79;
+    public static final int ICONST_0        = 3;
+    public static final int ICONST_1        = 4;
+    public static final int ICONST_2        = 5;
+    public static final int ICONST_3        = 6;
+    public static final int ICONST_4        = 7;
+    public static final int ICONST_5        = 8;
+    public static final int ICONST_M1       = 2;
+    public static final int IDIV            = 108;
+    public static final int IFEQ            = 153;
+    public static final int IFGE            = 156;
+    public static final int IFGT            = 157;
+    public static final int IFLE            = 158;
+    public static final int IFLT            = 155;
+    public static final int IFNE            = 154;
+    public static final int IFNONNULL       = 199;
+    public static final int IFNULL          = 198;
+    public static final int IF_ACMPEQ       = 165;
+    public static final int IF_ACMPNE       = 166;
+    public static final int IF_ICMPEQ       = 159;
+    public static final int IF_ICMPGE       = 162;
+    public static final int IF_ICMPGT       = 163;
+    public static final int IF_ICMPLE       = 164;
+    public static final int IF_ICMPLT       = 161;
+    public static final int IF_ICMPNE       = 160;
+    public static final int IINC            = 132;
+    public static final int ILOAD           = 21;
+    public static final int ILOAD_0         = 26;
+    public static final int ILOAD_1         = 27;
+    public static final int ILOAD_2         = 28;
+    public static final int ILOAD_3         = 29;
+    public static final int IMUL            = 104;
+    public static final int INEG            = 116;
+    public static final int INSTANCEOF      = 193;
+    public static final int INVOKEINTERFACE = 185;
+    public static final int INVOKESPECIAL   = 183;
+    public static final int INVOKESTATIC    = 184;
+    public static final int INVOKEVIRTUAL   = 182;
+    public static final int IOR             = 128;
+    public static final int IREM            = 112;
+    public static final int IRETURN         = 172;
+    public static final int ISHL            = 120;
+    public static final int ISHR            = 122;
+    public static final int ISTORE          = 54;
+    public static final int ISTORE_0        = 59;
+    public static final int ISTORE_1        = 60;
+    public static final int ISTORE_2        = 61;
+    public static final int ISTORE_3        = 62;
+    public static final int ISUB            = 100;
+    public static final int IUSHR           = 124;
+    public static final int IXOR            = 130;
+    public static final int JSR             = 168;
+    public static final int JSR_W           = 201;
+    public static final int L2D             = 138;
+    public static final int L2F             = 137;
+    public static final int L2I             = 136;
+    public static final int LADD            = 97;
+    public static final int LALOAD          = 47;
+    public static final int LAND            = 127;
+    public static final int LASTORE         = 80;
+    public static final int LCMP            = 148;
+    public static final int LCONST_0        = 9;
+    public static final int LCONST_1        = 10;
+    public static final int LDC             = 18;
+    public static final int LDC2_W          = 20;
+    public static final int LDC_W           = 19;
+    public static final int LDIV            = 109;
+    public static final int LLOAD           = 22;
+    public static final int LLOAD_0         = 30;
+    public static final int LLOAD_1         = 31;
+    public static final int LLOAD_2         = 32;
+    public static final int LLOAD_3         = 33;
+    public static final int LMUL            = 105;
+    public static final int LNEG            = 117;
+    public static final int LOOKUPSWITCH    = 171;
+    public static final int LOR             = 129;
+    public static final int LREM            = 113;
+    public static final int LRETURN         = 173;
+    public static final int LSHL            = 121;
+    public static final int LSHR            = 123;
+    public static final int LSTORE          = 55;
+    public static final int LSTORE_0        = 63;
+    public static final int LSTORE_1        = 64;
+    public static final int LSTORE_2        = 65;
+    public static final int LSTORE_3        = 66;
+    public static final int LSUB            = 101;
+    public static final int LUSHR           = 125;
+    public static final int LXOR            = 131;
+    public static final int MONITORENTER    = 194;
+    public static final int MONITOREXIT     = 195;
+    public static final int MULTIANEWARRAY  = 197;
+    public static final int NEW             = 187;
+    public static final int NEWARRAY        = 188;
+    public static final int NOP             = 0;
+    public static final int POP             = 87;
+    public static final int POP2            = 88;
+    public static final int PUTFIELD        = 181;
+    public static final int PUTSTATIC       = 179;
+    public static final int RET             = 169;
+    public static final int RETURN          = 177;
+    public static final int SALOAD          = 53;
+    public static final int SASTORE         = 86;
+    public static final int SIPUSH          = 17;
+    public static final int SWAP            = 95;
+    public static final int TABLESWITCH     = 170;
+    public static final int WIDE            = 196;
+    public static final int INVOKEDYNAMIC   = 186;
 
     //Implementation - specific opcodes
-    int BREAKPOINT      = 202;
-    int IMPDEP1         = 254;
-    int IMPDEP2         = 255;
+    public static final int BREAKPOINT      = 202;
+    public static final int IMPDEP1         = 254;
+    public static final int IMPDEP2         = 255;
 
-    int T_BOOLEAN       = 4;
-    int T_CHAR          = 5;
-    int T_FLOAT         = 6;
-    int T_DOUBLE        = 7;
-    int T_BYTE          = 8;
-    int T_SHORT         = 9;
-    int T_INT           = 10;
-    int T_LONG          = 11;
+    /**
+     * Types
+     */
+    public static final int T_BOOLEAN       = 4;
+    public static final int T_CHAR          = 5;
+    public static final int T_FLOAT         = 6;
+    public static final int T_DOUBLE        = 7;
+    public static final int T_BYTE          = 8;
+    public static final int T_SHORT         = 9;
+    public static final int T_INT           = 10;
+    public static final int T_LONG          = 11;
+    public static final byte T_VOID         = 12;
+    public static final byte T_ARRAY        = 13;
+    public static final byte T_OBJECT       = 14;
+    public static final byte T_REFERENCE    = 14; // Deprecated
+    public static final byte T_UNKNOWN      = 15;
+    public static final byte T_ADDRESS      = 16;
 
-    int ACC_PUBLIC      = 0x0001;
-    int ACC_PRIVATE     = 0x0002;
-    int ACC_PROTECTED   = 0x0004;
-    int ACC_STATIC      = 0x0008;
-    int ACC_FINAL       = 0x0010;
-    int ACC_SUPER       = 0x0020;
-    int ACC_SYNCHRONIZED
-                        = 0x0020;
-    int ACC_VOLATILE    = 0x0040;
-    int ACC_BRIDGE      = 0x0040;
-    int ACC_VARARGS     = 0x0080;
-    int ACC_TRANSIENT   = 0x0080;
-    int ACC_NATIVE      = 0x0100;
-    int ACC_INTERFACE   = 0x0200;
-    int ACC_ABSTRACT    = 0x0400;
-    int ACC_STRICT      = 0x0800;
-    int ACC_SYNTHETIC   = 0x1000;
-    int ACC_ANNOTATION  = 0x2000;
-    int ACC_ENUM        = 0x4000;
+    /**
+     * Access codes
+     */
+    public static final int ACC_PUBLIC      = 0x0001;
+    public static final int ACC_PRIVATE     = 0x0002;
+    public static final int ACC_PROTECTED   = 0x0004;
+    public static final int ACC_STATIC      = 0x0008;
+    public static final int ACC_FINAL       = 0x0010;
+    public static final int ACC_SUPER       = 0x0020;
+    public static final int ACC_SYNCHRONIZED
+                                            = 0x0020;
+    public static final int ACC_VOLATILE    = 0x0040;
+    public static final int ACC_BRIDGE      = 0x0040;
+    public static final int ACC_VARARGS     = 0x0080;
+    public static final int ACC_TRANSIENT   = 0x0080;
+    public static final int ACC_NATIVE      = 0x0100;
+    public static final int ACC_INTERFACE   = 0x0200;
+    public static final int ACC_ABSTRACT    = 0x0400;
+    public static final int ACC_STRICT      = 0x0800;
+    public static final int ACC_SYNTHETIC   = 0x1000;
+    public static final int ACC_ANNOTATION  = 0x2000;
+    public static final int ACC_ENUM        = 0x4000;
+    public final static String[] ACCESS_NAMES = {
+            "public", "private", "protected", "static", "final", "synchronized",
+            "volatile", "transient", "native", "interface", "abstract", "strictfp",
+            "synthetic", "annotation", "enum"};
 
-    byte TAG_UTF_STRING  = 1;
-    byte TAG_INTEGER     = 3;
-    byte TAG_FLOAT       = 4;
-    byte TAG_LONG        = 5;
-    byte TAG_DOUBLE      = 6;
-    byte TAG_CLASS       = 7;
-    byte TAG_STRING      = 8;
-    byte TAG_FIELD       = 9;
-    byte TAG_METHOD      = 10;
-    byte TAG_INTERFACE_METHOD
-                        = 11;
-    byte TAG_DESCRIPTOR  = 12;
-    byte TAG_METHOD_HANDLE
-                        = 15;
-    byte TAG_METHOD_TYPE = 16;
-    byte TAG_INVOKEDYNAMIC
-                        = 18;
+    /**
+     * Constant tags
+     */
+    public static final byte CONSTANT_Utf8 = 1;
+    public static final byte CONSTANT_Integer = 3;
+    public static final byte CONSTANT_Float = 4;
+    public static final byte CONSTANT_Long = 5;
+    public static final byte CONSTANT_Double = 6;
+    public static final byte CONSTANT_Class = 7;
+    public static final byte CONSTANT_String = 8;
+    public static final byte CONSTANT_Fieldref = 9;
+    public static final byte CONSTANT_Methodref = 10;
+    public static final byte CONSTANT_InterfaceMethodref = 11;
+    public static final byte CONSTANT_NameAndType = 12;
+    public static final byte CONSTANT_MethodHandle = 15;
+    public static final byte CONSTANT_MethodType = 16;
+    public static final byte CONSTANT_InvokeDynamic = 18;
+    public static final String[] CONSTANT_NAMES = {
+            "", "CONSTANT_Utf8", "", "CONSTANT_Integer",
+            "CONSTANT_Float", "CONSTANT_Double", "CONSTANT_Class",
+            "CONSTANT_Class", "CONSTANT_String", "CONSTANT_Fieldref",
+            "CONSTANT_Methodref", "CONSTANT_InterfaceMethodref",
+            "CONSTANT_NameAndType", "", "", "CONSTANT_MethodHandle",
+            "CONSTANT_MethodType", "", "CONSTANT_InvokeDynamic" };
+
+    /**
+     * Attribute tags
+     */
+    public static final byte ATTR_UNKNOWN                       			= -1;
+    public static final byte ATTR_SOURCE_FILE                   			= 0;
+    public static final byte ATTR_CONSTANT_VALUE                			= 1;
+    public static final byte ATTR_CODE                          			= 2;
+    public static final byte ATTR_EXCEPTIONS                    			= 3;
+    public static final byte ATTR_LINE_NUMBER_TABLE             			= 4;
+    public static final byte ATTR_LOCAL_VARIABLE_TABLE          			= 5;
+    public static final byte ATTR_INNER_CLASSES                 			= 6;
+    public static final byte ATTR_SYNTHETIC                     			= 7;
+    public static final byte ATTR_DEPRECATED                    			= 8;
+    public static final byte ATTR_PMG                           			= 9;
+    public static final byte ATTR_SIGNATURE                     			= 10;
+    public static final byte ATTR_STACK_MAP                     			= 11;
+    public static final byte ATTR_RUNTIME_VISIBLE_ANNOTATIONS    			= 12;
+    public static final byte ATTR_RUNTIMEIN_VISIBLE_ANNOTATIONS  			= 13;
+    public static final byte ATTR_RUNTIME_VISIBLE_PARAMETER_ANNOTATIONS 	= 14;
+    public static final byte ATTR_RUNTIMEIN_VISIBLE_PARAMETER_ANNOTATIONS   = 15;
+    public static final byte ATTR_ANNOTATION_DEFAULT                        = 16;
+    public static final byte ATTR_LOCAL_VARIABLE_TYPE_TABLE                 = 17;
+    public static final byte ATTR_ENCLOSING_METHOD                      	= 18;
+    public static final byte ATTR_STACK_MAP_TABLE                           = 19;
+    public static final short KNOWN_ATTRIBUTES = 20;
+    public static final String[] ATTRIBUTE_NAMES = {
+            "SourceFile", "ConstantValue", "Code", "Exceptions",
+            "LineNumberTable", "LocalVariableTable",
+            "InnerClasses", "Synthetic", "Deprecated",
+            "PMGClass", "Signature", "StackMap",
+            "RuntimeVisibleAnnotations", "RuntimeInvisibleAnnotations",
+            "RuntimeVisibleParameterAnnotations", "RuntimeInvisibleParameterAnnotations",
+            "AnnotationDefault", "LocalVariableTypeTable", "EnclosingMethod", "StackMapTable"};
+
 
     //For invokedynamic opcodes
-    int H_GETFIELD      = 1;
-    int H_GETSTATIC     = 2;
-    int H_PUTFIELD      = 3;
-    int H_PUTSTATIC     = 4;
-    int H_INVOKEVIRTUAL = 5;
-    int H_INVOKESTATIC  = 6;
-    int H_INVOKESPECIAL = 7;
-    int H_NEWINVOKESPECIAL
-                        = 8;
-    int H_INVOKEINTERFACE
-                        = 9;
+    public static final int H_GETFIELD      = 1;
+    public static final int H_GETSTATIC     = 2;
+    public static final int H_PUTFIELD      = 3;
+    public static final int H_PUTSTATIC     = 4;
+    public static final int H_INVOKEVIRTUAL = 5;
+    public static final int H_INVOKESTATIC  = 6;
+    public static final int H_INVOKESPECIAL = 7;
+    public static final int H_NEWINVOKESPECIAL
+            = 8;
+    public static final int H_INVOKEINTERFACE
+            = 9;
 
     //Credit: Javaassist
-    int[] STACK_GROWTH = {
+    public static final int[] STACK_GROWTH = {
             0, // nop, 0
             1, // aconst_null, 1
             1, // iconst_m1, 2

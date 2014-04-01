@@ -3,7 +3,7 @@ package com.captainbern.yggdrasil.reflection.bytecode.constant;
 import java.io.DataInput;
 import java.io.IOException;
 
-import static com.captainbern.yggdrasil.reflection.bytecode.Opcode.TAG_CLASS;
+import static com.captainbern.yggdrasil.reflection.bytecode.Opcode.CONSTANT_Class;
 
 public class ClassConstant extends Constant {
 
@@ -14,12 +14,11 @@ public class ClassConstant extends Constant {
     }
 
     public ClassConstant(int name) {
-        super(TAG_CLASS);
+        super(CONSTANT_Class);
         this.name = name;
     }
 
-    public int getName() {
+    public int getNameIndex() {
         return this.name;
     }
-
 }

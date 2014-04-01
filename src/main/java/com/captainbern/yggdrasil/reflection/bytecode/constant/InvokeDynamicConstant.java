@@ -3,7 +3,7 @@ package com.captainbern.yggdrasil.reflection.bytecode.constant;
 import java.io.DataInput;
 import java.io.IOException;
 
-import static com.captainbern.yggdrasil.reflection.bytecode.Opcode.TAG_INVOKEDYNAMIC;
+import static com.captainbern.yggdrasil.reflection.bytecode.Opcode.CONSTANT_InvokeDynamic;
 
 public class InvokeDynamicConstant extends Constant {
 
@@ -15,7 +15,7 @@ public class InvokeDynamicConstant extends Constant {
     }
 
     public InvokeDynamicConstant(int bootstrap, int nameAndType) {
-        super(TAG_INVOKEDYNAMIC);
+        super(CONSTANT_InvokeDynamic);
         this.bootstrap = bootstrap;
         this.nameAndType = nameAndType;
     }

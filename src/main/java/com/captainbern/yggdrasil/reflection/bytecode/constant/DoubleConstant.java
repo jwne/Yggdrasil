@@ -3,7 +3,7 @@ package com.captainbern.yggdrasil.reflection.bytecode.constant;
 import java.io.DataInput;
 import java.io.IOException;
 
-import static com.captainbern.yggdrasil.reflection.bytecode.Opcode.TAG_DOUBLE;
+import static com.captainbern.yggdrasil.reflection.bytecode.Opcode.CONSTANT_Double;
 
 public class DoubleConstant extends Constant {
 
@@ -14,7 +14,7 @@ public class DoubleConstant extends Constant {
     }
 
     public DoubleConstant(double cdouble) {
-        super(TAG_DOUBLE);
+        super(CONSTANT_Double);
         this.cdouble = cdouble;
     }
 

@@ -3,16 +3,16 @@ package com.captainbern.yggdrasil.reflection.bytecode.constant;
 import java.io.DataInput;
 import java.io.IOException;
 
-import static com.captainbern.yggdrasil.reflection.bytecode.Opcode.TAG_INTERFACE_METHOD;
+import static com.captainbern.yggdrasil.reflection.bytecode.Opcode.CONSTANT_InterfaceMethodref;
 
 public class InterfaceMethodConstant extends MemberConstant {
 
     public InterfaceMethodConstant(DataInput stream) throws IOException {
-        super(TAG_INTERFACE_METHOD, stream);
+        super(CONSTANT_InterfaceMethodref, stream);
     }
 
     public InterfaceMethodConstant(int cindex, int nameAndType) {
-        super(TAG_INTERFACE_METHOD, cindex, nameAndType);
+        super(CONSTANT_InterfaceMethodref, cindex, nameAndType);
     }
 
     @Override

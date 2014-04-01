@@ -3,7 +3,7 @@ package com.captainbern.yggdrasil.reflection.bytecode.constant;
 import java.io.DataInput;
 import java.io.IOException;
 
-import static com.captainbern.yggdrasil.reflection.bytecode.Opcode.TAG_STRING;
+import static com.captainbern.yggdrasil.reflection.bytecode.Opcode.CONSTANT_String;
 
 public class StringConstant extends Constant {
 
@@ -14,11 +14,11 @@ public class StringConstant extends Constant {
     }
 
     public StringConstant(int cstring) {
-        super(TAG_STRING);
+        super(CONSTANT_String);
         this.cstring = cstring;
     }
 
-    public int getString() {
+    public int getStringIndex() {
         return this.cstring;
     }
 }

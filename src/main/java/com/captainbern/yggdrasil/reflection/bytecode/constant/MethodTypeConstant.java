@@ -3,7 +3,7 @@ package com.captainbern.yggdrasil.reflection.bytecode.constant;
 import java.io.DataInput;
 import java.io.IOException;
 
-import static com.captainbern.yggdrasil.reflection.bytecode.Opcode.TAG_METHOD_TYPE;
+import static com.captainbern.yggdrasil.reflection.bytecode.Opcode.CONSTANT_MethodType;
 
 public class MethodTypeConstant extends Constant {
 
@@ -14,7 +14,7 @@ public class MethodTypeConstant extends Constant {
     }
 
     public MethodTypeConstant(int descriptor) {
-        super(TAG_METHOD_TYPE);
+        super(CONSTANT_MethodType);
         this.descriptor = descriptor;
     }
 

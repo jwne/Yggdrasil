@@ -3,16 +3,16 @@ package com.captainbern.yggdrasil.reflection.bytecode.constant;
 import java.io.DataInput;
 import java.io.IOException;
 
-import static com.captainbern.yggdrasil.reflection.bytecode.Opcode.TAG_METHOD;
+import static com.captainbern.yggdrasil.reflection.bytecode.Opcode.CONSTANT_Methodref;
 
 public class MethodConstant extends MemberConstant {
 
     public MethodConstant(DataInput stream) throws IOException {
-        super(TAG_METHOD, stream);
+        super(CONSTANT_Methodref, stream);
     }
 
     public MethodConstant(int cindex, int nameAndType) {
-        super(TAG_METHOD, cindex, nameAndType);
+        super(CONSTANT_Methodref, cindex, nameAndType);
     }
 
     @Override

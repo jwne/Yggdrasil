@@ -3,7 +3,7 @@ package com.captainbern.yggdrasil.reflection.bytecode.constant;
 import java.io.DataInput;
 import java.io.IOException;
 
-import static com.captainbern.yggdrasil.reflection.bytecode.Opcode.TAG_FLOAT;
+import static com.captainbern.yggdrasil.reflection.bytecode.Opcode.CONSTANT_Float;
 
 public class FloatConstant extends Constant {
 
@@ -14,7 +14,7 @@ public class FloatConstant extends Constant {
     }
 
     public FloatConstant(float cfloat) {
-        super(TAG_FLOAT);
+        super(CONSTANT_Float);
         this.cfloat = cfloat;
     }
 

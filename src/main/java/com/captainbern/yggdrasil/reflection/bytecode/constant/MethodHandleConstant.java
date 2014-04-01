@@ -3,7 +3,7 @@ package com.captainbern.yggdrasil.reflection.bytecode.constant;
 import java.io.DataInput;
 import java.io.IOException;
 
-import static com.captainbern.yggdrasil.reflection.bytecode.Opcode.TAG_METHOD_HANDLE;
+import static com.captainbern.yggdrasil.reflection.bytecode.Opcode.CONSTANT_MethodHandle;
 
 public class MethodHandleConstant extends Constant {
 
@@ -15,7 +15,7 @@ public class MethodHandleConstant extends Constant {
     }
 
     public MethodHandleConstant(int ckind, int cindex) {
-        super(TAG_METHOD_HANDLE);
+        super(CONSTANT_MethodHandle);
         this.ckind = ckind;
         this.cindex = cindex;
     }

@@ -7,6 +7,7 @@ import java.io.DataInputStream;
 import java.io.IOException;
 
 import static com.captainbern.yggdrasil.reflection.bytecode.Opcode.JDK_8;
+import static com.captainbern.yggdrasil.reflection.bytecode.Opcode.CONSTANT_Class;
 
 public class ClassFile {
 
@@ -83,10 +84,20 @@ public class ClassFile {
     }
 
     public String getClassName() {
-        return this.constantPool.getClassConstant(this.thisClass);
+        try {
+            return this.constantPool.getConstantString(this.thisClass, CONSTANT_Class);
+        } catch (ClassFormatException e) {
+            e.printStackTrace();
+        }
+        return "<Unknown>";
     }
 
     public String getSuperClassName() {
-        return this.constantPool.getClassConstant(this.superClass);
+        try {
+            return this.constantPool.getConstantString(this.superClass, CONSTANT_Class);
+        } catch (ClassFormatException e) {
+            e.printStackTrace();
+        }
+        return "<Unknown>";
     }
 }

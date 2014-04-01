@@ -3,7 +3,7 @@ package com.captainbern.yggdrasil.reflection.bytecode.constant;
 import java.io.DataInput;
 import java.io.IOException;
 
-import static com.captainbern.yggdrasil.reflection.bytecode.Opcode.TAG_INTEGER;
+import static com.captainbern.yggdrasil.reflection.bytecode.Opcode.CONSTANT_Integer;
 
 public class IntegerConstant extends Constant {
 
@@ -14,7 +14,7 @@ public class IntegerConstant extends Constant {
     }
 
     public IntegerConstant(int cint) {
-        super(TAG_INTEGER);
+        super(CONSTANT_Integer);
         this.cint = cint;
     }
 

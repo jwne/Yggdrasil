@@ -1,6 +1,7 @@
 package com.captainbern.yggdrasil.utils;
 
 import com.captainbern.yggdrasil.reflection.bytecode.ClassFile;
+import com.captainbern.yggdrasil.reflection.bytecode.exception.ClassFormatException;
 import org.junit.Test;
 
 import java.io.IOException;
@@ -19,8 +20,11 @@ public class ClassUtilsTest {
             print("Minor: " + classFile.getMinor());
             print("Major: " + classFile.getMagic());
             print("ClassName: " + classFile.getClassName());
+            print("SuperClass: " + classFile.getSuperClassName());
 
         } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassFormatException e) {
             e.printStackTrace();
         }
     }

@@ -3,16 +3,16 @@ package com.captainbern.yggdrasil.reflection.bytecode.constant;
 import java.io.DataInput;
 import java.io.IOException;
 
-import static com.captainbern.yggdrasil.reflection.bytecode.Opcode.TAG_FIELD;
+import static com.captainbern.yggdrasil.reflection.bytecode.Opcode.CONSTANT_Fieldref;
 
 public class FieldConstant extends MemberConstant {
 
     public FieldConstant(DataInput stream) throws IOException {
-        super(TAG_FIELD, stream);
+        super(CONSTANT_Fieldref, stream);
     }
 
     public FieldConstant(int classIndex, int nameAndType) {
-        super(TAG_FIELD, classIndex, nameAndType);
+        super(CONSTANT_Fieldref, classIndex, nameAndType);
     }
 
     @Override

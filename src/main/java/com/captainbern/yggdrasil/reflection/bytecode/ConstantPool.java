@@ -2,12 +2,15 @@ package com.captainbern.yggdrasil.reflection.bytecode;
 
 import com.captainbern.yggdrasil.reflection.bytecode.constant.ClassConstant;
 import com.captainbern.yggdrasil.reflection.bytecode.constant.Constant;
+import com.captainbern.yggdrasil.reflection.bytecode.constant.StringConstant;
 import com.captainbern.yggdrasil.reflection.bytecode.constant.Utf8Constant;
 import com.captainbern.yggdrasil.reflection.bytecode.exception.ClassFormatException;
 import com.sun.org.apache.bcel.internal.Constants;
 
 import java.io.DataInputStream;
 import java.io.IOException;
+
+import static com.captainbern.yggdrasil.reflection.bytecode.Opcode.*;
 
 public class ConstantPool {
 
@@ -32,25 +35,49 @@ public class ConstantPool {
         }
     }
 
-    public int getTag(int index) {
-        return getItem(index).getTag();
+    public Constant[] getConstantPool() {
+        return this.constantPool;
     }
 
-    public Constant getItem(int index) {
+    public int getSize() {
+        return this.size;
+    }
+
+    public Constant getConstant(int index) {
+        if (index >= constantPool.length || index < 0) {
+            throw new IndexOutOfBoundsException("Pool size: \'" + this.constantPool.length + "\'. Referenced index: \'" + index);
+        }
         return constantPool[index];
     }
 
-    public String getClassConstant(int index) {
-        ClassConstant constant = (ClassConstant)getItem(index);
+    public Constant getConstant(int index, byte tag) throws ClassFormatException {
+        Constant constant;
+        constant = getConstant(index);
         if (constant == null) {
-            return null;
-        } else {
-            return getUtf8(constant.getName());
+            throw new ClassFormatException("Constant pool at index \'" + index + "\' is NULL.");
         }
+        if (constant.getTag() != tag) {
+            throw new ClassFormatException("Expected class \'" + Constants.CONSTANT_NAMES[tag]
+                    + "\' at index \'" + index + "\' and got \'" + constant + "\'");
+        }
+        return constant;
     }
 
-    public String getUtf8(int index) {
-        Utf8Constant constant = (Utf8Constant) getItem(index);
-        return constant.getString();
+    public String getConstantString(int index, byte tag) throws ClassFormatException {
+        Constant constant = getConstant(index, tag);
+        int stringIndex;
+        switch (tag) {
+            case CONSTANT_Class:
+               stringIndex = ((ClassConstant) constant).getNameIndex();
+                break;
+            case CONSTANT_String:
+                stringIndex = ((StringConstant) constant).getStringIndex();
+                break;
+            default:
+                throw new IllegalArgumentException("Invalid tag: " + tag);
+        }
+
+        constant = getConstant(stringIndex, CONSTANT_Utf8);
+        return ((Utf8Constant) constant).getString();
     }
 }

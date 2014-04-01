@@ -3,7 +3,7 @@ package com.captainbern.yggdrasil.reflection.bytecode.constant;
 import java.io.DataInput;
 import java.io.IOException;
 
-import static com.captainbern.yggdrasil.reflection.bytecode.Opcode.TAG_DESCRIPTOR;
+import static com.captainbern.yggdrasil.reflection.bytecode.Opcode.CONSTANT_NameAndType;
 
 public class DescriptorConstant extends Constant {
 
@@ -15,7 +15,7 @@ public class DescriptorConstant extends Constant {
     }
 
     public DescriptorConstant(int memberName, int typeDescriptor) {
-        super(TAG_DESCRIPTOR);
+        super(CONSTANT_NameAndType);
         this.memberName = memberName;
         this.typeDescriptor = typeDescriptor;
     }

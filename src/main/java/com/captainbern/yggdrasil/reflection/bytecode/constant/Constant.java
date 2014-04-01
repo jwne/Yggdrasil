@@ -19,10 +19,10 @@ public abstract class Constant {
         return this.tag;
     }
 
-    public static Constant readConstant(DataInputStream codeStream) throws IOException, ClassFormatException {
+    public static final Constant readConstant(DataInputStream codeStream) throws IOException, ClassFormatException {
         byte tag = codeStream.readByte();
         switch (tag) {
-            case TAG_UTF_STRING:
+            case CONSTANT_Utf8:
                 return new Utf8Constant(codeStream);
             case 3:
                 return new IntegerConstant(codeStream);
