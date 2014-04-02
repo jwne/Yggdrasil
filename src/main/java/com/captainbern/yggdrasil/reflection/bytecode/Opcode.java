@@ -273,10 +273,10 @@ public interface Opcode {
     /**
      * Constant tags
      */
-    public static final byte CONSTANT_Utf8 = 1;
-    public static final byte CONSTANT_Integer = 3;
-    public static final byte CONSTANT_Float = 4;
-    public static final byte CONSTANT_Long = 5;
+    public static final byte CONSTANT_Utf8          = 1;
+    public static final byte CONSTANT_Integer       = 3;
+    public static final byte CONSTANT_Float         = 4;
+    public static final byte CONSTANT_Long          = 5;
     public static final byte CONSTANT_Double = 6;
     public static final byte CONSTANT_Class = 7;
     public static final byte CONSTANT_String = 8;
@@ -319,7 +319,7 @@ public interface Opcode {
     public static final byte ATTR_LOCAL_VARIABLE_TYPE_TABLE                 = 17;
     public static final byte ATTR_ENCLOSING_METHOD                      	= 18;
     public static final byte ATTR_STACK_MAP_TABLE                           = 19;
-    public static final short KNOWN_ATTRIBUTES = 20;
+    public static final short KNOWN_ATTRIBUTES                              = 20;
     public static final String[] ATTRIBUTE_NAMES = {
             "SourceFile", "ConstantValue", "Code", "Exceptions",
             "LineNumberTable", "LocalVariableTable",
@@ -331,17 +331,15 @@ public interface Opcode {
 
 
     //For invokedynamic opcodes
-    public static final int H_GETFIELD      = 1;
-    public static final int H_GETSTATIC     = 2;
-    public static final int H_PUTFIELD      = 3;
-    public static final int H_PUTSTATIC     = 4;
-    public static final int H_INVOKEVIRTUAL = 5;
-    public static final int H_INVOKESTATIC  = 6;
-    public static final int H_INVOKESPECIAL = 7;
-    public static final int H_NEWINVOKESPECIAL
-            = 8;
-    public static final int H_INVOKEINTERFACE
-            = 9;
+    public static final int H_GETFIELD         = 1;
+    public static final int H_GETSTATIC        = 2;
+    public static final int H_PUTFIELD         = 3;
+    public static final int H_PUTSTATIC        = 4;
+    public static final int H_INVOKEVIRTUAL    = 5;
+    public static final int H_INVOKESTATIC     = 6;
+    public static final int H_INVOKESPECIAL    = 7;
+    public static final int H_NEWINVOKESPECIAL = 8;
+    public static final int H_INVOKEINTERFACE  = 9;
 
     //Credit: Javaassist
     public static final int[] STACK_GROWTH = {
