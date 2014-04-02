@@ -3,12 +3,14 @@ package com.captainbern.yggdrasil.reflection.bytecode.constant;
 import java.io.DataInput;
 import java.io.IOException;
 
-import static com.captainbern.yggdrasil.reflection.bytecode.Opcode.CONSTANT_NameAndType;
-
 public class DescriptorConstant extends Constant {
 
     private int memberName;
     private int typeDescriptor;
+
+    public DescriptorConstant(DescriptorConstant constant) {
+        this(constant.getMemberName(), constant.getTypeDescriptor());
+    }
 
     public DescriptorConstant(DataInput stream) throws IOException {
         this(stream.readUnsignedShort(), stream.readUnsignedShort());

@@ -10,6 +10,10 @@ public class MethodHandleConstant extends Constant {
     private int ckind;
     private int cindex;
 
+    public MethodHandleConstant(MethodHandleConstant constant) {
+        this(constant.getKind(), constant.getMethodIndex());
+    }
+
     public MethodHandleConstant(DataInput stream) throws IOException {
         this(stream.readUnsignedByte(), stream.readUnsignedShort());
     }

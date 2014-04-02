@@ -9,6 +9,10 @@ public class Utf8Constant extends Constant {
 
     private String cstring;
 
+    public Utf8Constant(Utf8Constant constant) {
+        this(constant.getString());
+    }
+
     public Utf8Constant(DataInput inputStream) throws IOException {
         this(inputStream.readUTF());
     }

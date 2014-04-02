@@ -9,6 +9,10 @@ public class IntegerConstant extends Constant {
 
     private int cint;
 
+    public IntegerConstant(IntegerConstant constant) {
+        this(constant.getInt());
+    }
+
     public IntegerConstant(DataInput stream) throws IOException {
         this(stream.readInt());
     }

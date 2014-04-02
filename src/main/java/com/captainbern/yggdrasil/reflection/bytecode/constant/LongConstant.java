@@ -9,6 +9,10 @@ public class LongConstant extends Constant {
 
     private long clong;
 
+    public LongConstant(LongConstant constant) {
+        this(constant.getLong());
+    }
+
     public LongConstant(DataInput stream) throws IOException {
         this(stream.readLong());
     }

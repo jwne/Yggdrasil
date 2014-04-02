@@ -7,6 +7,10 @@ import static com.captainbern.yggdrasil.reflection.bytecode.Opcode.CONSTANT_Inte
 
 public class InterfaceMethodConstant extends MemberConstant {
 
+    public InterfaceMethodConstant(InterfaceMethodConstant constant) {
+        this(constant.getClassIndex(), constant.getNameAndType());
+    }
+
     public InterfaceMethodConstant(DataInput stream) throws IOException {
         super(CONSTANT_InterfaceMethodref, stream);
     }

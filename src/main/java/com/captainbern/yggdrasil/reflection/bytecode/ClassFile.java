@@ -1,15 +1,15 @@
 package com.captainbern.yggdrasil.reflection.bytecode;
 
+import com.captainbern.yggdrasil.reflection.bytecode.attribute.Attribute;
 import com.captainbern.yggdrasil.reflection.bytecode.exception.ClassFormatException;
+import com.captainbern.yggdrasil.reflection.bytecode.field.Field;
+import com.captainbern.yggdrasil.reflection.bytecode.method.Method;
 
 import java.io.ByteArrayInputStream;
 import java.io.DataInputStream;
 import java.io.IOException;
 
-import static com.captainbern.yggdrasil.reflection.bytecode.Opcode.JDK_8;
-import static com.captainbern.yggdrasil.reflection.bytecode.Opcode.CONSTANT_Class;
-
-public class ClassFile {
+public class ClassFile implements Opcode {
 
     protected byte[] bytes;
     protected DataInputStream codeStream;
@@ -21,6 +21,10 @@ public class ClassFile {
     private int thisClass;
     private int superClass;
     private int[] interfaces;
+    private String[] interfaceNames;
+    private Field[] fields;
+    private Method[] methods;
+    private Attribute[] attributes;
 
     public ClassFile(final byte[] bytes) throws IOException, ClassFormatException {
         DataInputStream codeStream = new DataInputStream(new ByteArrayInputStream(bytes));
@@ -50,13 +54,37 @@ public class ClassFile {
         } else {
             this.interfaces = new int[interfacesCount];
             for(int i = 0; i < interfacesCount; i++) {
-                interfaces[i] = codeStream.readUnsignedShort();
+                this.interfaces[i] = codeStream.readUnsignedShort();
             }
         }
 
+        // And their names
+        this.interfaceNames = new String[this.interfaces.length];
+        for (int i = 0; i < interfaces.length; i++) {
+            this.interfaceNames[i] = this.constantPool.getConstantString(interfaces[i], Opcode.CONSTANT_Class);
+        }
+
         // Fields
+        int fieldCount = codeStream.readUnsignedShort();
+        if(fieldCount == 0) {
+            this.fields = null;
+        } else {
+            this.fields = new Field[interfacesCount];
+            for(int i = 0; i < fieldCount; i++) {
+                this.fields[i] = new Field(codeStream, this.constantPool);
+            }
+        }
 
         // Methods
+        int methodCount = codeStream.readUnsignedShort();
+        if(methodCount == 0) {
+            this.methods = null;
+        } else {
+            this.methods = new Method[methodCount];
+            for(int i = 0; i < methodCount; i++) {
+                this.methods[i] = new Method(codeStream, this.constantPool);
+            }
+        }
     }
 
     public byte[] getByteCode() {
@@ -99,5 +127,25 @@ public class ClassFile {
             e.printStackTrace();
         }
         return "<Unknown>";
+    }
+
+    public int[] getInterfaces() {
+        return this.interfaces;
+    }
+
+    public String[] getInterfaceNames() {
+        return this.interfaceNames;
+    }
+
+    public Field[] getFields() {
+        return this.fields;
+    }
+
+    public Method[] getMethods() {
+        return this.methods;
+    }
+
+    public Attribute[] getAttributes() {
+        return this.attributes;
     }
 }

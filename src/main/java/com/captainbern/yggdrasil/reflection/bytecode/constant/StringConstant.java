@@ -9,6 +9,10 @@ public class StringConstant extends Constant {
 
     private int cstring;
 
+    public StringConstant(StringConstant constant) {
+        this(constant.getStringIndex());
+    }
+
     public StringConstant(DataInput stream) throws IOException {
         this(stream.readUnsignedShort());
     }

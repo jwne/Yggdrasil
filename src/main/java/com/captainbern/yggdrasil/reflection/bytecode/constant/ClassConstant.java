@@ -9,6 +9,10 @@ public class ClassConstant extends Constant {
 
     private int name;
 
+    public ClassConstant(ClassConstant classConstant) {
+        this(classConstant.getNameIndex());
+    }
+
     public ClassConstant(DataInput stream) throws IOException {
         this(stream.readUnsignedShort());
     }

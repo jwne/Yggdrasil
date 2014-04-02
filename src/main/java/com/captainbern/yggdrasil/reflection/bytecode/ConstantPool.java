@@ -10,9 +10,7 @@ import com.sun.org.apache.bcel.internal.Constants;
 import java.io.DataInputStream;
 import java.io.IOException;
 
-import static com.captainbern.yggdrasil.reflection.bytecode.Opcode.*;
-
-public class ConstantPool {
+public class ConstantPool implements Opcode {
 
     private int size;
     private Constant[] constantPool;

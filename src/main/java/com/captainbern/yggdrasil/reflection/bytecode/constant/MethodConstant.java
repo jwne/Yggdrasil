@@ -7,6 +7,10 @@ import static com.captainbern.yggdrasil.reflection.bytecode.Opcode.CONSTANT_Meth
 
 public class MethodConstant extends MemberConstant {
 
+    public MethodConstant(MethodConstant constant) {
+        this(constant.getClassIndex(), constant.getNameAndType());
+    }
+
     public MethodConstant(DataInput stream) throws IOException {
         super(CONSTANT_Methodref, stream);
     }

@@ -3,11 +3,13 @@ package com.captainbern.yggdrasil.reflection.bytecode.constant;
 import java.io.DataInput;
 import java.io.IOException;
 
-import static com.captainbern.yggdrasil.reflection.bytecode.Opcode.CONSTANT_Float;
-
 public class FloatConstant extends Constant {
 
     private float cfloat;
+
+    public FloatConstant(FloatConstant constant) {
+        this(constant.getFloat());
+    }
 
     public FloatConstant(DataInput stream) throws IOException {
         this(stream.readFloat());

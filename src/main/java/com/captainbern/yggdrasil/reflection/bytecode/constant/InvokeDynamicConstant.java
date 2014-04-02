@@ -10,6 +10,10 @@ public class InvokeDynamicConstant extends Constant {
     private int bootstrap;
     private int nameAndType;
 
+    public InvokeDynamicConstant(InvokeDynamicConstant constant) {
+        this(constant.getBootstrap(), constant.getNameAndType());
+    }
+
     public InvokeDynamicConstant(DataInput stream) throws IOException {
         this(stream.readUnsignedShort(), stream.readUnsignedShort());
     }

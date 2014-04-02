@@ -8,6 +8,10 @@ public abstract class MemberConstant extends Constant {
     private int classIndex;
     private int nameAndType;
 
+    public MemberConstant(MemberConstant memberConstant) {
+        this(memberConstant.getTag(), memberConstant.getClassIndex(), memberConstant.getNameAndType());
+    }
+
     public MemberConstant(byte tag, DataInput stream) throws IOException {
         this(tag, stream.readUnsignedShort(), stream.readUnsignedShort());
     }

@@ -9,6 +9,10 @@ public class MethodTypeConstant extends Constant {
 
     private int descriptor;
 
+    public MethodTypeConstant(MethodTypeConstant constant) {
+        this(constant.getDescriptor());
+    }
+
     public MethodTypeConstant(DataInput stream) throws IOException {
         this(stream.readUnsignedShort());
     }

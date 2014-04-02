@@ -1,13 +1,12 @@
 package com.captainbern.yggdrasil.reflection.bytecode.constant;
 
+import com.captainbern.yggdrasil.reflection.bytecode.Opcode;
 import com.captainbern.yggdrasil.reflection.bytecode.exception.ClassFormatException;
 
 import java.io.DataInputStream;
 import java.io.IOException;
 
-import static com.captainbern.yggdrasil.reflection.bytecode.Opcode.*;
-
-public abstract class Constant {
+public abstract class Constant implements Opcode {
 
     protected byte tag;
 
@@ -19,36 +18,36 @@ public abstract class Constant {
         return this.tag;
     }
 
-    public static final Constant readConstant(DataInputStream codeStream) throws IOException, ClassFormatException {
+    public static Constant readConstant(DataInputStream codeStream) throws IOException, ClassFormatException {
         byte tag = codeStream.readByte();
         switch (tag) {
             case CONSTANT_Utf8:
                 return new Utf8Constant(codeStream);
-            case 3:
+            case CONSTANT_Integer:
                 return new IntegerConstant(codeStream);
-            case 4:
+            case CONSTANT_Float:
                 return new FloatConstant(codeStream);
-            case 5:
+            case CONSTANT_Long:
                 return new LongConstant(codeStream);
-            case 6:
+            case CONSTANT_Double:
                 return new DoubleConstant(codeStream);
-            case 7:
+            case CONSTANT_Class:
                 return new ClassConstant(codeStream);
-            case 8:
+            case CONSTANT_String:
                 return new StringConstant(codeStream);
-            case 9:
+            case CONSTANT_Fieldref:
                 return new FieldConstant(codeStream);
-            case 10:
+            case CONSTANT_Methodref:
                 return new MethodConstant(codeStream);
-            case 11:
+            case CONSTANT_InterfaceMethodref:
                 return new InterfaceMethodConstant(codeStream);
-            case 12:
+            case CONSTANT_NameAndType:
                 return new DescriptorConstant(codeStream);
-            case 15:
+            case CONSTANT_MethodHandle:
                 return new MethodHandleConstant(codeStream);
-            case 16:
+            case CONSTANT_MethodType:
                 return new MethodTypeConstant(codeStream);
-            case 18:
+            case CONSTANT_InvokeDynamic:
                 return new InvokeDynamicConstant(codeStream);
             default:
                 throw new ClassFormatException("Invalid tag type: " + tag);
