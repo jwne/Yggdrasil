@@ -10,20 +10,20 @@ import java.io.IOException;
 
 public class Attribute implements Opcode {
 
-    protected byte tag;
+    protected String tag;
 
     protected int nameIndex;
     protected int length;
     protected ConstantPool constantPool;
 
-    public Attribute(byte tag, int index, int length, ConstantPool constantPool) {
+    public Attribute(String tag, int index, int length, ConstantPool constantPool) {
         this.tag = tag;
         this.nameIndex = index;
         this.length = length;
         this.constantPool = constantPool;
     }
 
-    public final byte getTag() {
+    public final String getTag() {
         return this.tag;
     }
 
@@ -57,20 +57,11 @@ public class Attribute implements Opcode {
     }
 
     public static Attribute readAttribute(DataInputStream codeStream, ConstantPool constantPool) throws IOException, ClassFormatException {
-        byte tag = ATTR_UNKNOWN;
-
         int index = codeStream.readUnsignedShort();
         Utf8Constant constant = (Utf8Constant) constantPool.getConstant(index, CONSTANT_Utf8);
-        String name = constant.getString();
+        String tag = constant.getString();
 
         int length = codeStream.readInt();
-
-        for(byte i = 0; i < KNOWN_ATTRIBUTES; i++) {
-            if(ATTRIBUTE_NAMES[i].equalsIgnoreCase(name)) {
-                tag = i;
-                break;
-            }
-        }
 
         switch (tag) {
             // Do stuff

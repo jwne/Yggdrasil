@@ -18,10 +18,10 @@ public class Exceptions extends Attribute implements Opcode {
 
     public Exceptions(int index, int count, DataInputStream codeStream, ConstantPool constantPool) throws IOException {
         this(index, count, (int[]) null, constantPool);
-        exceptionCount = codeStream.readUnsignedShort();
-        exceptions = new int[exceptionCount];
+        this.exceptionCount = codeStream.readUnsignedShort();
+        this.exceptions = new int[this.exceptionCount];
         for (int i = 0; i < exceptionCount; i++) {
-            exceptions[i] = codeStream.readUnsignedShort();
+            this.exceptions[i] = codeStream.readUnsignedShort();
         }
     }
 

@@ -85,6 +85,8 @@ public class ClassFile implements Opcode {
                 this.methods[i] = new Method(codeStream, this.constantPool);
             }
         }
+
+        // Attributes
     }
 
     public byte[] getByteCode() {

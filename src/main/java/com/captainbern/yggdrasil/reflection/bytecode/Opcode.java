@@ -298,28 +298,29 @@ public interface Opcode {
     /**
      * Attribute tags
      */
-    public static final byte ATTR_UNKNOWN                       			= -1;
-    public static final byte ATTR_SOURCE_FILE                   			= 0;
-    public static final byte ATTR_CONSTANT_VALUE                			= 1;
-    public static final byte ATTR_CODE                          			= 2;
-    public static final byte ATTR_EXCEPTIONS                    			= 3;
-    public static final byte ATTR_LINE_NUMBER_TABLE             			= 4;
-    public static final byte ATTR_LOCAL_VARIABLE_TABLE          			= 5;
-    public static final byte ATTR_INNER_CLASSES                 			= 6;
-    public static final byte ATTR_SYNTHETIC                     			= 7;
-    public static final byte ATTR_DEPRECATED                    			= 8;
-    public static final byte ATTR_PMG                           			= 9;
-    public static final byte ATTR_SIGNATURE                     			= 10;
-    public static final byte ATTR_STACK_MAP                     			= 11;
-    public static final byte ATTR_RUNTIME_VISIBLE_ANNOTATIONS    			= 12;
-    public static final byte ATTR_RUNTIMEIN_VISIBLE_ANNOTATIONS  			= 13;
-    public static final byte ATTR_RUNTIME_VISIBLE_PARAMETER_ANNOTATIONS 	= 14;
-    public static final byte ATTR_RUNTIMEIN_VISIBLE_PARAMETER_ANNOTATIONS   = 15;
-    public static final byte ATTR_ANNOTATION_DEFAULT                        = 16;
-    public static final byte ATTR_LOCAL_VARIABLE_TYPE_TABLE                 = 17;
-    public static final byte ATTR_ENCLOSING_METHOD                      	= 18;
-    public static final byte ATTR_STACK_MAP_TABLE                           = 19;
-    public static final short KNOWN_ATTRIBUTES                              = 20;
+    public static final String ATTR_UNKNOWN                       			= "";
+    public static final String ATTR_SOURCE_FILE                   			= "SourceFile";
+    public static final String ATTR_CONSTANT_VALUE                			= "ConstantValue";
+    public static final String ATTR_CODE                          			= "Code";
+    public static final String ATTR_EXCEPTIONS                    			= "Exceptions";
+    public static final String ATTR_LINE_NUMBER_TABLE             			= "LineNumberTable";
+    public static final String ATTR_LOCAL_VARIABLE_TABLE          			= "LocalVariableTable";
+    public static final String ATTR_INNER_CLASSES                 			= "InnerClasses";
+    public static final String ATTR_SYNTHETIC                     			= "Synthetic";
+    public static final String ATTR_DEPRECATED                    			= "Deprecated";
+    public static final String ATTR_PMG                           			= "PMGClass";
+    public static final String ATTR_SIGNATURE                     			= "Signature";
+    public static final String ATTR_STACK_MAP                     			= "StackMap";
+    public static final String ATTR_RUNTIME_VISIBLE_ANNOTATIONS    			= "RuntimeVisibleAnnotations";
+    public static final String ATTR_RUNTIMEIN_VISIBLE_ANNOTATIONS  			= "RuntimeInvisibleAnnotations";
+    public static final String ATTR_RUNTIME_VISIBLE_PARAMETER_ANNOTATIONS 	= "RuntimeVisibleParameterAnnotations";
+    public static final String ATTR_RUNTIMEIN_VISIBLE_PARAMETER_ANNOTATIONS = "RuntimeInvisibleParameterAnnotations";
+    public static final String ATTR_ANNOTATION_DEFAULT                      = "AnnotationDefault";
+    public static final String ATTR_LOCAL_VARIABLE_TYPE_TABLE               = "LocalVariableTypeTable";
+    public static final String ATTR_ENCLOSING_METHOD                      	= "EnclosingMethod";
+    public static final String ATTR_BOOTSTRAP_METHODS                       = "BootstrapMethods";
+    public static final String ATTR_STACK_MAP_TABLE                         = "StackMapTable";
+    public static final short KNOWN_ATTRIBUTES                              = 21;
     public static final String[] ATTRIBUTE_NAMES = {
             "SourceFile", "ConstantValue", "Code", "Exceptions",
             "LineNumberTable", "LocalVariableTable",
@@ -327,7 +328,7 @@ public interface Opcode {
             "PMGClass", "Signature", "StackMap",
             "RuntimeVisibleAnnotations", "RuntimeInvisibleAnnotations",
             "RuntimeVisibleParameterAnnotations", "RuntimeInvisibleParameterAnnotations",
-            "AnnotationDefault", "LocalVariableTypeTable", "EnclosingMethod", "StackMapTable"};
+            "AnnotationDefault", "LocalVariableTypeTable", "EnclosingMethod", "BootstrapMethods", "StackMapTable"};
 
 
     //For invokedynamic opcodes
