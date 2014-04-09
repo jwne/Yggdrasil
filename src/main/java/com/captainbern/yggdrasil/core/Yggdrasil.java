@@ -5,7 +5,6 @@ import com.captainbern.yggdrasil.ModuleLogger;
 import com.captainbern.yggdrasil.command.ObjectInstantiator;
 import com.captainbern.yggdrasil.debug.CommandDebug;
 import com.captainbern.yggdrasil.logging.LogFileHandler;
-import com.captainbern.yggdrasil.mapper.MapManager;
 import com.captainbern.yggdrasil.protocol.CommonProtocolManager;
 import com.captainbern.yggdrasil.protocol.ProtocolManager;
 import com.captainbern.yggdrasil.server.*;
@@ -55,11 +54,6 @@ public class Yggdrasil extends BukkitPlugin {
      * The current instance
      */
     private static Yggdrasil instance;
-
-    /**
-     * The MapManager
-     */
-    private static MapManager mapManager;
 
     /**
      * The server brand

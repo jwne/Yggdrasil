@@ -16,6 +16,8 @@ import net.minecraft.util.io.netty.channel.ChannelPromise;
 
 import org.bukkit.entity.Player;
 
+import java.util.concurrent.Callable;
+
 public class ChannelPipelineInjectorHandler extends ChannelDuplexHandler implements ChannelPipelineInjector {
 
     // The player
@@ -69,7 +71,7 @@ public class ChannelPipelineInjectorHandler extends ChannelDuplexHandler impleme
                 throw new IllegalStateException("Channel is NULL! Cannot inject handler without a Channel!");
 
             // Yay, let's inject
-            this.channel.pipeline().addBefore("packet_handler", getHandlerName(), this);
+            this.channel.pipeline().addBefore("packet_handler", "yggdrasil_packet_handler", this);
 
             injected = true;
             return true;
@@ -77,19 +79,28 @@ public class ChannelPipelineInjectorHandler extends ChannelDuplexHandler impleme
     }
 
     @Override
-    public boolean close() {
-        if(this.closed) {
+    public void close() {
+        if(!this.closed) {
 
-            // Remove our handler from the pipeline
-            try {
-                getChannel().pipeline().remove(getHandlerName());
-                this.closed = true;
-            } catch (Throwable t) {
-                // this should never be called, but if so..
-                this.closed = false;
+            this.closed = true;
+
+            if(injected) {
+                // Remove our handler from the pipeline
+
+                getChannel().eventLoop().submit(new Callable<Object>() {
+
+                    @Override
+                    public Object call() throws Exception {
+                        getChannel().pipeline().remove(ChannelPipelineInjectorHandler.this);
+                        return null;
+                    }
+
+                });
+
+                injected = false;
+
             }
         }
-        return false;
     }
 
     @Override
@@ -154,10 +165,6 @@ public class ChannelPipelineInjectorHandler extends ChannelDuplexHandler impleme
     @Override
     public Protocol getProtocolPhase() {
         return Protocol.fromVanilla(NetworkManagerRef.PROTOCOL_PHASE.get(getNetworkManager()));
-    }
-
-    private String getHandlerName() {
-        return toString();
     }
 
     private InjectionManager getInjectionManager() {

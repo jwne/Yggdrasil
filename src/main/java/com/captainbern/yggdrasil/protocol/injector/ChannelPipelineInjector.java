@@ -8,7 +8,7 @@ public interface ChannelPipelineInjector {
 
     public boolean inject();
 
-    public boolean close();
+    public void close();
 
     public Player getPlayer();
 

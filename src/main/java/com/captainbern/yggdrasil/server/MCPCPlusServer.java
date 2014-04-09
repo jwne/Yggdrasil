@@ -17,4 +17,9 @@ public class MCPCPlusServer extends SpigotServer {
     public String getName() {
         return "MCPC+";
     }
+
+    @Override
+    public ServerBrand getServerBrand() {
+        return ServerBrand.MCPC_PLUS;
+    }
 }

@@ -17,4 +17,9 @@ public class SportBukkitServer extends CraftBukkitServer {
     public String getName() {
         return "SportBukkit";
     }
+
+    @Override
+    public ServerBrand getServerBrand() {
+        return ServerBrand.SPORTBUKKIT;
+    }
 }

@@ -23,4 +23,6 @@ public interface CommonServer {
     public boolean isCompatible();
 
     public CommandMap getCommandMap();
+
+    public ServerBrand getServerBrand();
 }

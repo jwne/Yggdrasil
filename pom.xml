@@ -144,8 +144,7 @@
                 <includes>
                     <include>*.yml</include>
                     <include>*.txt</include>
-                    <include>mappings/**/*.csv</include>
-                    <include>mappings/**/version.json</include>
+                    <include>*.xml</include>
                 </includes>
             </resource>
         </resources>
@@ -161,8 +160,8 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>2.4</version>
                 <configuration>
-                    <source>1.6</source>
-                    <target>1.6</target>
+                    <source>1.7</source>
+                    <target>1.7</target>
                     <showWarnings>true</showWarnings>
                     <showDeprecation>false</showDeprecation>
                 </configuration>
@@ -191,6 +190,11 @@
             <plugin>
                 <groupId>org.zeroturnaround</groupId>
                 <artifactId>jrebel-maven-plugin</artifactId>
+                <configuration>
+                    <addResourcesDirToRebelXml>true</addResourcesDirToRebelXml>
+                    <alwaysGenerate>true</alwaysGenerate>
+                    <showGenerated>true</showGenerated>
+                </configuration>
                 <executions>
                     <execution>
                         <id>generate-rebel-xml</id>

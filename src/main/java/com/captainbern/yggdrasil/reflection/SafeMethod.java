@@ -65,4 +65,18 @@ public class SafeMethod<T> implements MethodAccessor<T> {
         }
         return null;
     }
+
+    @Override
+    public Class<?> getReturnType() {
+        if(this.method == null)
+            throw new RuntimeException("Method is NULL!");
+        return this.method.getReturnType();
+    }
+
+    @Override
+    public Class[] getArguments() {
+        if(this.method == null)
+            throw new RuntimeException("Method is NULL!");
+        return this.method.getParameterTypes();
+    }
 }

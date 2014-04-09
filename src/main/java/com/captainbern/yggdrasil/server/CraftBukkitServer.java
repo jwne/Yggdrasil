@@ -92,4 +92,9 @@ public class CraftBukkitServer implements CommonServer {
     public CommandMap getCommandMap() {
         return COMMAND_MAP_FIELD_ACCESSOR.get(Bukkit.getPluginManager());
     }
+
+    @Override
+    public ServerBrand getServerBrand() {
+        return ServerBrand.CRAFTBUKKIT;
+    }
 }

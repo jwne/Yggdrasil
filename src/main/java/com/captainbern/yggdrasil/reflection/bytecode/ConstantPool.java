@@ -5,7 +5,6 @@ import com.captainbern.yggdrasil.reflection.bytecode.constant.Constant;
 import com.captainbern.yggdrasil.reflection.bytecode.constant.StringConstant;
 import com.captainbern.yggdrasil.reflection.bytecode.constant.Utf8Constant;
 import com.captainbern.yggdrasil.reflection.bytecode.exception.ClassFormatException;
-import com.sun.org.apache.bcel.internal.Constants;
 
 import java.io.DataInputStream;
 import java.io.IOException;
@@ -27,7 +26,7 @@ public class ConstantPool implements Opcode {
         for (int i = 1; i < size; i++) {
             constantPool[i] = Constant.readConstant(inputStream);
             tag = constantPool[i].getTag();
-            if ((tag == Constants.CONSTANT_Double) || (tag == Constants.CONSTANT_Long)) {
+            if ((tag == CONSTANT_Double) || (tag == CONSTANT_Long)) {
                 i++;
             }
         }
@@ -55,7 +54,7 @@ public class ConstantPool implements Opcode {
             throw new ClassFormatException("Constant pool at index \'" + index + "\' is NULL.");
         }
         if (constant.getTag() != tag) {
-            throw new ClassFormatException("Expected class \'" + Constants.CONSTANT_NAMES[tag]
+            throw new ClassFormatException("Expected class \'" + CONSTANT_NAMES[tag]
                     + "\' at index \'" + index + "\' and got \'" + constant + "\'");
         }
         return constant;

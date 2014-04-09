@@ -180,7 +180,7 @@ public class ClassUtils {
             return null;
         }
 
-        List<Class<?>> classes = new ArrayList<>();
+        List<Class<?>> classes = new ArrayList<Class<?>>();
         Class<?> superClass = clazz.getSuperclass();
 
         while (superClass != null) {
@@ -201,7 +201,7 @@ public class ClassUtils {
             return null;
         }
 
-        final LinkedList<Class<?>> interfaces = new LinkedList<>();
+        final LinkedList<Class<?>> interfaces = new LinkedList<Class<?>>();
         getInterfaces(clazz, interfaces);
 
         return interfaces;

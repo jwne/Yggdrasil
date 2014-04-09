@@ -1,6 +1,5 @@
 package com.captainbern.yggdrasil.entity;
 
-import com.captainbern.yggdrasil.entity.pathfinding.PathfinderGoalSelector;
 import com.captainbern.yggdrasil.reflection.refs.entity.craft.CraftEntityRef;
 import com.captainbern.yggdrasil.wrappers.WrappedDataWatcher;
 import org.bukkit.entity.LivingEntity;
@@ -35,22 +34,6 @@ public abstract class CommonEntity<T extends LivingEntity> {
         }
 
         return this.nmsHandle;
-    }
-
-    public void clearGoals() {
-
-    }
-
-    public void clearAttackGoals() {
-
-    }
-
-    public PathfinderGoalSelector getPathfinderGoalSelector() {
-        return null;
-    }
-
-    public PathfinderGoalSelector getAttackPathfinderGoalSelector() {
-        return null;
     }
 
     public int getId() {
