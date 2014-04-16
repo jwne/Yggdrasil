@@ -1,4 +1,4 @@
 name: Yggdrasil
-description: A library with several tools
+description: A library with several tools and utils that I use in my plugins.
 version: ${project.version}
 main: com.captainbern.yggdrasil.core.Yggdrasil
