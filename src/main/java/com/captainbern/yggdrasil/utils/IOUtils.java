@@ -554,7 +554,7 @@ public class IOUtils {
 
         return (char) ((
                 (bytes[index] & 0xFF) << 8) |
-                (bytes[index] & 0xFF) << 0
+                (bytes[index + 1] & 0xFF) << 0
         );
     }
 
