@@ -26,7 +26,7 @@ public class CommonProtocolManager implements ProtocolManager {
 
     private InjectionManager injectionManager;
 
-    private ChannelInjector injector;
+    private Injector injector;
 
     private static volatile List<Injector> injectorList = new ArrayList<Injector>();
     private static volatile List<Injector> injectors = Collections.synchronizedList(injectorList);
@@ -36,7 +36,7 @@ public class CommonProtocolManager implements ProtocolManager {
 
         injectionManager = new InjectionManager(yggdrasil);
 
-        this.injector = new ChannelInjectorHandler(injectionManager);
+        //this.injector = new ChannelPipelineInjectorHandler(injectionManager);
 
         registerEvents(yggdrasil.getServer().getPluginManager(), yggdrasil);
     }
