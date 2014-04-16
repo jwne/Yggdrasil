@@ -319,11 +319,11 @@ public class ListenerInvoker {
         return null;
     }
 
-    public PacketEvent handleReceive(ChannelPipelineInjector injector, Object packet) {
+    public PacketEvent handleReceive(Injector injector, Object packet) {
         return null;
     }
 
-    public PacketEvent handleSend(ChannelPipelineInjector injector, Object packet) {
+    public PacketEvent handleSend(Injector injector, Object packet) {
         return null;
     }
 }

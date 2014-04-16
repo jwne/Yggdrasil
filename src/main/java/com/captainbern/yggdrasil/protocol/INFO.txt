@@ -1,0 +1,5 @@
+This is a small Procotol-Manipulation-Library (ProManLib)
+It's based of ProtocolLib's implementation (usage of the same "structure" and methods)
+
+This part of the library would definitely not exist without the help of aadnk/Comphenix.
+A huge thanks to Comphenix for the tons of help he provided.

@@ -3,6 +3,7 @@ package com.captainbern.yggdrasil.server;
 import com.captainbern.yggdrasil.core.Yggdrasil;
 import com.captainbern.yggdrasil.reflection.FieldAccessor;
 import com.captainbern.yggdrasil.reflection.SafeField;
+import com.captainbern.yggdrasil.reflection.utility.CommonReflection;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandMap;
 import org.bukkit.plugin.SimplePluginManager;
@@ -15,10 +16,6 @@ public class CraftBukkitServer implements CommonServer {
 
     public int MC_VERSION_NUMERIC;
 
-    public String CRAFTBUKKIT_VERSIONED;
-
-    public String MINECRAFT_VERSIONED;
-
     @Override
     public boolean init() {
         String serverPath = Bukkit.getServer().getClass().getName();
@@ -30,15 +27,7 @@ public class CraftBukkitServer implements CommonServer {
         final String PACKAGE_NAME = Bukkit.getServer().getClass().getPackage().getName();
         MC_VERSION = PACKAGE_NAME.substring(PACKAGE_NAME.lastIndexOf('.') + 1);
 
-        if(MC_VERSION.isEmpty()) {
-            CRAFTBUKKIT_VERSIONED = Yggdrasil.getCraftBukkitRoot();
-            MINECRAFT_VERSIONED = Yggdrasil.getNMSRoot();
-        } else {
-            CRAFTBUKKIT_VERSIONED = Yggdrasil.getCraftBukkitRoot() + "." + MC_VERSION;
-            MINECRAFT_VERSIONED = Yggdrasil.getNMSRoot() + "." + MC_VERSION;
-        }
-
-      MC_VERSION_NUMERIC = Integer.valueOf(MC_VERSION.replaceAll("[^0-9]", ""));
+        MC_VERSION_NUMERIC = Integer.valueOf(MC_VERSION.replaceAll("[^0-9]", ""));
 
         return true;
     }
@@ -51,7 +40,7 @@ public class CraftBukkitServer implements CommonServer {
     @Override
     public Class getClass(String name) {
         try{
-            return Class.forName(name);
+            return CommonReflection.getClass(name);
         }catch(Exception e){
             Yggdrasil.LOGGER_REFLECTION.warning("Failed to find matching class for: " + name);
             return null;
@@ -60,12 +49,12 @@ public class CraftBukkitServer implements CommonServer {
 
     @Override
     public Class getNMSClass(String name) {
-        return getClass(MINECRAFT_VERSIONED + "." + name);
+        return CommonReflection.getMinecraftClass(name);
     }
 
     @Override
     public Class getCBClass(String name) {
-        return getClass(CRAFTBUKKIT_VERSIONED + "." + name);
+        return CommonReflection.getCraftBukkitClass(name);
     }
 
     @Override

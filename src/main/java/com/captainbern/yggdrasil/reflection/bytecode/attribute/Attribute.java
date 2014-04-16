@@ -67,7 +67,6 @@ public class Attribute implements Opcode {
             // Do stuff
             /**
              * Unknown
-             *
              */
         }
 

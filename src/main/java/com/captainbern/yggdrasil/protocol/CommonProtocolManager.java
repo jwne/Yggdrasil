@@ -28,8 +28,8 @@ public class CommonProtocolManager implements ProtocolManager {
 
     private ChannelInjector injector;
 
-    private static volatile List<ChannelPipelineInjector> injectorList = new ArrayList<ChannelPipelineInjector>();
-    private static volatile List<ChannelPipelineInjector> injectors = Collections.synchronizedList(injectorList);
+    private static volatile List<Injector> injectorList = new ArrayList<Injector>();
+    private static volatile List<Injector> injectors = Collections.synchronizedList(injectorList);
 
     public CommonProtocolManager(Yggdrasil yggdrasil) {
         INSTANCE = this;

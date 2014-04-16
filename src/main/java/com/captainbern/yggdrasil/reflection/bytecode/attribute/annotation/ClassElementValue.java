@@ -10,7 +10,7 @@ public class ClassElementValue extends ElementValue {
     private int classIndex;
 
     public ClassElementValue(ClassElementValue classElementValue) {
-        this(classElementValue.getClassIndex(), classElementValue.getConstantPool());
+        this(classElementValue.getIndex(), classElementValue.getConstantPool());
     }
 
     public ClassElementValue(DataInputStream codeStream, ConstantPool constantPool) throws IOException {
@@ -22,11 +22,11 @@ public class ClassElementValue extends ElementValue {
         this.classIndex = classIndex;
     }
 
-    public final int getClassIndex() {
+    public final int getIndex() {
         return this.classIndex;
     }
 
-    public final void setClassIndex(int classIndex) {
+    public final void setIndex(int classIndex) {
         this.classIndex = classIndex;
     }
 }

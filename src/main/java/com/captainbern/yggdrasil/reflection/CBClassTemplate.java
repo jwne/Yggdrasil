@@ -1,7 +1,7 @@
 package com.captainbern.yggdrasil.reflection;
 
 import com.captainbern.yggdrasil.core.Yggdrasil;
-import com.captainbern.yggdrasil.utils.CommonUtils;
+import com.captainbern.yggdrasil.reflection.utility.CommonReflection;
 
 import java.util.logging.Level;
 
@@ -16,7 +16,7 @@ public class CBClassTemplate extends ClassTemplate<Object> {
     }
 
     protected void setCBClass(String name) {
-        Class clazz = CommonUtils.getCBClass(name);
+        Class clazz = CommonReflection.getCraftBukkitClass(name);
         if(clazz == null){
             Yggdrasil.LOGGER_REFLECTION.log(Level.WARNING, "Failed to find a valid class for: {0}!", name);
         }

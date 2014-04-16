@@ -4,7 +4,7 @@ import com.captainbern.yggdrasil.protocol.Protocol;
 import net.minecraft.util.io.netty.channel.Channel;
 import org.bukkit.entity.Player;
 
-public interface ChannelPipelineInjector {
+public interface Injector {
 
     public boolean inject();
 

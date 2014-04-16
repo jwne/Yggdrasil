@@ -1,33 +1,30 @@
 package com.captainbern.yggdrasil.protocol.injector;
 
 import com.captainbern.yggdrasil.collection.PlayerHashMap;
-import com.captainbern.yggdrasil.core.Yggdrasil;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.Plugin;
 
 /**
  * The class that will go about registering our custom ChannelHandler in the channel of the given player.
  */
 public class InjectionManager {
 
-    private static final PlayerHashMap<ChannelPipelineInjector> lookup = new PlayerHashMap<ChannelPipelineInjector>();
+    private static final PlayerHashMap<Injector> lookup = new PlayerHashMap<Injector>();
 
     private volatile boolean closed;
 
-    private static ListenerInvoker invoker;
+    private Plugin plugin;
 
-    public InjectionManager(Yggdrasil yggdrasil) {
-        invoker = new ListenerInvoker(yggdrasil, this);
+    public InjectionManager(Plugin plugin) {
+        this.plugin = plugin;
+    }
+
+    public Plugin getPlugin() {
+        return this.plugin;
     }
 
     public boolean isClosed() {
         return this.closed;
-    }
-
-    public ListenerInvoker getInvoker() {
-        if(invoker == null)
-            throw new RuntimeException("Well, this is embarrassing... The ListenerInvoker appears to be NULL!");
-
-        return invoker;
     }
 
     /**
@@ -36,14 +33,14 @@ public class InjectionManager {
      * @param injector
      * @return
      */
-    public ChannelPipelineInjector registerInjector(Player player, ChannelInjector injector) {
+    public Injector registerInjector(Player player, Injector injector) {
         if(closed) {
             return null;
         }
 
-        ChannelPipelineInjector pipelineInjector = lookup.get(player);
+        Injector pipelineInjector = lookup.get(player);
         if(pipelineInjector == null) {
-            pipelineInjector = new ChannelPipelineInjectorHandler(player, this, injector);
+            pipelineInjector = new ChannelPipelineInjectorHandler(player, this);
         }
 
         lookup.remove(player);
@@ -60,7 +57,7 @@ public class InjectionManager {
         if(!lookup.containsKey(player))
             return;
 
-        ChannelPipelineInjector injector = lookup.get(player);
+        Injector injector = lookup.get(player);
         injector.close();
 
         lookup.remove(player);
@@ -71,7 +68,7 @@ public class InjectionManager {
             closed = true;
 
             // Close everything
-            for (ChannelPipelineInjector injector : lookup.values())
+            for (Injector injector : lookup.values())
                 injector.close();
         }
     }

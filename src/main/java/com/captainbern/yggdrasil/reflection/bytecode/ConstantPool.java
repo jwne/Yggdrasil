@@ -1,9 +1,6 @@
 package com.captainbern.yggdrasil.reflection.bytecode;
 
-import com.captainbern.yggdrasil.reflection.bytecode.constant.ClassConstant;
-import com.captainbern.yggdrasil.reflection.bytecode.constant.Constant;
-import com.captainbern.yggdrasil.reflection.bytecode.constant.StringConstant;
-import com.captainbern.yggdrasil.reflection.bytecode.constant.Utf8Constant;
+import com.captainbern.yggdrasil.reflection.bytecode.constant.*;
 import com.captainbern.yggdrasil.reflection.bytecode.exception.ClassFormatException;
 
 import java.io.DataInputStream;
@@ -76,5 +73,35 @@ public class ConstantPool implements Opcode {
 
         constant = getConstant(stringIndex, CONSTANT_Utf8);
         return ((Utf8Constant) constant).getString();
+    }
+
+    public String getUtf8StringConstant(int index) throws ClassFormatException {
+        Utf8Constant constant = (Utf8Constant) getConstant(index, CONSTANT_Utf8);
+        return constant.getString();
+    }
+
+    public double getDoubleConstant(int index) throws ClassFormatException {
+        DoubleConstant constant = (DoubleConstant) getConstant(index, CONSTANT_Double);
+        return constant.getDouble();
+    }
+
+    public float getFloatConstant(int index) throws ClassFormatException {
+        FloatConstant constant = (FloatConstant) getConstant(index, CONSTANT_Float);
+        return constant.getFloat();
+    }
+
+    public int getIntegerConstant(int index) throws ClassFormatException {
+        IntegerConstant constant = (IntegerConstant) getConstant(index, CONSTANT_Integer);
+        return constant.getInt();
+    }
+
+    public long getLongConstant(int index) throws ClassFormatException {
+        LongConstant constant = (LongConstant) getConstant(index, CONSTANT_Long);
+        return constant.getLong();
+    }
+
+    public String getStringConstant(int index) throws ClassFormatException {
+        StringConstant constant = (StringConstant) getConstant(index, CONSTANT_String);
+        return getUtf8StringConstant(constant.getStringIndex());
     }
 }

@@ -18,7 +18,7 @@ import org.bukkit.entity.Player;
 
 import java.util.concurrent.Callable;
 
-public class ChannelPipelineInjectorHandler extends ChannelDuplexHandler implements ChannelPipelineInjector {
+public class ChannelPipelineInjectorHandler extends ChannelDuplexHandler implements Injector {
 
     // The player
     private Player player;
@@ -41,16 +41,12 @@ public class ChannelPipelineInjectorHandler extends ChannelDuplexHandler impleme
 
     private InjectionManager injectionManager;
 
-    private ChannelInjector listener;
-
-    public ChannelPipelineInjectorHandler(Player player, InjectionManager manager, ChannelInjector listener) {
+    public ChannelPipelineInjectorHandler(Player player, InjectionManager manager) {
         Preconditions.checkNotNull(player, "Player can't be NULL!");
         Preconditions.checkNotNull(manager, "InjectionManager can't be NULL!");
-        Preconditions.checkNotNull(listener, "The ChannelInjector can't be NULL!");
 
         this.player = player;
         this.injectionManager = manager;
-        this.listener = listener;
 
         /**
          * Channel/network stuff
@@ -220,13 +216,13 @@ public class ChannelPipelineInjectorHandler extends ChannelDuplexHandler impleme
     }
 
     //@Override
-    public PacketEvent handleReceive(ChannelPipelineInjector injector, Object packet) {
-        return this.getInjectionManager().getInvoker().handleReceive(injector, packet);
+    public PacketEvent handleReceive(Injector injector, Object packet) {
+        return null;
     }
 
     //@Override
-    public PacketEvent handleSend(ChannelPipelineInjector injector, Object packet) {
-        return this.getInjectionManager().getInvoker().handleSend(injector, packet);
+    public PacketEvent handleSend(Injector injector, Object packet) {
+        return null;
     }
 
     @Override

@@ -55,11 +55,31 @@ public class ElementValue implements Opcode {
         char tag = (char) codeStream.readByte();
         switch (tag) {
             case TYPE_STRING:
-                return new PrimitiveElementValue(tag, codeStream, constantPool);
+                return new StringElementValue(codeStream, constantPool);
             case TYPE_ENUM:
                 return new EnumElementValue(codeStream, constantPool);
             case TYPE_CLASS:
                 return new ClassElementValue(codeStream, constantPool);
+            case TYPE_ANNOTATION:
+                return new AnnotationElementValue(Annotation.read(codeStream, constantPool, false), constantPool);
+            case TYPE_BYTE:
+                return new ByteElementValue(codeStream, constantPool);
+            case TYPE_CHAR:
+                return new CharElementValue(codeStream, constantPool);
+            case TYPE_DOUBLE:
+                return new DoubleElementValue(codeStream, constantPool);
+            case TYPE_FLOAT:
+                return new FloatElementValue(codeStream, constantPool);
+            case TYPE_INT:
+                return new IntegerElementValue(codeStream, constantPool);
+            case TYPE_LONG:
+                return new LongElementValue(codeStream, constantPool);
+            case TYPE_SHORT:
+                return new ShortElementValue(codeStream, constantPool);
+            case TYPE_BOOLEAN:
+                return new BooleanElementValue(codeStream, constantPool);
+            case TYPE_ARRAY:
+                return ArrayElementValue.read(codeStream, constantPool);
            default:
                throw new RuntimeException("Wrong tag-type: " + tag);
         }

@@ -1,6 +1,8 @@
 Yggdrasil (aka CBCommonLib)
 ===========
 
+Latest build:
+
 Yggdrasil - also known as "the tree of life" or "tree of knowledge" in the
 Nordic mythology - is a library which contains several utils and tools that can be used
 across multiple plugins.

@@ -4,7 +4,14 @@ import com.captainbern.yggdrasil.reflection.bytecode.ConstantPool;
 
 public class AnnotationElementValue extends ElementValue {
 
-    public AnnotationElementValue(byte type, ConstantPool constantPool) {
+    private Annotation annotation;
+
+    public AnnotationElementValue(Annotation annotation, ConstantPool constantPool) {
         super(ElementValue.TYPE_ANNOTATION, constantPool);
+        this.annotation = annotation;
+    }
+
+    public final Annotation getAnnotation() {
+        return this.annotation;
     }
 }
