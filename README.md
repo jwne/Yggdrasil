@@ -1,7 +1,7 @@
 Yggdrasil (aka CBCommonLib)
 ===========
 
-Latest build:
+Latest build: [![Build Status](https://travis-ci.org/CaptainBern/Yggdrasil.svg?branch=master)](https://travis-ci.org/CaptainBern/Yggdrasil)
 
 Yggdrasil - also known as "the tree of life" or "tree of knowledge" in the
 Nordic mythology - is a library which contains several utils and tools that can be used
